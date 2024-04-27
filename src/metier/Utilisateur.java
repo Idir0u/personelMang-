@@ -1,5 +1,8 @@
 package metier;
 
+import java.sql.*;
+import java.util.Vector;
+
 public class Utilisateur {
 	int idUser;
 	String username;
@@ -55,6 +58,21 @@ public class Utilisateur {
 	
 	public void affiche() {
 		System.out.println(idUser +" \t "+ username +" \t " + " \t " + email + " \t " + name + " \t " + prenom);
+	}
+        Connection conn = Utilitaire.getConnection();
+        public Vector<Utilisateur> displayUsers() {
+            Vector<Utilisateur> vetu = new Vector<Utilisateur>();
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
+			while (rs.next()) {
+				//(int idUser, String username, String passwd, String email, String name, String prenom)
+                            vetu.add(new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+			} 
+		} catch (Exception e) {
+			System.out.println("Exception : "+ e);
+		}
+		return vetu;
 	}
 
 }

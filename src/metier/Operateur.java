@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! will not be used in the future !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public class Operateur {
 	Vector<Utilisateur> vetu = new Vector<Utilisateur>();
 	Connection conn = Utilitaire.getConnection();
@@ -43,49 +43,20 @@ public class Operateur {
 	}
         //----------------------------------------------
     public boolean userExists(String username) {
-    boolean exists = false;
-    try {
-        PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE username = ?");
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int count = rs.getInt(1);
-            exists = (count > 0);
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Exception : " + e);
         }
-    } catch (Exception e) {
-        System.out.println("Exception : " + e);
+        return false;
     }
-    return exists;
-}
     //--------------------------------------------------
-    public boolean userConnection(String username, String passwd) {
-    boolean exists = false;
-    try {
-        PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM USERS WHERE username = ? AND passwd = ?");
-        ps.setString(1, username);
-        ps.setString(2, passwd);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int count = rs.getInt(1);
-            exists = (count > 0);
-        }
-    } catch (Exception e) {
-        System.out.println("Exception : " + e);
-    }
-    return exists;
-}
-        //-------------------------------------------
-    public void authenticateUser(String username, String passwd ){
-        if (this.userConnection(username, passwd)) {
-                // User doesn't exist, add them to the database
-                    //this.ajouterUser("zakariae1", "fhdjrkhj4", "zemat@gmail.com", "Zemat", "Zakariae");
-                    System.out.println("WELCOME " + username);
-                } else {
-                    System.out.println("Account not found!!");
-        }
-    }
-
-	//-------------------------------------------
+ 	//-------------------------------------------
 	/*public Abonnement retournerAbonnement(int numAb) {
 		int idCl;
 		Client cl;
