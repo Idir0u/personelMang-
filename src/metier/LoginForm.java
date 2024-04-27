@@ -10,11 +10,13 @@ package metier;
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.border.Border;
 
 public class LoginForm extends JFrame {
-    Operateur o = new Operateur();
+    Connection conn = Utilitaire.getConnection();
                          
     public LoginForm() {
         GridBagConstraints gridBagConstraints;
@@ -175,13 +177,18 @@ public class LoginForm extends JFrame {
         LoignButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Get the text from jTextField3
+                
                 String username = jTextField3.getText();
                 char[] passwordChars = jPasswordField1.getPassword();
                 String password = new String(passwordChars); 
-
-                o.authenticateUser(username, password);
+                if(username.equals("") || password.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter your username and password !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    authenticateUserLogin(username, password);
+                }
             }
         });
+        
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
@@ -246,7 +253,31 @@ public class LoginForm extends JFrame {
         getContentPane().add(Form);
 
         pack();
-    }                                     
+    }   
+    public void authenticateUserLogin(String username, String passwd) {
+            boolean exists = false;
+            try {
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ? AND passwd = ?");
+                ps.setString(1, username);
+                ps.setString(2, passwd);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    // if exists
+                    HomePage hp = new HomePage();
+                    this.setVisible(false);
+                    hp.setVisible(true);
+                    hp.setLocationRelativeTo(null);
+                    
+                    
+                }else{
+                    // if not
+                    JOptionPane.showMessageDialog(null, "Incorrect username or password", "Incorrect Information", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                System.out.println("Exception : " + e);
+            }
+            
+        }
                                         
 
 }
