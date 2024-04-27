@@ -6,7 +6,8 @@ import java.sql.*;
 
 
 
-public class SignUp extends JFrame {                      
+public class SignUp extends JFrame { 
+    Connection conn = Utilitaire.getConnection();
     public SignUp() {
         java.awt.GridBagConstraints gridBagConstraints;
 
@@ -268,7 +269,7 @@ public class SignUp extends JFrame {
         Left.setBackground(new java.awt.Color(255, 255, 255));
         Left.setLayout(new java.awt.GridBagLayout());
 
-        Image.setIcon(new ImageIcon(getClass().getResource("6333204 (1).jpg"))); 
+        Image.setIcon(new ImageIcon(getClass().getResource("assets/6333204 (1).jpg"))); 
         Image.setText("jLabel1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
