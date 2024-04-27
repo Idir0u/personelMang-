@@ -1,0 +1,252 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package metier;
+
+/**
+ *
+ * @author IDIR
+ */
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+
+public class LoginForm extends JFrame {
+    Operateur o = new Operateur();
+                         
+    public LoginForm() {
+        GridBagConstraints gridBagConstraints;
+
+        JPanel Right = new JPanel();
+        JLabel jLabel2 = new JLabel();
+        JLabel image = new JLabel();
+        JPanel Form = new JPanel();
+        JLabel Loginh1 = new JLabel();
+        JLabel Usernameh1 = new JLabel();
+        JLabel Usernameline = new JLabel();
+        JLabel Passwordh1 = new JLabel();
+        JLabel Passwordline = new JLabel();
+        JLabel Usernameicon = new JLabel();
+        JLabel PasswordIcon = new JLabel();
+        JLabel PasswordForget = new JLabel();
+        JButton LoignButton = new JButton();
+        JLabel requestCreateAccount = new JLabel();
+        JLabel SignUph = new JLabel();
+        JTextField jTextField3 = new JTextField();
+        JPasswordField jPasswordField1 = new JPasswordField();
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
+        setPreferredSize(new Dimension(800, 500));
+        getContentPane().setLayout(new GridLayout());
+
+        Right.setBackground(new Color(255, 255, 255));
+
+        image.setIcon(new ImageIcon(getClass().getResource("assets/—Pngtree—purple gradient multi-terminal login data_5045244 (1).png")));
+        
+
+        Right.setBackground(new Color(255, 255, 255));
+        Right.setLayout(new GridBagLayout());
+        Right.add(image);
+
+        getContentPane().add(Right);
+
+        Form.setBackground(new Color(153, 0, 204));
+        Form.setLayout(new GridBagLayout());
+
+        Loginh1.setFont(new Font("Palatino Linotype", 1, 33)); 
+        Loginh1.setForeground(new Color(255, 255, 255));
+        Loginh1.setHorizontalAlignment(SwingConstants.CENTER);
+        Loginh1.setText("Login");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 37;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(57, 125, 0, 0);
+        Form.add(Loginh1, gridBagConstraints);
+
+        Usernameh1.setFont(new Font("Segoe UI", 0, 14));
+        Usernameh1.setForeground(new Color(255, 255, 255));
+        Usernameh1.setText("Username");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 49;
+        gridBagConstraints.ipady = 16;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(6, 43, 0, 0);
+        Form.add(Usernameh1, gridBagConstraints);
+
+        Usernameline.setFont(new Font("Segoe Script", 0, 14));
+        Usernameline.setForeground(new Color(255, 255, 255));
+        Usernameline.setText("_________________________________________");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(10, 43, 0, 0);
+        Form.add(Usernameline, gridBagConstraints);
+
+        Passwordh1.setFont(new Font("Segoe UI", 0, 14));
+        Passwordh1.setForeground(new Color(255, 255, 255));
+        Passwordh1.setText("Password");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 53;
+        gridBagConstraints.ipady = 16;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(6, 43, 0, 0);
+        Form.add(Passwordh1, gridBagConstraints);
+
+        Passwordline.setFont(new Font("Segoe Script", 0, 14));
+        Passwordline.setForeground(new Color(255, 255, 255));
+        Passwordline.setText("_________________________________________");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 9;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(6, 43, 0, 0);
+        Form.add(Passwordline, gridBagConstraints);
+
+        Usernameicon.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png")));
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 22;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(3, 16, 0, 30);
+        Form.add(Usernameicon, gridBagConstraints);
+
+        PasswordIcon.setIcon(new ImageIcon(getClass().getResource("assets/icons8-lock-30.png"))); 
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 22;
+        gridBagConstraints.gridheight = 4;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(41, 16, 0, 30);
+        Form.add(PasswordIcon, gridBagConstraints);
+
+        PasswordForget.setFont(new Font("Segoe UI", 0, 13));
+        PasswordForget.setForeground(new Color(255, 255, 255));
+        PasswordForget.setHorizontalAlignment(SwingConstants.CENTER);
+        PasswordForget.setText("Forget Password?");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(18, 137, 0, 0);
+        Form.add(PasswordForget, gridBagConstraints);
+
+        LoignButton.setFont(new Font("Segoe UI", 1, 14));
+        LoignButton.setForeground(new Color(153, 0, 204));
+        LoignButton.setText("LOGIN");
+        LoignButton.setBorder(null);
+        LoignButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        LoignButton.setBackground(Color.white);
+        LoignButton.setBorder(null);
+        LoignButton.addMouseListener(new MouseAdapter() {
+            
+            public void mouseEntered(MouseEvent e) {
+                LoignButton.setBackground(new Color(153, 0, 204));
+                LoignButton.setForeground(Color.white);
+                Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 1);
+                LoignButton.setBorder(whiteBorder);
+            }
+
+            
+            public void mouseExited(MouseEvent e) {
+                LoignButton.setBackground(Color.white);
+                LoignButton.setForeground(new Color(153, 0, 204));
+                LoignButton.setBorder(null);
+            }
+        });
+        LoignButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Get the text from jTextField3
+                String username = jTextField3.getText();
+                char[] passwordChars = jPasswordField1.getPassword();
+                String password = new String(passwordChars); 
+
+                o.authenticateUser(username, password);
+            }
+        });
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 21;
+        gridBagConstraints.ipadx = 229;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(18, 51, 0, 0);
+        Form.add(LoignButton, gridBagConstraints);
+
+        requestCreateAccount.setFont(new Font("Segoe UI", 0, 13));
+        requestCreateAccount.setForeground(new Color(255, 255, 255));
+        requestCreateAccount.setText("Don't have an account?");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(12, 92, 58, 0);
+        Form.add(requestCreateAccount, gridBagConstraints);
+
+        SignUph.setFont(new Font("Segoe UI", 0, 13));
+        SignUph.setForeground(new Color(255, 255, 255));
+        SignUph.setText("Sign up");
+        SignUph.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(12, 12, 58, 0);
+        Form.add(SignUph, gridBagConstraints);
+
+        jTextField3.setBackground(new Color(153, 0, 204));
+        jTextField3.setBorder(null);
+        jTextField3.setForeground(Color.white);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 11;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 196;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(37, 50, 0, 0);
+        Form.add(jTextField3, gridBagConstraints);
+
+        jPasswordField1.setBackground(new Color(153, 0, 204));
+        jPasswordField1.setBorder(null);
+        jPasswordField1.setForeground(Color.white);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 186;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(32, 50, 0, 0);
+        Form.add(jPasswordField1, gridBagConstraints);
+
+        getContentPane().add(Form);
+
+        pack();
+    }                                     
+                                        
+
+}
