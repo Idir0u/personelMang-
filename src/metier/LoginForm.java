@@ -221,6 +221,13 @@ public class LoginForm extends JFrame {
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new Insets(12, 12, 58, 0);
         Form.add(SignUph, gridBagConstraints);
+        SignUph.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // sending to the signUp page after clicking 'signup'    
+                popUpSignUp();
+            }
+        });
 
         jTextField3.setBackground(new Color(153, 0, 204));
         jTextField3.setBorder(null);
@@ -253,7 +260,13 @@ public class LoginForm extends JFrame {
         getContentPane().add(Form);
 
         pack();
-    }   
+    }  
+    public void popUpSignUp(){
+        SignUp su = new SignUp();
+        this.setVisible(false);
+        su.setVisible(true);
+        su.setLocationRelativeTo(null);
+    }
     public void authenticateUserLogin(String username, String passwd) {
             boolean exists = false;
             try {

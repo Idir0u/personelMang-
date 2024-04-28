@@ -1,6 +1,9 @@
 package metier;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
 
@@ -43,7 +46,7 @@ public class SignUp extends JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel1.setText("Sign in");
+        jLabel1.setText("Sign Up");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -66,8 +69,8 @@ public class SignUp extends JFrame {
         UsernameField.setBackground(new java.awt.Color(153, 0, 204));
         UsernameField.setForeground(new java.awt.Color(255, 255, 255));
         UsernameField.setBorder(null);
-        UsernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        UsernameField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 UsernameFieldActionPerformed(evt);
             }
         });
@@ -109,7 +112,7 @@ public class SignUp extends JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 30, 0, 0);
         Right.add(FullnameField, gridBagConstraints);
-
+        
         Email.setFont(new java.awt.Font("Roboto Light", 1, 14)); 
         Email.setForeground(new java.awt.Color(255, 255, 255));
         Email.setText("Email");
@@ -200,6 +203,30 @@ public class SignUp extends JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(20, 50, 20, 40);
         Right.add(SignInButton, gridBagConstraints);
+        //----------------------
+        
+        SignInButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Get the text from jTextField3
+                //UsernameField FullnameField Email UsernameFIeld PasswordField ConfirmPasswordField
+                String fullname = FullnameField.getText();
+                String username = UsernameField.getText();
+                String email = UsernameFIeld.getText();
+               
+                
+                char[] passwordChars = PasswordFiled.getPassword();
+                String password = new String(passwordChars);
+                char[] passwordcfChars = ConfirmPasswordField.getPassword();
+                String confirmPassword = new String(passwordcfChars);
+                if(username.equals("") || password.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter your username and password !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    SigningUp(username, password);
+                }
+            }
+        });
+        
+        //----------------------
 
         jLabel2.setFont(new java.awt.Font("Segoe Script", 0, 12)); 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -297,6 +324,9 @@ public class SignUp extends JFrame {
         pack();
     }                       
 
+    private void SigningUp(String username, String passwd){
+        // signing up after collecting information
+    }
     private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
     }                                             

@@ -21,11 +21,11 @@ public class MainApp {
 		//idUser +" \t "+ username +" \t " + " \t " + email + " \t " + name + " \t " + prenom
 		System.out.println("**ID_Utilisateur\t UserName\t EMAIL\t Name\t Prenom**\n");
 		System.out.println("**************************************************");
-		iterateur = o.displayUsers().iterator();
+		/*iterateur = o.displayUsers().iterator();
 		while(iterateur.hasNext()) {
 			Utilisateur u = iterateur.next();
 			u.affiche();
-		}
+		}*/
 		//o.ajouterUser("zakariae1", "fhdjrkhj4", "zemat@gmail.com", "Zemat", "Zakariae");
                 /*if (!o.userExists("zakariae1")) {
                 // User doesn't exist, add them to the database
