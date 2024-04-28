@@ -21,11 +21,11 @@ public class SignUp extends JFrame {
         JLabel Username = new JLabel();
         JTextField FullnameField = new JTextField();
         JLabel Email = new JLabel();
-        JTextField UsernameFIeld = new JTextField();
+        JTextField EmailField = new JTextField();
         JLabel Password = new JLabel();
         JPasswordField ConfirmPasswordField = new JPasswordField();
         JLabel ConfirmPassword = new JLabel();
-        JPasswordField PasswordFiled = new JPasswordField();
+        JPasswordField PasswordField = new JPasswordField();
         JButton SignInButton = new JButton();
         JLabel jLabel2 = new JLabel();
         JLabel jLabel3 = new JLabel();
@@ -124,10 +124,10 @@ public class SignUp extends JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         Right.add(Email, gridBagConstraints);
 
-        UsernameFIeld.setBackground(new java.awt.Color(153, 0, 204));
-        UsernameFIeld.setForeground(new java.awt.Color(255, 255, 255));
-        UsernameFIeld.setBorder(null);
-        UsernameFIeld.addActionListener(new java.awt.event.ActionListener() {
+        EmailField.setBackground(new java.awt.Color(153, 0, 204));
+        EmailField.setForeground(new java.awt.Color(255, 255, 255));
+        EmailField.setBorder(null);
+        EmailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsernameFIeldActionPerformed(evt);
             }
@@ -140,7 +140,7 @@ public class SignUp extends JFrame {
         gridBagConstraints.ipady = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 30, 0, 0);
-        Right.add(UsernameFIeld, gridBagConstraints);
+        Right.add(EmailField, gridBagConstraints);
 
         Password.setFont(new java.awt.Font("Roboto Light", 1, 14)); 
         Password.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,11 +176,11 @@ public class SignUp extends JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
         Right.add(ConfirmPassword, gridBagConstraints);
-
-        PasswordFiled.setBackground(new java.awt.Color(153, 0, 204));
-        PasswordFiled.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        PasswordFiled.setForeground(new java.awt.Color(255, 255, 255));
-        PasswordFiled.setBorder(null);
+//PasswordFieLd
+        PasswordField.setBackground(new java.awt.Color(153, 0, 204));
+        PasswordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        PasswordField.setForeground(new java.awt.Color(255, 255, 255));
+        PasswordField.setBorder(null);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -188,11 +188,11 @@ public class SignUp extends JFrame {
         gridBagConstraints.ipadx = 216;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 30, 0, 0);
-        Right.add(PasswordFiled, gridBagConstraints);
+        Right.add(PasswordField, gridBagConstraints);
 
         SignInButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); 
         SignInButton.setForeground(new java.awt.Color(153, 0, 204));
-        SignInButton.setText("SIGN IN");
+        SignInButton.setText("SIGN UP");
         SignInButton.setPreferredSize(new java.awt.Dimension(300, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -211,18 +211,23 @@ public class SignUp extends JFrame {
                 //UsernameField FullnameField Email UsernameFIeld PasswordField ConfirmPasswordField
                 String fullname = FullnameField.getText();
                 String username = UsernameField.getText();
-                String email = UsernameFIeld.getText();
-               
-                
-                char[] passwordChars = PasswordFiled.getPassword();
+                String email = EmailField.getText();
+                char[] passwordChars = PasswordField.getPassword();
                 String password = new String(passwordChars);
                 char[] passwordcfChars = ConfirmPasswordField.getPassword();
                 String confirmPassword = new String(passwordcfChars);
-                if(username.equals("") || password.equals("")){
-                    JOptionPane.showMessageDialog(null, "Please enter your username and password !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                
+                
+                if(username.equals("") || password.equals("") || confirmPassword.equals("") || fullname.equals("") || email.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter all of your information !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    SigningUp(username, password);
+                    if(!password.equals(confirmPassword)){
+                        JOptionPane.showMessageDialog(null, "Please enter the same password !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        SigningUp(username, password, email, fullname);
+                    } 
                 }
+                popUpHomePage();
             }
         });
         
@@ -324,8 +329,9 @@ public class SignUp extends JFrame {
         pack();
     }                       
 
-    private void SigningUp(String username, String passwd){
+    private void SigningUp(String username, String passwd, String email, String fullname){
         // signing up after collecting information
+        ajouterUser(username,passwd,email,fullname);
     }
     private void UsernameFieldActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
@@ -337,6 +343,28 @@ public class SignUp extends JFrame {
 
     private void UsernameFIeldActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
-    }                                        
+    }  
+    public void popUpHomePage(){
+                HomePage su = new HomePage();
+                this.setVisible(false);
+                su.setVisible(true);
+                su.setLocationRelativeTo(null);
+    }
+    public void ajouterUser(String username, String passwd, String email, String fullname) {
+	    try {
+	        PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS (username, passwd, email, name) VALUES (?, ?, ?, ?)");
+	        ps.setString(1, username);
+	        ps.setString(2, passwd);
+	        ps.setString(3, email);
+	        ps.setString(4, fullname);
+	        
+	        
+	        ps.executeUpdate();
+	        System.out.println("User added successfully!");
+	        
+	    } catch (Exception e) {
+	        System.out.println("Exception : " + e);
+	    }
+    }
                  
 }

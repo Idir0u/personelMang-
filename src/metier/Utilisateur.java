@@ -8,17 +8,18 @@ public class Utilisateur {
 	String username;
 	String passwd;
 	String email;
-	String name;
-	String prenom;
-	public Utilisateur(int idUser, String username, String passwd, String email, String name, String prenom) {
+	String fullname;
+	public Utilisateur(int idUser, String username, String passwd, String email, String fullname) {
 		super();
 		this.idUser = idUser;
 		this.username = username;
 		this.passwd = passwd;
 		this.email = email;
-		this.name = name;
-		this.prenom = prenom;
+		this.fullname = fullname;
 	}
+        public Utilisateur(){
+            this(0,"","","","");
+        }
 	public int getIdUser() {
 		return idUser;
 	}
@@ -43,21 +44,16 @@ public class Utilisateur {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getName() {
-		return name;
+	public String getFullName() {
+		return fullname;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPrenom() {
-		return prenom;
-	}
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFullName(String fullname) {
+		this.fullname = fullname;
 	}
 	
+	
 	public void affiche() {
-		System.out.println(idUser +" \t "+ username +" \t " + " \t " + email + " \t " + name + " \t " + prenom);
+		System.out.println(idUser +" \t "+ username +" \t " + " \t " + email + " \t " + fullname);
 	}
         Connection conn = Utilitaire.getConnection();
         public Vector<Utilisateur> displayUsers() {
@@ -67,7 +63,7 @@ public class Utilisateur {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
 			while (rs.next()) {
 				//(int idUser, String username, String passwd, String email, String name, String prenom)
-                            vetu.add(new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+                            vetu.add(new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
 			} 
 		} catch (Exception e) {
 			System.out.println("Exception : "+ e);
