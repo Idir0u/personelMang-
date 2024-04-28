@@ -268,7 +268,7 @@ public class LoginForm extends JFrame {
         su.setLocationRelativeTo(null);
     }
     public void authenticateUserLogin(String username, String passwd) {
-            boolean exists = false;
+            
             try {
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ? AND passwd = ?");
                 ps.setString(1, username);
@@ -276,7 +276,7 @@ public class LoginForm extends JFrame {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     // if exists
-                    HomePage hp = new HomePage();
+                    HomePage hp = new HomePage(new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
                     this.setVisible(false);
                     hp.setVisible(true);
                     hp.setLocationRelativeTo(null);

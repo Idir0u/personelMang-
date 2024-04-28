@@ -216,31 +216,35 @@ public class SignUp extends JFrame {
                 String password = new String(passwordChars);
                 char[] passwordcfChars = ConfirmPasswordField.getPassword();
                 String confirmPassword = new String(passwordcfChars);
-                   
-                //boolean error = true;
-                //while(error){
-                    //error = false;
-                    if(username.equals("") || password.equals("") || confirmPassword.equals("") || fullname.equals("") || email.equals("")){
-                        JOptionPane.showMessageDialog(null, "Please enter all of your information !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                int id = userExists(username);
+                if(username.equals("") || password.equals("") || confirmPassword.equals("") || fullname.equals("") || email.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please enter all of your information !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                    return ;
+
+                }else{
+                    if(!password.equals(confirmPassword)){
+                        JOptionPane.showMessageDialog(null, "Please enter the same password !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                        ConfirmPassword.setText("");
                         return ;
-                    //    error = true;
                     }else{
-                        if(!password.equals(confirmPassword)){
-                            JOptionPane.showMessageDialog(null, "Please enter the same password !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
-                            //error = true;
-                            return ;
+                        
+                        if(id > 0){
+                            JOptionPane.showMessageDialog(null, "Username already exists, please use another  !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                            return;
                         }else{
-                            if(userExists(username)){
-                                JOptionPane.showMessageDialog(null, "Username already exists, please use another  !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }else{
-                                SigningUp(username, password, email, fullname);//break;
-                            }
-                        } 
-                    }
-                //}
-                
-                popUpHomePage();
+                            SigningUp(username, password, email, fullname);
+                        }
+                    } 
+                } 
+                try{
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
+                    rs.last();
+                    id = rs.getInt(1);
+                }catch(Exception ex){
+                    System.out.println("Exception :" +ex);
+                }
+                popUpHomePage(id, username, password, email, fullname);
             }
         });
         
@@ -357,8 +361,9 @@ public class SignUp extends JFrame {
     private void UsernameFIeldActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
     }  
-    public void popUpHomePage(){
-                HomePage su = new HomePage();
+    public void popUpHomePage(int id, String username, String passwd, String email, String fullname){
+                //Utilisateur user = new Utilisateur(0,username, passwd ,email, fullname);
+                HomePage su = new HomePage(new Utilisateur(id, username, passwd ,email, fullname));
                 this.setVisible(false);
                 su.setVisible(true);
                 su.setLocationRelativeTo(null);
@@ -379,18 +384,18 @@ public class SignUp extends JFrame {
 	        System.out.println("Exception : " + e);
 	    }
     }
-    public boolean userExists(String username) {
+    public int userExists(String username) {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return true;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println("Exception : " + e);
         }
-        return false;
+        return 0;
     }
                  
 }
