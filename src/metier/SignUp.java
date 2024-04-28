@@ -66,10 +66,10 @@ public class SignUp extends JFrame {
         gridBagConstraints.insets = new java.awt.Insets(12, 30, 0, 0);
         Right.add(Fullname, gridBagConstraints);
 
-        UsernameField.setBackground(new java.awt.Color(153, 0, 204));
-        UsernameField.setForeground(new java.awt.Color(255, 255, 255));
-        UsernameField.setBorder(null);
-        UsernameField.addActionListener(new ActionListener() {
+        EmailField.setBackground(new java.awt.Color(153, 0, 204));
+        EmailField.setForeground(new java.awt.Color(255, 255, 255));
+        EmailField.setBorder(null);
+        EmailField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 UsernameFieldActionPerformed(evt);
             }
@@ -82,7 +82,7 @@ public class SignUp extends JFrame {
         gridBagConstraints.ipady = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
-        Right.add(UsernameField, gridBagConstraints);
+        Right.add(EmailField, gridBagConstraints);
 
         Username.setFont(new java.awt.Font("Roboto Light", 1, 14)); 
         Username.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,10 +124,10 @@ public class SignUp extends JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         Right.add(Email, gridBagConstraints);
 
-        EmailField.setBackground(new java.awt.Color(153, 0, 204));
-        EmailField.setForeground(new java.awt.Color(255, 255, 255));
-        EmailField.setBorder(null);
-        EmailField.addActionListener(new java.awt.event.ActionListener() {
+        UsernameField.setBackground(new java.awt.Color(153, 0, 204));
+        UsernameField.setForeground(new java.awt.Color(255, 255, 255));
+        UsernameField.setBorder(null);
+        UsernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsernameFIeldActionPerformed(evt);
             }
@@ -140,7 +140,7 @@ public class SignUp extends JFrame {
         gridBagConstraints.ipady = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 30, 0, 0);
-        Right.add(EmailField, gridBagConstraints);
+        Right.add(UsernameField, gridBagConstraints);
 
         Password.setFont(new java.awt.Font("Roboto Light", 1, 14)); 
         Password.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,17 +216,30 @@ public class SignUp extends JFrame {
                 String password = new String(passwordChars);
                 char[] passwordcfChars = ConfirmPasswordField.getPassword();
                 String confirmPassword = new String(passwordcfChars);
-                
-                
-                if(username.equals("") || password.equals("") || confirmPassword.equals("") || fullname.equals("") || email.equals("")){
-                    JOptionPane.showMessageDialog(null, "Please enter all of your information !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    if(!password.equals(confirmPassword)){
-                        JOptionPane.showMessageDialog(null, "Please enter the same password !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                   
+                //boolean error = true;
+                //while(error){
+                    //error = false;
+                    if(username.equals("") || password.equals("") || confirmPassword.equals("") || fullname.equals("") || email.equals("")){
+                        JOptionPane.showMessageDialog(null, "Please enter all of your information !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
+                        return ;
+                    //    error = true;
                     }else{
-                        SigningUp(username, password, email, fullname);
-                    } 
-                }
+                        if(!password.equals(confirmPassword)){
+                            JOptionPane.showMessageDialog(null, "Please enter the same password !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                            //error = true;
+                            return ;
+                        }else{
+                            if(userExists(username)){
+                                JOptionPane.showMessageDialog(null, "Username already exists, please use another  !!", "Invalid Information", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }else{
+                                SigningUp(username, password, email, fullname);//break;
+                            }
+                        } 
+                    }
+                //}
+                
                 popUpHomePage();
             }
         });
@@ -352,7 +365,7 @@ public class SignUp extends JFrame {
     }
     public void ajouterUser(String username, String passwd, String email, String fullname) {
 	    try {
-	        PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS (username, passwd, email, name) VALUES (?, ?, ?, ?)");
+	        PreparedStatement ps = conn.prepareStatement("INSERT INTO USERS (username, passwd, email, fullname) VALUES (?, ?, ?, ?)");
 	        ps.setString(1, username);
 	        ps.setString(2, passwd);
 	        ps.setString(3, email);
@@ -365,6 +378,19 @@ public class SignUp extends JFrame {
 	    } catch (Exception e) {
 	        System.out.println("Exception : " + e);
 	    }
+    }
+    public boolean userExists(String username) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Exception : " + e);
+        }
+        return false;
     }
                  
 }

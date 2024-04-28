@@ -17,7 +17,7 @@ public class MainApp {
             Iterator<Utilisateur> iterateur;
             System.out.println("**************************************************");
 		//idUser +" \t "+ username +" \t " + " \t " + email + " \t " + name + " \t " + prenom
-		System.out.println("**ID_Utilisateur\t UserName\t EMAIL\t Name\t Prenom**\n");
+		System.out.println("**ID_Utilisateur\t UserName\t EMAIL\t FullName**\n");
 		System.out.println("**************************************************");
                 Utilisateur user = new Utilisateur();
 		iterateur =  user.displayUsers().iterator();
@@ -49,9 +49,9 @@ public class MainApp {
 		//o.ajouterClient(80, "Ali", "Ali@gmail.com", "7894561", "Casablanca");
 		//o.reglerFact(1);
                 
-                //LoginForm frame = new LoginForm();
-                //frame.setVisible(true);
-                display();
+                LoginForm frame = new LoginForm();
+                frame.setVisible(true);
+                //display();
 	}
 
 }
