@@ -8,7 +8,6 @@ import java.sql.*;
 
 
 
-
 public class SignUp extends JFrame { 
     Connection conn = Utilitaire.getConnection();
     public SignUp() {
@@ -363,7 +362,7 @@ public class SignUp extends JFrame {
     }  
     public void popUpHomePage(int id, String username, String passwd, String email, String fullname){
                 //Utilisateur user = new Utilisateur(0,username, passwd ,email, fullname);
-                HomePage su = new HomePage(new Utilisateur(id, username, passwd ,email, fullname));
+                HomePage su = new HomePage(/*new Utilisateur(id, username, passwd ,email, fullname)*/);
                 this.setVisible(false);
                 su.setVisible(true);
                 su.setLocationRelativeTo(null);

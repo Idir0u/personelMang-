@@ -26,7 +26,7 @@ public class MainApp {
 			u.affiche();
 		}
         }
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		//Operateur o = new Operateur();
 		
 		
@@ -49,9 +49,9 @@ public class MainApp {
 		//o.ajouterClient(80, "Ali", "Ali@gmail.com", "7894561", "Casablanca");
 		//o.reglerFact(1);
                 
-                LoginForm frame = new LoginForm();
-                frame.setVisible(true);
+                //LoginForm frame = new LoginForm();
+                //frame.setVisible(true);
                 //display();
-	}
+	//}
 
 }

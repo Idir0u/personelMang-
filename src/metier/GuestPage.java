@@ -3,9 +3,9 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class HomePage extends JFrame {
+public class GuestPage extends JFrame {
     private JLabel Username;
-    public HomePage() {
+    public GuestPage() {
         GridBagConstraints gridBagConstraints;
         JPanel body = new JPanel();
         JPanel Header = new JPanel();
