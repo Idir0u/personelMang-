@@ -16,12 +16,12 @@ public class ProjectPanel extends JPanel {
     private JLabel descriptionLabel;
 
     public ProjectPanel(String name, String description) {
-        nameLabel = new JLabel("Name: " + name);
-        descriptionLabel = new JLabel("Description: " + description);
+        this.nameLabel = new JLabel("Name: " + name);
+        this.descriptionLabel = new JLabel("Description: " + description);
 
-        setLayout(new GridLayout(2, 1));
-        add(nameLabel);
-        add(descriptionLabel);
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.setLayout(new GridLayout(2, 1));
+        this.add(nameLabel);
+        this.add(descriptionLabel);
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 }

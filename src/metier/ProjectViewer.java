@@ -1,16 +1,10 @@
 
 package metier;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Vector;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
+import java.sql.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -22,24 +16,30 @@ import javax.swing.SwingUtilities;
 public class ProjectViewer extends JFrame {
     private JPanel mainPanel;
 
-    public ProjectViewer(List<Project> projects) {
-        setTitle("Project Viewer");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+    public ProjectViewer(Vector<Project> projects) {
+    setTitle("Project Viewer");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setSize(600, 400);
 
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    mainPanel = new JPanel();
+    mainPanel.setLayout(new BorderLayout());
 
-        JScrollPane scrollPane = new JScrollPane(mainPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    JScrollPane scrollPane = new JScrollPane(mainPanel);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        for (Project project : projects) {
-            mainPanel.add(new ProjectPanel(project.getNom_long(), project.getDescription()));
-        }
+    JPanel projectGrid = new JPanel();
+    projectGrid.setLayout(new GridLayout(0, 2)); // 2 columns, variable number of rows
 
-        add(scrollPane);
-        
+    for (Project project : projects) {
+        projectGrid.add(new ProjectPanel(project.getNom_long(), project.getDescription()));
     }
+
+    mainPanel.add(projectGrid, BorderLayout.CENTER);
+
+    add(scrollPane);
+    this.setVisible(true);
+}
+
 
     public static void main(String[] args) {
         // Retrieve projects from the database
@@ -66,7 +66,7 @@ public class ProjectViewer extends JFrame {
                         // Handle unknown enum values or error cases
                         etat = null; // Or throw an exception
                     }
-                    projects.add(new Project(rs.getByte(1), rs.getNString(2), rs.getNString(3), rs.getNString(4), rs.getNString(5), rs.getNString(6), rs.getBoolean(7), etat, rs.getDate(9)));
+                    projects.add(new Project(rs.getByte(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getBoolean(7), etat, rs.getDate(9)));
                 } 
             } catch (Exception e) {
                             System.out.println("Exception : "+ e);
