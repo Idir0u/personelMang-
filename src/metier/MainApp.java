@@ -1,5 +1,5 @@
 package metier;
-import metier.*;
+//import metier.*;
 
 import java.util.Iterator;
 import java.util.Scanner;
