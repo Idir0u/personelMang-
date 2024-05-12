@@ -11,11 +11,11 @@ public class Project {
     private String nom_long;
     private String description;
     private String theme;
-    private String type;
+    private Typep type;
     private boolean isPublic;
     private Etat etat;
     private Date date_creation;
-    public Project(int id, String n_court, String n_long, String descp, String theme, String type, boolean isPublic, Etat etat, Date date){
+    public Project(int id, String n_court, String n_long, String descp, String theme, Typep type, boolean isPublic, Etat etat, Date date){
         this.IdProjet = id;
         this.nom_court = n_court;
         this.nom_long = n_long;
@@ -67,11 +67,11 @@ public class Project {
         this.theme = theme;
     }
 
-    public String getType() {
+    public Typep getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Typep type) {
         this.type = type;
     }
 

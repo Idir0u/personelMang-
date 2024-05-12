@@ -37,6 +37,7 @@ public class ProjectViewer extends JFrame {
     mainPanel.add(projectGrid, BorderLayout.CENTER);
 
     add(scrollPane);
+    pack();
     this.setVisible(true);
 }
 
@@ -56,17 +57,17 @@ public class ProjectViewer extends JFrame {
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM PROJET");
                 while (rs.next()) {
-                    String etatValue = rs.getString(8); // Assuming the enum value is stored as a string in the database
-                    Etat etat;
-                    if ("clos".equalsIgnoreCase(etatValue)) {
-                        etat = Etat.CLOS;
-                    } else if ("ouvert".equalsIgnoreCase(etatValue)) {
-                        etat = Etat.OUVERT;
+                    String typeValue = rs.getString(8); // Assuming the enum value is stored as a string in the database
+                    Typep type;
+                    if ("clos".equalsIgnoreCase(typeValue)) {
+                        type = Typep.CLOSURE;
+                    } else if ("ouvert".equalsIgnoreCase(typeValue)) {
+                        type = Typep.CREATION;
                     } else {
                         // Handle unknown enum values or error cases
-                        etat = null; // Or throw an exception
+                        type = null; // Or throw an exception
                     }
-                    projects.add(new Project(rs.getByte(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getBoolean(7), etat, rs.getDate(9)));
+                    //projects.add(new Project(rs.getByte(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), type, rs.getBoolean(7), etat, rs.getDate(9)));
                 } 
             } catch (Exception e) {
                             System.out.println("Exception : "+ e);

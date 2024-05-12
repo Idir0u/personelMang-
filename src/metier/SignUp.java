@@ -175,7 +175,7 @@ public class SignUp extends JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
         Right.add(ConfirmPassword, gridBagConstraints);
-//PasswordFieLd
+
         PasswordField.setBackground(new java.awt.Color(153, 0, 204));
         PasswordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         PasswordField.setForeground(new java.awt.Color(255, 255, 255));

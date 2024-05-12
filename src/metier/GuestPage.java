@@ -18,6 +18,7 @@ public class GuestPage extends JFrame {
         JButton Messages = new JButton();
         JButton Projects = new JButton();
         JButton Requests = new JButton();
+        TableWithButtonPanel mainTable = new TableWithButtonPanel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 500));
@@ -66,6 +67,14 @@ public class GuestPage extends JFrame {
         );
 
         body.add(Header, BorderLayout.NORTH);
+        
+        
+        /////////////////////////////////////////////////////////////////////////////////
+        mainTable.setBackground(new Color(255, 255, 255));
+        mainTable.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        
+        
+        body.add(mainTable, BorderLayout.CENTER);
 
         Menu.setBackground(new Color(255, 255, 255));
         Menu.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -166,7 +175,7 @@ public class GuestPage extends JFrame {
                                    
     public static void main(String args[]) {
         
-        new HomePage().setVisible(true);
+        new GuestPage().setVisible(true);
     }
 
                        
