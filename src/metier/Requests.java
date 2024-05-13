@@ -53,9 +53,11 @@ public class Requests extends javax.swing.JFrame {
         Contenu = new javax.swing.JPanel();
         ReviewedRequests = new javax.swing.JButton();
         newRequests = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
         tablePanel = new TableWithButtonPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = tablePanel.getTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,7 +69,7 @@ public class Requests extends javax.swing.JFrame {
         Header.setPreferredSize(new java.awt.Dimension(963, 50));
         Header.setLayout(new java.awt.GridBagLayout());
 
-        LOGO.setFont(new java.awt.Font("Montserrat Black", 3, 24)); // NOI18N
+        LOGO.setFont(new java.awt.Font("Montserrat Black", 3, 24));
         LOGO.setForeground(new java.awt.Color(255, 255, 255));
         LOGO.setText("P4P");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -78,7 +80,7 @@ public class Requests extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 67, 10, 0);
         Header.add(LOGO, gridBagConstraints);
 
-        Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Username.setFont(new java.awt.Font("Segoe UI", 1, 14));
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Username.setText("Username_XXXXX");
@@ -117,9 +119,10 @@ public class Requests extends javax.swing.JFrame {
         Menu.setPreferredSize(new java.awt.Dimension(180, 427));
         Menu.setLayout(new java.awt.GridLayout(9, 0));
 
-        Home1.setBackground(new java.awt.Color(153, 0, 204));
-        Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Home1.setForeground(new java.awt.Color(255, 255, 255));
+        Home1.setBackground(Color.WHITE);
+        //Home1.setBackground(new java.awt.Color(153, 0, 204));
+        Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); 
+        Home1.setForeground(new java.awt.Color(153, 0, 204));
         Home1.setText("Home");
         Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -130,7 +133,8 @@ public class Requests extends javax.swing.JFrame {
         });
         Menu.add(Home1);
 
-        Messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Messages.setBackground(Color.WHITE);
+        Messages.setFont(new java.awt.Font("Segoe UI", 1, 14));
         Messages.setForeground(new java.awt.Color(153, 0, 204));
         Messages.setText("Messages");
         Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
@@ -142,7 +146,8 @@ public class Requests extends javax.swing.JFrame {
         });
         Menu.add(Messages);
 
-        Users.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Users.setBackground(Color.WHITE);
+        Users.setFont(new java.awt.Font("Segoe UI", 1, 14)); 
         Users.setForeground(new java.awt.Color(153, 0, 204));
         Users.setText("Users");
         Users.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
@@ -154,7 +159,8 @@ public class Requests extends javax.swing.JFrame {
         });
         Menu.add(Users);
 
-        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Projects.setBackground(Color.WHITE);
+        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14));
         Projects.setForeground(new java.awt.Color(153, 0, 204));
         Projects.setText("Projects");
         Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
@@ -166,8 +172,9 @@ public class Requests extends javax.swing.JFrame {
         });
         Menu.add(Projects);
 
-        Requests.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Requests.setForeground(new java.awt.Color(153, 0, 204));
+        Requests.setBackground(new java.awt.Color(153, 0, 204));
+        Requests.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Requests.setForeground(Color.WHITE);
         Requests.setText("Requests");
         Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -177,8 +184,9 @@ public class Requests extends javax.swing.JFrame {
             }
         });
         Menu.add(Requests);
-
-        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        
+        Agenda.setBackground(Color.WHITE);
+        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14));
         Agenda.setForeground(new java.awt.Color(153, 0, 204));
         Agenda.setText("Agenda");
         Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
@@ -206,8 +214,13 @@ public class Requests extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 7;
         gridBagConstraints.ipady = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(26, 40, 0, 0);
+        ReviewedRequests.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ReviewedRqActionPerformed(evt);
+            }
+        });
         Contenu.add(ReviewedRequests, gridBagConstraints);
 
         newRequests.setBackground(new java.awt.Color(0, 0, 204));
@@ -223,6 +236,11 @@ public class Requests extends javax.swing.JFrame {
         gridBagConstraints.ipady = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(26, 85, 0, 0);
+        newRequests.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                NewRqActionPerformed(evt);
+            }
+        });
         Contenu.add(newRequests, gridBagConstraints);
 
         
@@ -240,6 +258,64 @@ public class Requests extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(16, 10, 22, 13);
         Contenu.add(jScrollPane1, gridBagConstraints);
+        
+
+        
+        String[] columns = {"Id_demande", "username", "nom_project", "theme", "Date", "Type", "etat"};
+
+        // Create a table model with button column
+        Object[][] data = {
+            };
+        Vector<Object[]> demandes = tablePanel.fetchDemandesAccepeted();
+        
+        DefaultTableModel model = new DefaultTableModel(data, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make only the button column editable/////////////////////////////////////////////////////-!!!!!!!!!!!!!!!!!!!!!!///
+            }
+            @Override
+            public Object getValueAt(int row, int column) {
+                Object value = super.getValueAt(row, column);
+                // Check if it's column 6 and modify text color based on cell content
+                if (column == 6) {
+                    String cellValue = String.valueOf(value);
+                    if (cellValue.equalsIgnoreCase("refused")) {
+                        // Set text color to red and make it bold
+                        return "<html><font color='red'><b>" + cellValue + "</b></font></html>";
+                    } else if (cellValue.equalsIgnoreCase("accepted")) {
+                        // Set text color to green and make it bold
+                        return "<html><font color='green'><b>" + cellValue + "</b></font></html>";
+                    }
+                }
+                return value;
+            }
+        };
+        for(Object[] o : demandes) {
+    	model.addRow(o);
+    	}
+        jTable2.setModel(model);
+        jTable2.setGridColor(Color.LIGHT_GRAY);
+        jTable2.setRowHeight(40);
+        jTable2.setSelectionBackground(new Color(153, 204, 0));
+        jTable2.setSelectionForeground(new Color(255, 255, 255));
+        jTable2.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTable2.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable2.setShowVerticalLines(true);
+        jScrollPane2.setViewportView(jTable2);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 744;
+        gridBagConstraints.ipady = 407;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(16, 10, 22, 13);
+        //jScrollPane2.setVisible(false);
+        Contenu.add(jScrollPane2, gridBagConstraints);
 
         body.add(Contenu, java.awt.BorderLayout.CENTER);
 
@@ -275,6 +351,17 @@ public class Requests extends javax.swing.JFrame {
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AgendaActionPerformed
+    private void ReviewedRqActionPerformed(ActionEvent evt) {
+    	jScrollPane1.setVisible(false);
+    	jScrollPane2.setVisible(true);
+    	
+    }
+    private void NewRqActionPerformed(ActionEvent evt) {
+    	jScrollPane2.setVisible(false);
+    	jScrollPane1.setVisible(true);
+    	
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -328,9 +415,11 @@ public class Requests extends javax.swing.JFrame {
     private javax.swing.JButton Users;
     private javax.swing.JPanel body;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private TableWithButtonPanel tablePanel;
+    private javax.swing.JTable jTable2;
     private javax.swing.JButton newRequests;
     private javax.swing.JLabel userIcon;
-    private TableWithButtonPanel tablePanel;
     // End of variables declaration//GEN-END:variables
 }

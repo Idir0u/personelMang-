@@ -52,6 +52,46 @@ public class TableWithButtonPanel extends JPanel {
         }
         return demandes;
     }
+    public Vector<Object[]> fetchDemandesAccepeted(){
+    	Vector<Object[]> demandes = new Vector<Object[]>(); 
+    	
+    	try {
+    		
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT IdDemande, username, nom_court_projet, theme_projet, date_demande, type, etat FROM DEMANDE");
+
+            
+            while (rs.next()) {
+            	/*String etatValue = rs.getString(6); // Assuming the enum value is stored as a string in the database
+                Etat etat;
+                if ("creation".equalsIgnoreCase(etatValue)) {
+                    etat = Etat.CREATION;
+                } else if ("ouvert".equalsIgnoreCase(etatValue)) {
+                    etat = Etat.CLOSURE;
+                } else {
+                    // Handle unknown enum values or error cases
+                    etat = null; // Or throw an exception
+                }*/
+            	
+            	//Etat etatValue = Etat.PENDING;
+            	if(rs.getString(7).equalsIgnoreCase("accepted") || rs.getString(7).equalsIgnoreCase("refused")) {
+                Object[] row = {
+                	rs.getInt(1),
+                	rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getDate(5),
+                    rs.getString(6),
+                    rs.getString(7)
+                };
+                demandes.add(row);
+            	}
+            }
+        } catch (Exception e) {
+                        System.out.println("Exception : "+ e);
+        }
+        return demandes;
+    }
  // Methods to calculate the minimum width of a column--------------------------------------------
     
     private void setColumnWidths() {
@@ -91,6 +131,7 @@ public class TableWithButtonPanel extends JPanel {
             public boolean isCellEditable(int row, int column) {
                 return column == 6; // Make only the button column editable/////////////////////////////////////////////////////-!!!!!!!!!!!!!!!!!!!!!!///
             }
+            
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
@@ -129,7 +170,7 @@ public class TableWithButtonPanel extends JPanel {
         
 
         JScrollPane scrollPane = new JScrollPane(table);
-        table.setGridColor(Color.LIGHT_GRAY);
+        table.setGridColor(Color.WHITE);
         table.setRowHeight(40);
         table.setSelectionBackground(new Color(153, 204, 0));
         table.setSelectionForeground(new Color(255, 255, 255));
@@ -183,10 +224,12 @@ public class TableWithButtonPanel extends JPanel {
         public Object getCellEditorValue() {
             if (isPushed) {
                 // Open a new JFrame when button is clicked
-                JFrame frame = new JFrame("Button Clicked");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.setSize(200, 200);
+            	int row = table.getEditingRow(); // Get the index of the editing row
+                int value = (int) table.getValueAt(row, 0); // Get the value of the first column in the editing row
+
+                JFrame frame = new DemandeOverview(value);
                 frame.setLocationRelativeTo(null);
+                frame.setSize(520,400);
                 frame.setVisible(true);
             }
             isPushed = false;
