@@ -9,33 +9,21 @@ import java.awt.event.*;
 import java.sql.*;
 import java.util.*;
 
-public class TableWithButtonPanel extends JPanel {
+public class TableButtonPanelUser extends JPanel {
 	private JFrame parent;
     private JTable table;
+    public int id;
     Connection conn = Utilitaire.getConnection();
 //--------------------------------------------------------------------fetchDemandes---------------------//
-    Vector<Object[]> fetchDemandes(){
+    Vector<Object[]> fetchDemandesUser(){
     	Vector<Object[]> demandes = new Vector<Object[]>(); 
     	
     	try {
-    		
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT IdDemande, username, nom_court_projet, theme_projet, date_demande, type, etat, IdUtilisateur FROM DEMANDE");
-
-            
+    		PreparedStatement pstm = conn.prepareStatement("SELECT IdDemande, username, nom_court_projet, theme_projet, date_demande, type, etat FROM DEMANDE WHERE IdUtilisateur = ?");
+    		pstm.setInt(1, id);
+    		ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-            	/*String etatValue = rs.getString(6); // Assuming the enum value is stored as a string in the database
-                Etat etat;
-                if ("creation".equalsIgnoreCase(etatValue)) {
-                    etat = Etat.CREATION;
-                } else if ("ouvert".equalsIgnoreCase(etatValue)) {
-                    etat = Etat.CLOSURE;
-                } else {
-                    // Handle unknown enum values or error cases
-                    etat = null; // Or throw an exception
-                }*/
             	
-            	//Etat etatValue = Etat.PENDING;
             	if(rs.getString(7).equalsIgnoreCase("pending")) {
                 Object[] row = {
                 	rs.getInt(1),
@@ -46,7 +34,6 @@ public class TableWithButtonPanel extends JPanel {
                     rs.getString(6),
                 };
                 demandes.add(row);
-                
             	}
             }
         } catch (Exception e) {
@@ -54,14 +41,14 @@ public class TableWithButtonPanel extends JPanel {
         }
         return demandes;
     }
-    public Vector<Object[]> fetchDemandesAccepeted(){
+    public Vector<Object[]> fetchDemandesReviewdUser(){
     	Vector<Object[]> demandes = new Vector<Object[]>(); 
     	
     	try {
     		
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT IdDemande, username, nom_court_projet, theme_projet, date_demande, type, etat FROM DEMANDE");
-
+    		PreparedStatement pstm = conn.prepareStatement("SELECT IdDemande, username, nom_court_projet, theme_projet, date_demande, type, etat FROM DEMANDE WHERE IdUtilisateur = ?");
+    		pstm.setInt(1, id);
+    		ResultSet rs = pstm.executeQuery();
             
             while (rs.next()) {
             	if(rs.getString(7).equalsIgnoreCase("accepted") || rs.getString(7).equalsIgnoreCase("refused")) {
@@ -103,7 +90,8 @@ public class TableWithButtonPanel extends JPanel {
     }
     
 //-------------------------------------------------Constructor-------------------------------------------//
-    public TableWithButtonPanel(JFrame parent) {
+    public TableButtonPanelUser(JFrame parent, int id) {
+    	this.id = id;
     	this.parent = parent;
         setLayout(new BorderLayout());
 
@@ -115,7 +103,7 @@ public class TableWithButtonPanel extends JPanel {
         // Create a table model with button column
         Object[][] data = {
             };
-        Vector<Object[]> demandes = fetchDemandes();
+        Vector<Object[]> demandes = fetchDemandesUser();
         
         DefaultTableModel model = new DefaultTableModel(data, columns) {
             @Override
@@ -220,9 +208,10 @@ public class TableWithButtonPanel extends JPanel {
             	int row = table.getEditingRow(); // Get the index of the editing row
                 int value = (int) table.getValueAt(row, 0); // Get the value of the first column in the editing row
                 String type = (String) table.getValueAt(row, 5);
-                JFrame frame = new DemandeOverview(value, type, true);
+                JFrame frame = new DemandeOverview(value, type, false);
                 frame.setLocationRelativeTo(null);
                 frame.setSize(520,400);
+                
                 
                 parent.setEnabled(false);
 

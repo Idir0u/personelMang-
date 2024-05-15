@@ -18,7 +18,7 @@ public class GuestPage extends JFrame {
         JButton Messages = new JButton();
         JButton Projects = new JButton();
         JButton Requests = new JButton();
-        TableWithButtonPanel mainTable = new TableWithButtonPanel();
+        TableWithButtonPanel mainTable = new TableWithButtonPanel(this);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 500));

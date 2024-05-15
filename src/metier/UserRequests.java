@@ -21,13 +21,15 @@ import java.util.*;
  *
  * @author zakar
  */
-public class Requests extends javax.swing.JFrame {
+public class UserRequests extends javax.swing.JFrame {
+	private int id; 
+	Connection conn = Utilitaire.getConnection();
     
-    public Requests() {
+    public UserRequests(int id) {
+    	this.id=id;
         initComponents();
     }
-     
-   
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +55,7 @@ public class Requests extends javax.swing.JFrame {
         Contenu = new javax.swing.JPanel();
         ReviewedRequests = new javax.swing.JButton();
         newRequests = new javax.swing.JButton();
-        tablePanel = new TableWithButtonPanel(this);
+        tablePanel = new TableButtonPanelUser(this, this.id);
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = tablePanel.getTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -227,7 +229,7 @@ public class Requests extends javax.swing.JFrame {
         newRequests.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         newRequests.setForeground(new java.awt.Color(255, 255, 255));
         newRequests.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-code-fork-30 (1).png"))); // NOI18N
-        newRequests.setText("New Requests");
+        newRequests.setText("Pending Requests");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -242,31 +244,18 @@ public class Requests extends javax.swing.JFrame {
             }
         });
         Contenu.add(newRequests, gridBagConstraints);
-
         
+        Vector<Object[]> pendemandes = tablePanel.fetchDemandesUser();//= tablePanel.fetchDemandes();
         jScrollPane1.setViewportView(jTable1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 744;
-        gridBagConstraints.ipady = 407;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(16, 10, 22, 13);
-        Contenu.add(jScrollPane1, gridBagConstraints);
-        
 
-        
         String[] columns = {"Id_demande", "username", "nom_project", "theme", "Date", "Type", "etat"};
+        //String[] columns2 = {"Id_demande", "username", "nom_project", "theme", "Date", "Type"};
 
         // Create a table model with button column
         Object[][] data = {
             };
-        Vector<Object[]> demandes = tablePanel.fetchDemandesAccepeted();
+        Vector<Object[]> demandes = tablePanel.fetchDemandesReviewdUser();//= tablePanel.fetchDemandesAccepeted();
         
         DefaultTableModel model = new DefaultTableModel(data, columns) {
             @Override
@@ -290,9 +279,29 @@ public class Requests extends javax.swing.JFrame {
                 return value;
             }
         };
+        
         for(Object[] o : demandes) {
-    	model.addRow(o);
+        	model.addRow(o);
     	}
+        
+        
+        
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 744;
+        gridBagConstraints.ipady = 407;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(16, 10, 22, 13);
+        Contenu.add(jScrollPane1, gridBagConstraints);
+        
+
+        
         jTable2.setModel(model);
         jTable2.setGridColor(Color.LIGHT_GRAY);
         jTable2.setRowHeight(40);
@@ -393,14 +402,23 @@ public class Requests extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	Requests rq = new Requests();
+            	UserRequests rq = new UserRequests(3);
             	rq.setSize(1000, 600);
             	rq.setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agenda;
     private javax.swing.JPanel Contenu;
     private javax.swing.JPanel Header;
@@ -417,7 +435,7 @@ public class Requests extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private TableWithButtonPanel tablePanel;
+    private TableButtonPanelUser tablePanel;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton newRequests;
     private javax.swing.JLabel userIcon;
