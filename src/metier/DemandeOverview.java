@@ -24,7 +24,7 @@ public class DemandeOverview extends JFrame {
     	try {
     		
             PreparedStatement pstmt = conn.prepareStatement("SELECT nom_court_projet, description_projet, date_demande, projet_is_public, IdGroupe, IdProjet, nom_long_projet, theme_projet, type, idUtilisateur FROM DEMANDE WHERE IdDemande = ?");
-            pstmt.setInt(1, this.id);//idProjet AutoINC (\/), nom_court (\/), nom_long (\/), description(\/), theme \/), type (\/), isPublic (\/), etat AUTOMATIC enabled(\/), date_creation AUTOMATIC (\/)
+            pstmt.setInt(1, this.id);
             ResultSet rs = pstmt.executeQuery();
 
             
@@ -75,15 +75,7 @@ public class DemandeOverview extends JFrame {
         jTextArea1 = new JTextArea();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        /*
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                dispose(); // Dispose of the frame when it's closed
-            }
-        });
-        */
-
+        
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(jPanel1, BorderLayout.CENTER); 
         jPanel1.setBackground(new Color(250, 251, 255));
@@ -93,15 +85,9 @@ public class DemandeOverview extends JFrame {
         getContentPane().add(jPanel1, BorderLayout.CENTER);
         
         String name = (String) demande[0];
-        //String description = (String) demande[1];
         Date date_dm = (Date)demande[2];
         boolean isPublic = (int) demande[3] == 1 ? true : false;
-        /*int IdGroupe = (int) demande[4];
-        int IdProjet = (int) demande[5];
-        String nom_long = (String) demande[6];
-        String theme = (String) demande[7];
-        String type_pr = (String) demande[8];
-        int IdUser = (int) demande[9];*/
+        
         
         // Format the Date object as a string
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -126,11 +112,9 @@ public class DemandeOverview extends JFrame {
         gridBagConstraints.insets = new Insets(20, 10, 0, 0);
         jPanel1.add(dateLabel, gridBagConstraints);
 
-        projectName.setFont(new Font("Segoe UI", 1, 15)); // NOI18N
+        projectName.setFont(new Font("Segoe UI", 1, 15)); 
         projectName.setForeground(new Color(51, 0, 204));
         projectName.setHorizontalAlignment(SwingConstants.LEFT);
-        //projectName.setBackground(Color.RED);
-        //projectName.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(153, 0, 204)));
         
         projectName.setText("Project name :  "+ name);
         gridBagConstraints = new GridBagConstraints();
@@ -142,8 +126,8 @@ public class DemandeOverview extends JFrame {
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new Insets(40, 30, 0, 0);
         jPanel1.add(projectName, gridBagConstraints);
-//nom_long_projet, description_projet, date_demande, projet_is_public, IdGroup, IdProjet
-        projectEtat.setFont(new Font("Segoe UI", 1, 17)); // NOI18N
+        
+        projectEtat.setFont(new Font("Segoe UI", 1, 17)); 
         projectEtat.setForeground(new Color(153, 204, 0));
         
         
@@ -166,11 +150,10 @@ public class DemandeOverview extends JFrame {
         rfuseButton.setBackground(new Color(255, 51, 51));
 ///////////////////////////////////////////////////////////
         if(type.equalsIgnoreCase("closure") && projectEtat.getText().equalsIgnoreCase("Private")) {
-        	//rfuseButton.setBackground( Color.GRAY );
         	rfuseButton.setEnabled(false);//disable the button
 
         }
-        rfuseButton.setFont(new Font("Segoe UI", 1, 18)); // NOI18N
+        rfuseButton.setFont(new Font("Segoe UI", 1, 18)); 
         rfuseButton.setForeground(new Color(255, 255, 255));
         rfuseButton.setText("Refuse");
         rfuseButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -239,7 +222,7 @@ public class DemandeOverview extends JFrame {
         gridBagConstraints.insets = new Insets(15, 30, 0, 0);
         jPanel1.add(h1Description, gridBagConstraints);
 
-        date.setFont(new Font("Segoe UI", 1, 15)); // NOI18N
+        date.setFont(new Font("Segoe UI", 1, 15));
         date.setForeground(new Color(51, 0, 204));
         date.setHorizontalAlignment(SwingConstants.LEFT);
         
@@ -256,11 +239,11 @@ public class DemandeOverview extends JFrame {
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane1.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
+        jScrollPane1.setFont(new Font("Segoe UI", 0, 14)); 
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new Color(248, 255, 255));
-        jTextArea1.setFont(new Font("Segoe UI", 0, 13)); // NOI18N
+        jTextArea1.setFont(new Font("Segoe UI", 0, 13));
         jTextArea1.setLineWrap(true);
         String descp = (String) demande[1];
         jTextArea1.setText(descp);
@@ -332,7 +315,6 @@ public class DemandeOverview extends JFrame {
 	        		//destroy the relationships of admins and members with there groups, then also the group (line ine db) itself, but not the project
 	        		closePublicProjectRefuse(idProjet, idGroupe);
 	        		JOptionPane.showMessageDialog(null, "the update has been done succesfuly", "Action conformation", JOptionPane.OK_OPTION);
-                    //this.setVisible(false);
                     Window window = SwingUtilities.getWindowAncestor((Component) evt.getSource());
                     if (window != null) {
                         window.dispose();
@@ -394,14 +376,14 @@ public class DemandeOverview extends JFrame {
     	//ps: idadmin = idmember +(-) 1;
     	//if it's closure -> public destroy everything the project line, 2 groupe lines(grpadmin, grpmember), all the realtionships lines in group_utilisateur(DELETE * FROM UTIL_GRP WHERE IDGROUP= idgrp_admin and (+-1)idgrp_membre
     	//if it's creation -> public and private (no condition) the only diff is in the insert line (etat: private ou public)
-    	//if 
+    	
     	try {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
             pstmt.setObject(1,"Accepted");
             pstmt.setInt(2, this.id);
             int et = pstmt.executeUpdate();                
             if (et >= 1) {
-                System.out.println("the update has been done succesfuly");          	
+                System.out.println("the status update has been done succesfuly");          	
             }else {
             	System.out.println(et +"lines affected!");
             }
