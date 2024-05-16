@@ -359,7 +359,7 @@ public class Requests extends javax.swing.JFrame {
     	jScrollPane1.setVisible(false);
     	jScrollPane2.setVisible(true);
     	
-    }
+    }  
     private void NewRqActionPerformed(ActionEvent evt) {
     	jScrollPane2.setVisible(false);
     	jScrollPane1.setVisible(true);
