@@ -5,4 +5,3 @@ public enum Etat {
     ACCEPTED,
     REFUSED
 }
-

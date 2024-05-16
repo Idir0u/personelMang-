@@ -346,6 +346,10 @@ public class Requests extends javax.swing.JFrame {
 
     private void RequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestsActionPerformed
         // TODO add your handling code here:
+    	this.setVisible(false);
+    	Requests rq= new Requests();
+    	rq.setSize(1000, 600);
+    	rq.setVisible(true);
     }//GEN-LAST:event_RequestsActionPerformed
 
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed

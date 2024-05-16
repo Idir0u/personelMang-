@@ -312,17 +312,17 @@ public class UserRequests extends javax.swing.JFrame {
         jTable2.setShowVerticalLines(true);
         jScrollPane2.setViewportView(jTable2);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 744;
         gridBagConstraints.ipady = 407;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(16, 10, 22, 13);
+        gridBagConstraints.insets = new Insets(16, 10, 22, 13);
         //jScrollPane2.setVisible(false);
         Contenu.add(jScrollPane2, gridBagConstraints);
 
@@ -355,12 +355,16 @@ public class UserRequests extends javax.swing.JFrame {
 
     private void RequestsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RequestsActionPerformed
         // TODO add your handling code here:
+    	this.setVisible(false);
+    	UserRequests rq= new UserRequests(id);
+    	rq.setSize(1000, 600);
+    	rq.setVisible(true);
     }//GEN-LAST:event_RequestsActionPerformed
 
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AgendaActionPerformed
-    private void ReviewedRqActionPerformed(ActionEvent evt) {
+    private void ReviewedRqActionPerformed(ActionEvent evt) {//this.conn
     	jScrollPane1.setVisible(false);
     	jScrollPane2.setVisible(true);
     	
