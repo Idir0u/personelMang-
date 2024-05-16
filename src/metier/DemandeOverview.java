@@ -433,7 +433,7 @@ public class DemandeOverview extends JFrame {
     private void createProject(int idUser,String nom_court, String nom_long, String description, String theme, String type, boolean isPublic) {
     	try {
 
-            PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court_projet, nom_long_projet, description_projet, projet_is_public, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled') ");
+            PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court, nom_long, description, isPublic, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled') ");
             PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court
             PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court-adm
             PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO UTILSATEUR_GROUPE(idUtilsateur, idGroupe) VALUES(?, (SELECT (idGroupe) FROM GROUPE WHERE nom_groupe = ?)  )");//idUser, nom_court-adm
@@ -460,8 +460,11 @@ public class DemandeOverview extends JFrame {
             if(rs.next()) {
             	int idProjet = rs.getInt(1);
             	PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre, description, idProjet) VALUES ('creation', 'creation du projet', ?)");
-                
+            	PreparedStatement pstmt7 = conn.prepareStatement("UPDATE DEMANDE SET IdProjet = ? WHERE IdDemande = ?");
+            	pstmt7.setInt(1, idProjet);
+            	pstmt7.setInt(2, id);
                 pstmt5.setInt(1, idProjet);
+                pstmt7.executeUpdate();
                 et *= pstmt5.executeUpdate();
             	
             }
