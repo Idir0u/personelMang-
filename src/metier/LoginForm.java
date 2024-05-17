@@ -41,7 +41,7 @@ public class LoginForm extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setPreferredSize(new Dimension(800, 500));
+        setPreferredSize(new Dimension(1050, 650));
         getContentPane().setLayout(new GridLayout());
 
         Right.setBackground(new Color(255, 255, 255));
@@ -184,7 +184,18 @@ public class LoginForm extends JFrame {
                 if(username.equals("") || password.equals("")){
                     JOptionPane.showMessageDialog(null, "Please enter your username and password !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    authenticateUserLogin(username, password);
+                	if (username.endsWith("-adm")) {
+                    authenticateAdminLogin(username, password);
+                    System.out.println("Admin login successful.");
+                    }else if(username.equalsIgnoreCase("guest") && password.equalsIgnoreCase("guest")){
+                    	System.out.println("Guest login successful");
+                    	connectGuest(username);
+                    	
+                    }
+                    else {
+                    	authenticateUserLogin(username, password);
+                    	System.out.println("User login successful.");
+                    }
                 }
             }
         });
@@ -268,18 +279,17 @@ public class LoginForm extends JFrame {
         su.setLocationRelativeTo(null);
     }
     public void authenticateUserLogin(String username, String passwd) {
-            
             try {
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM USERS WHERE username = ? AND passwd = ?");
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM UTILISATEUR WHERE username = ? AND mot_de_passe = ?");
                 ps.setString(1, username);
                 ps.setString(2, passwd);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     // if exists
-                    HomePage hp = new HomePage(/*new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))*/);
+                    HomePageAdmin hpadm = new HomePageAdmin(username);
                     this.setVisible(false);
-                    hp.setVisible(true);
-                    hp.setLocationRelativeTo(null);
+                    hpadm.setVisible(true);
+                    hpadm.setLocationRelativeTo(null);
                     
                     
                 }else{
@@ -290,7 +300,47 @@ public class LoginForm extends JFrame {
                 System.out.println("Exception : " + e);
             }
             
+ 	}
+    public void authenticateAdminLogin(String username, String passwd) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ADMINISTRATEUR_PLATFORME WHERE username = ? AND mot_de_passe = ?");
+            ps.setString(1, username);
+            ps.setString(2, passwd);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                // if exists
+                //HomePage hp = new HomePage(/*new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))*/);
+                this.setVisible(false);
+                HomePageUser hmu = new HomePageUser(getId(username),username);//!!!!!!!!!!!!!!!!!homePageAdmin_platform
+                hmu.setVisible(true);
+ 
+            }else{
+                // if not
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Incorrect Information", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception : " + e);
         }
+        
+	}
+    public void connectGuest(String username) {
+    	GuestPage gp = new GuestPage(username);
+    	gp.setVisible(true);
+    	this.setVisible(false);
+    }
+    public int getId(String username) {
+    	try {
+            PreparedStatement ps = conn.prepareStatement("SELECT idutilisateur FROM utilisateur WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception : " + e);
+        }
+    	return 0;
+    }
                                         
 
 }

@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class GuestPage extends JFrame {
     private JLabel Username;
-    public GuestPage() {
+    public GuestPage(String username) {
         GridBagConstraints gridBagConstraints;
         JPanel body = new JPanel();
         JPanel Header = new JPanel();
@@ -21,7 +21,8 @@ public class GuestPage extends JFrame {
         TableWithButtonPanel mainTable = new TableWithButtonPanel(this);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1000, 500));
+        setPreferredSize(new Dimension(1050, 650));
+        setLocationRelativeTo(null);
 
         body.setBackground(new Color(255, 255, 255));
         body.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(153,0,204)));
@@ -36,7 +37,7 @@ public class GuestPage extends JFrame {
         Username.setFont(new Font("Segoe UI", 1, 14));
         Username.setForeground(new Color(255, 255, 255));
         Username.setHorizontalAlignment(SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username);
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -175,7 +176,7 @@ public class GuestPage extends JFrame {
                                    
     public static void main(String args[]) {
         
-        new GuestPage().setVisible(true);
+        new GuestPage("").setVisible(true);
     }
 
                        
