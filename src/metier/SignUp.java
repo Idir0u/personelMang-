@@ -243,6 +243,8 @@ public class SignUp extends JFrame {
                 }catch(Exception ex){
                     System.out.println("Exception :" +ex);
                 }
+                
+                
                 popUpHomePage(id, username, password, email, fullname);
             }
         });
@@ -364,6 +366,7 @@ public class SignUp extends JFrame {
                 //Utilisateur user = new Utilisateur(0,username, passwd ,email, fullname);
                 HomePage su = new HomePage(/*new Utilisateur(id, username, passwd ,email, fullname)*/);
                 this.setVisible(false);
+                
                 su.setVisible(true);
                 su.setLocationRelativeTo(null);
     }
