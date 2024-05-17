@@ -3,8 +3,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 
-import metier.TableWithButtonPanel.ButtonEditor;
-import metier.TableWithButtonPanel.ButtonRenderer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -376,7 +374,7 @@ public class Requests extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
             	Requests rq = new Requests();
-            	rq.setSize(1000, 600);
+            	rq.setSize(1050, 650);
             	rq.setVisible(true);
             }
         });
