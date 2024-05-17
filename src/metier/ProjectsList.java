@@ -15,7 +15,7 @@ public class ProjectsList extends JFrame {
 
     public ProjectsList() {
         GridBagConstraints gridBagConstraints;
-        tableProjets = new TableProjetList();
+        tableProjets = new TableProjetList(this);
         body = new JPanel();
         Header = new JPanel();
         LOGO = new JLabel();
@@ -108,19 +108,24 @@ public class ProjectsList extends JFrame {
         Menu.add(Messages);
 
         Users.setFont(new Font("Segoe UI", 1, 14));
-        Users.setForeground(Color.white);
+        Users.setForeground(new Color(153, 0, 204));
         Users.setText("Users");
-        Users.setBackground(new Color(153, 0, 204));
+        Users.setBackground(Color.white);
         Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Menu.add(Users);
 
         Projects.setFont(new Font("Segoe UI", 1, 14));
-        Projects.setForeground(new Color(153, 0, 204));
+        Projects.setForeground(Color.white);
         Projects.setText("Projects");
-        Projects.setBackground(Color.white);
+        Projects.setBackground(new Color(153, 0, 204));
         Projects.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Projects.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Projects.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ProjectsActionPerformed(evt);
+            }
+        });
         Menu.add(Projects);
 
         Requests.setFont(new Font("Segoe UI", 1, 14));
@@ -218,6 +223,13 @@ public class ProjectsList extends JFrame {
                 recherche.setText("");
             }
         });
+    }
+    private void ProjectsActionPerformed(ActionEvent evt) {
+        
+    	this.setVisible(false);
+    	ProjectsList pl= new ProjectsList();
+    	pl.setSize(1000, 630);
+    	pl.setVisible(true);
     }
 
     public static void main(String args[]) {

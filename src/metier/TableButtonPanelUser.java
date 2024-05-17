@@ -2,6 +2,9 @@ package metier;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import metier.TableProjetList.RoundedButton;
+
 import javax.swing.table.*;
 
 import java.awt.*;
@@ -159,20 +162,52 @@ public class TableButtonPanelUser extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    // Button renderer class
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-            setBorder(new EmptyBorder(5, 10, 5, 10)); // Add padding to the button
+    //RoundedButton class
+    class RoundedButton extends JButton {
+        public RoundedButton(Icon icon) {
+            super(icon);
+            setOpaque(false);
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            int diameter = Math.min(getWidth(), getHeight());
+            int x = (getWidth() - diameter) / 2;
+            int y = (getHeight() - diameter) / 2;
+            g2.setColor(getBackground());
+            g2.fillOval(x, y, diameter, diameter);
+            super.paintComponent(g2);
+            g2.dispose();
             
         }
 
         @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(40, 40);
+        }
+    }
+    // Button renderer class
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+    	private RoundedButton button1;
+        private RoundedButton button2;
+
+        public ButtonRenderer() {
+            setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
+            button1 = new RoundedButton(new ImageIcon(getClass().getResource("assets/view.png")));
+            button1.setBackground(Color.white);
+            button2 = new RoundedButton(new ImageIcon(getClass().getResource("assets/delete.png")));
+            button2.setBackground(Color.white);
+            add(button1);
+            add(button2);
+        }
+
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        	setIcon(new ImageIcon(getClass().getResource("assets/view.png")));
-        	setText((value == null) ? "" : value.toString());
-            //setForeground(Color.BLACK);
-            setBackground(Color.WHITE);
             return this;
         }
     }
@@ -180,46 +215,66 @@ public class TableButtonPanelUser extends JPanel {
     // Button editor class
 
     class ButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
-        private JButton button;
-        private String label;
-        private boolean isPushed;
+    	private JPanel panel;
+        private JButton button1;
+        private JButton button2;
         private JFrame parent;
+        private int selectedRow;
 
         public ButtonEditor(JFrame parent) {
         	this.parent = parent;
-            button = new JButton();
-            button.setOpaque(true);
-            button.setBorder(new EmptyBorder(5, 10, 5, 10)); // Add padding to the button
-            button.addActionListener(this);
+            panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+            button1 = new RoundedButton(new ImageIcon(getClass().getResource("assets/view.png")));
+            button2 = new RoundedButton(new ImageIcon(getClass().getResource("assets/delete.png")));
+            panel.add(button1);
+            panel.add(button2);
+            button1.addActionListener(this);
+            button2.addActionListener(this);
         }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            label = (value == null) ? "" : value.toString();
-            button.setText(label);
-            isPushed = true;
-            return button;
+        	selectedRow = row;
+            return panel;
+        }
+        /*
+int row = table.getEditingRow(); // Get the index of the editing row
+                int value = (int) table.getValueAt(row, 0); // Get the value of the first column in the editing row
+                String type = (String) table.getValueAt(row, 5);
+                JFrame frame = new DemandeOverview(value, type, false);
+                frame.setLocationRelativeTo(null);
+                frame.setSize(520,400);*/
+        @Override
+        public Object getCellEditorValue() {
+            return null;
         }
 
         @Override
-        public Object getCellEditorValue() {
-            if (isPushed) {
-                // Open a new JFrame when button is clicked
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == button1) {//About the project
+            	// Open a new JFrame when button is clicked
             	int row = table.getEditingRow(); // Get the index of the editing row
                 int value = (int) table.getValueAt(row, 0); // Get the value of the first column in the editing row
                 String type = (String) table.getValueAt(row, 5);
                 JFrame frame = new DemandeOverview(value, type, false);
                 frame.setLocationRelativeTo(null);
                 frame.setSize(520,400);
+                frame.setVisible(true);
                 
+            } else if (e.getSource() == button2) {//Verification before deleting the demande
+                int value = (int) table.getValueAt(selectedRow, 0);
+                VerifierSupprimeDemande popUp = new VerifierSupprimeDemande(value);
+                popUp.setLocationRelativeTo(null);
+                popUp.setSize(520, 400);
+                popUp.setVisible(true);
                 
                 parent.setEnabled(false);
 
                 // Show popup frame
-                frame.setVisible(true);
+                popUp.setVisible(true);
 
                 // When the popup frame is closed
-                frame.addWindowListener(new WindowAdapter() {
+                popUp.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {
                         // Enable input events of the parent frame
@@ -227,20 +282,11 @@ public class TableButtonPanelUser extends JPanel {
                         parent.setEnabled(true);
                     }
                 });
-                 
-                
-                
-                
             }
-            isPushed = false;
-            return label;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
             fireEditingStopped();
         }
     }
+    
 
 	public JTable getTable() {
 		return table;

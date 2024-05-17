@@ -12,6 +12,7 @@ import java.util.*;
 public class TableProjetList extends JPanel {
     private JTable table;
     private DefaultTableModel model;
+    private JFrame parent;
     Connection conn = Utilitaire.getConnection();
 
     Vector<Object[]> fetchProjects(String searchQuery) {
@@ -67,7 +68,8 @@ public class TableProjetList extends JPanel {
         return maxWidth;
     }
 
-    public TableProjetList() {
+    public TableProjetList(JFrame parent) {
+    	this.parent = parent;
         setLayout(new BorderLayout());
 
         String[] columns = {"IdProject", "Project name", "theme", "type", "state", "visibility", "actions"};
@@ -96,7 +98,7 @@ public class TableProjetList extends JPanel {
         table = new JTable(model);
         table.getColumnModel().getColumn(6).setPreferredWidth(100);
         table.getColumnModel().getColumn(6).setCellRenderer(new ButtonPanelRenderer());
-        table.getColumnModel().getColumn(6).setCellEditor(new ButtonPanelEditor());
+        table.getColumnModel().getColumn(6).setCellEditor(new ButtonPanelEditor(parent));
 
         setColumnWidths();
 
@@ -131,6 +133,7 @@ public class TableProjetList extends JPanel {
             g2.fillOval(x, y, diameter, diameter);
             super.paintComponent(g2);
             g2.dispose();
+            
         }
 
         @Override
@@ -162,12 +165,14 @@ public class TableProjetList extends JPanel {
         private JPanel panel;
         private JButton button1;
         private JButton button2;
+        private JFrame parent;
         private int selectedRow;
 
-        public ButtonPanelEditor() {
+        public ButtonPanelEditor(JFrame parent) {
+        	this.parent = parent;
             panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
-            button1 = new JButton(new ImageIcon(getClass().getResource("assets/view.png")));
-            button2 = new JButton(new ImageIcon(getClass().getResource("assets/delete.png")));
+            button1 = new RoundedButton(new ImageIcon(getClass().getResource("assets/view.png")));
+            button2 = new RoundedButton(new ImageIcon(getClass().getResource("assets/delete.png")));
             panel.add(button1);
             panel.add(button2);
             button1.addActionListener(this);
@@ -187,19 +192,34 @@ public class TableProjetList extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == button1) {
+            if (e.getSource() == button1) {//About the project
                 int value = (int) table.getValueAt(selectedRow, 0);
                 String type = (String) table.getValueAt(selectedRow, 5);
                 JFrame frame = new JFrame("View Project");
                 frame.setLocationRelativeTo(null);
                 frame.setSize(520, 400);
                 frame.setVisible(true);
-            } else if (e.getSource() == button2) {
+            } else if (e.getSource() == button2) {//Verification before deleting the project
                 int value = (int) table.getValueAt(selectedRow, 0);
-                VerifierSupprimeProjet frame = new VerifierSupprimeProjet(value);
-                frame.setLocationRelativeTo(null);
-                frame.setSize(520, 400);
-                frame.setVisible(true);
+                VerifierSupprimeProjet popUp = new VerifierSupprimeProjet(value);
+                popUp.setLocationRelativeTo(null);
+                popUp.setSize(520, 400);
+                popUp.setVisible(true);
+                
+                parent.setEnabled(false);
+
+                // Show popup frame
+                popUp.setVisible(true);
+
+                // When the popup frame is closed
+                popUp.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        // Enable input events of the parent frame
+                    	parent.setVisible(true);
+                        parent.setEnabled(true);
+                    }
+                });
             }
             fireEditingStopped();
         }

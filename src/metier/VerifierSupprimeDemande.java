@@ -17,13 +17,13 @@ import javax.swing.border.Border;
  *
  * @author zakar
  */
-public class VerifierSupprimeProjet extends javax.swing.JFrame {
+public class VerifierSupprimeDemande extends javax.swing.JFrame {
 	Connection conn = Utilitaire.getConnection();
 
     /**
      * Creates new form VerifierSupprimeProjet
      */
-    public VerifierSupprimeProjet(int idProjet) {
+    public VerifierSupprimeDemande(int idDemande) {
         
         java.awt.GridBagConstraints gridBagConstraints;
 
@@ -38,7 +38,7 @@ public class VerifierSupprimeProjet extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 102));
-        jLabel1.setText("Do you really want to delete this project?");
+        jLabel1.setText("Do you really want to delete this Demand?");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -56,7 +56,7 @@ public class VerifierSupprimeProjet extends javax.swing.JFrame {
         JFrame ButtonContainer = this;
         jButton1.addActionListener(new ActionListener() {
             public void actionPerformed( ActionEvent evt) {
-                acceptButtonActionPerformed(evt, idProjet);
+                acceptButtonActionPerformed(evt, idDemande);
                 ButtonContainer.dispose();
             }
             
@@ -74,54 +74,24 @@ public class VerifierSupprimeProjet extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void acceptButtonActionPerformed(ActionEvent evt, int idProjet) {
+    private void acceptButtonActionPerformed(ActionEvent evt, int idDemande) {
             try {
-                if (idProjet <= 0) {
+                if (idDemande <= 0) {
                     System.out.println("Invalid parameters provided.");
                     return;
                 }
-                PreparedStatement pstmt0 = conn.prepareStatement("SELECT idGroupe FROM GROUPE WHERE nom_groupe = (SELECT nom_court FROM PROJET WHERE IdProjet = ? )  ");
-                pstmt0.setInt(1, idProjet);
-                ResultSet rs = pstmt0.executeQuery();
-                if (!rs.next()) {
-                    System.out.println("No group found for the given project.");
-                    return;
-                }
-                int idGroupe = rs.getInt(1);
-                PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM PROJET WHERE idProjet = ?");
-                PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE idGroupe = ? OR idGroupe = ?");
-                PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
-                PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM EVENEMENT WHERE idProjet = ?");
-                PreparedStatement pstmt5 = conn.prepareStatement("DELETE FROM MESSAGE WHERE idProjet = ?");
-                PreparedStatement pstmt6 = conn.prepareStatement("DELETE FROM DOCUMENT WHERE idProjet = ?");
-                PreparedStatement pstmt7 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idProjet = ?");
-                
-                pstmt1.setInt(1, idProjet);
-                pstmt2.setInt(1, idGroupe);
-                pstmt2.setInt(2, idGroupe + 1);
-                pstmt3.setInt(1, idGroupe);
-                pstmt3.setInt(2, idGroupe + 1);
-                pstmt4.setInt(1, idProjet);
-                pstmt5.setInt(1, idProjet);
-                pstmt6.setInt(1, idProjet);
-                pstmt7.setInt(1, idProjet);
 
-                
-                int totalAffected = pstmt7.executeUpdate() + pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
-                
-                if (totalAffected >= 5) {
+                PreparedStatement pstmt0 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idDemande = ?"); 
+                pstmt0.setInt(1, idDemande);
+
+                int totalAffected = pstmt0.executeUpdate();                
+                if (totalAffected >= 1) {
                     System.out.println("All statements executed successfully.");
                 } else {
                     System.out.println("Some statements failed. Total affected rows: " + totalAffected);
                 }
-                rs.close();
                 pstmt0.close();
-                pstmt1.close();
-                pstmt2.close();
-                pstmt3.close();
-                pstmt4.close();
-                pstmt5.close();
-                pstmt6.close();
+
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
@@ -146,13 +116,13 @@ public class VerifierSupprimeProjet extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerifierSupprimeProjet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifierSupprimeDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerifierSupprimeProjet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifierSupprimeDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerifierSupprimeProjet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifierSupprimeDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerifierSupprimeProjet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifierSupprimeDemande.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
     }
