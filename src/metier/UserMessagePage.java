@@ -4,16 +4,20 @@ import javax.swing.border.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;
 
-
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.table.*;
 public class UserMessagePage extends JFrame {
 
     
-    public UserMessagePage() {
+    public UserMessagePage(String username) {
         GridBagConstraints gridBagConstraints;
+        this.usrname_var = username ;
 
         body = new JPanel();
         Header = new JPanel();
@@ -32,8 +36,9 @@ public class UserMessagePage extends JFrame {
         jLabel3 = new JLabel();
         jScrollPane1 = new JScrollPane();
         message_table = new JTable();
+       
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         body.setBackground(new Color(255, 255, 255));
         body.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(153,0,204)));
@@ -42,17 +47,17 @@ public class UserMessagePage extends JFrame {
         Header.setBackground(new Color(153, 0, 204));
         Header.setPreferredSize(new Dimension(963, 50));
 
-        LOGO.setFont(new Font("Montserrat Black", 3, 24)); // NOI18N
+        LOGO.setFont(new Font("Montserrat Black", 3, 24)); 
         LOGO.setForeground(new Color(255, 255, 255));
         LOGO.setText("P4P");
 
         userIcon.setHorizontalAlignment(SwingConstants.CENTER);
         userIcon.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        usrname.setFont(new Font("Segoe UI Black", 3, 14)); // NOI18N
+        usrname.setFont(new Font("Segoe UI Black", 3, 14)); 
         usrname.setForeground(new Color(255, 255, 255));
-        usrname.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-        usrname.setText("Username");
+        usrname.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); 
+        usrname.setText(usrname_var);
 
         GroupLayout HeaderLayout = new GroupLayout(Header);
         Header.setLayout(HeaderLayout);
@@ -62,7 +67,7 @@ public class UserMessagePage extends JFrame {
                 .addGap(67, 67, 67)
                 .addComponent(LOGO, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                 .addGap(608, 608, 608)
-                .addComponent(usrname, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                .addComponent(usrname, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(userIcon, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -87,7 +92,7 @@ public class UserMessagePage extends JFrame {
         Menu.setPreferredSize(new Dimension(180, 427));
         Menu.setLayout(new GridLayout(9, 0));
 
-        Home1.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Home1.setFont(new Font("Segoe UI", 1, 14)); 
         Home1.setBackground(new Color(255, 255, 255));
         Home1.setForeground(new Color(153, 0, 204));
         Home1.setText("Home");
@@ -101,7 +106,7 @@ public class UserMessagePage extends JFrame {
         Menu.add(Home1);
 
         Messages.setBackground(new Color(153, 0, 204));
-        Messages.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Messages.setFont(new Font("Segoe UI", 1, 14)); 
         Messages.setForeground(new Color(255, 255, 255));
         Messages.setText("Messages");
         Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -113,7 +118,7 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Messages);
 
-        Projects.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Projects.setFont(new Font("Segoe UI", 1, 14)); 
         Projects.setForeground(new Color(153, 0, 204));
         Projects.setBackground(new Color(255, 255, 255));
         Projects.setText("Projects");
@@ -126,7 +131,7 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Projects);
 
-        Requests.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Requests.setFont(new Font("Segoe UI", 1, 14)); 
         Requests.setForeground(new Color(153, 0, 204));
         Requests.setBackground(new Color(255, 255, 255));
         Requests.setText("Requests");
@@ -139,7 +144,7 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Requests);
 
-        Agenda.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Agenda.setFont(new Font("Segoe UI", 1, 14)); 
         Agenda.setForeground(new Color(153, 0, 204));
         Agenda.setBackground(new Color(255, 255, 255));
         Agenda.setText("Agenda");
@@ -152,14 +157,21 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Agenda);
 
-        Invitation.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        Invitation.setFont(new Font("Segoe UI", 1, 14)); 
         Invitation.setForeground(new Color(153, 0, 204));
         Invitation.setBackground(new Color(255, 255, 255));
         Invitation.setText("Invitation");
         Invitation.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(153, 0, 204)));
+        Invitation.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent evt)
+			{
+				InvitationActionPerformed(evt);
+			}
+		});
         Menu.add(Invitation);
 
-        deconnexion.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
         deconnexion.setForeground(new Color(153, 0, 204));
         deconnexion.setText("Se_deconnecter");
         deconnexion.setBackground(new Color(255, 255, 255));
@@ -176,52 +188,14 @@ public class UserMessagePage extends JFrame {
 
         DashBord.setBackground(new Color(255, 255, 255));
 
-        jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); // NOI18N
+        jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
         jLabel3.setForeground(new Color(153, 0, 204));
-        jLabel3.setIcon(new ImageIcon(getClass().getResource("assets/mail.png"))); // NOI18N
+        jLabel3.setIcon(new ImageIcon(getClass().getResource("assets/mail.png"))); 
         jLabel3.setText("WELCOME TO YOUR MESSAGE BOX");
 
         jScrollPane1.setBackground(new Color(255, 255, 255));
-
-        message_table.setModel(new DefaultTableModel(
-            new Object [][] {
-                {"Idir","15/05/2024", "12:00", "Online Car Rent"},
-                {"zakariae","15/05/2024", "12:00", "LLM Model"},
-                {"zakariae_aboussad","15/05/2024", "12:00", "Site Builder"},
-                {"yasser","15/05/2024", "12:00", "Online Car Rent"},
-                {"Arnaud","15/05/2024", "12:00", "Online Car Rent"},
-                
-            },
-            new String [] {
-                "Send by", "Date", "Time", "Relative Project"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        message_table.setColumnSelectionAllowed(true);
-        message_table.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                message_tableMouseClicked(evt);
-            }
-            public void mouseEntered(MouseEvent evt) {
-                message_tableMouseEntered(evt);
-            }
-        });
-        jScrollPane1.setViewportView(message_table);
-        message_table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      
+        
 
         GroupLayout DashBordLayout = new GroupLayout(DashBord);
         DashBord.setLayout(DashBordLayout);
@@ -252,42 +226,137 @@ public class UserMessagePage extends JFrame {
         getContentPane().add(body, BorderLayout.CENTER);
 
         pack();
+        
+        initialiserTable();
     }
 
+        public Vector<UserMessage> getUserMessage() {
+            Vector<UserMessage> ursmsglst = new Vector<UserMessage>();
+            try {
+                PreparedStatement ps1 = con.prepareStatement("SELECT IdUtilisateur FROM utilisateur WHERE username = ?");
+                ps1.setString(1, usrname_var);
+                ResultSet rs1 = ps1.executeQuery();
+                if (rs1.next()) { // Assurez-vous d'avoir un résultat avant de continuer
+                    int idUtilisateur = rs1.getInt("IdUtilisateur");
+                    PreparedStatement ps2 = con.prepareStatement("SELECT idSender, date_envoi, heure_envoi, contenu, idProjet FROM message WHERE idReceiver = ?");
+                    ps2.setInt(1, idUtilisateur);
+                    ResultSet rs2 = ps2.executeQuery();
+
+                    while (rs2.next()) {
+                        int idSender = rs2.getInt("idSender");
+                        Date dateEnvoi = rs2.getDate("date_envoi");
+                        Time heureEnvoi = rs2.getTime("heure_envoi");
+                        String contenu = rs2.getString("contenu");
+                        int idProjet = rs2.getInt("idProjet");
+
+                        PreparedStatement ps3 = con.prepareStatement("SELECT username FROM utilisateur WHERE IdUtilisateur = ?");
+                        ps3.setInt(1, idSender);
+                        ResultSet rs3 = ps3.executeQuery();
+                        rs3.next(); // Récupère le nom d'utilisateur de l'expéditeur
+
+                        PreparedStatement ps4 = con.prepareStatement("SELECT nom_long FROM projet WHERE IdProjet = ?");
+                        ps4.setInt(1, idProjet);
+                        ResultSet rs4 = ps4.executeQuery();
+                        rs4.next(); // Récupère le nom du projet
+
+                        ursmsglst.add(new UserMessage(rs3.getString("username"), dateEnvoi, heureEnvoi, contenu, rs4.getString("nom_long")));
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+            return ursmsglst;
+        }
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        public void initialiserTable() {
+            // Définissez le modèle de table avec les données récupérées
+        	
+            DefaultTableModel model = new DefaultTableModel(new Object[]{"Expéditeur", "Date d'envoi", "Heure d'envoi", "Projet"}, 0) {
+                Class[] types = new Class[]{
+                        java.lang.String.class, java.sql.Date.class, java.sql.Time.class, java.lang.String.class
+                };
+                boolean[] canEdit = new boolean[]{
+                        false, false, false, false
+                };
+
+                public Class getColumnClass(int columnIndex) {
+                    return types[columnIndex];
+                }
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            };
+
+            user_message_list = getUserMessage();
+            
+            for (UserMessage m : user_message_list) {
+                model.addRow(new Object[]{m.getSender(), m.getDate_envoi(), m.getHeure_envoie(), m.getGroupe_name()});
+            }
+
+            message_table.setModel(model);
+            message_table.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent evt) {
+                    int row = message_table.rowAtPoint(evt.getPoint());
+                    if (row >= 0) {
+                        String contenu = user_message_list.get(row).getContent();
+                        String sender = user_message_list.get(row).getSender();
+                        String project_name = user_message_list.get(row).getGroupe_name();
+                        new MessageShowPage(contenu,sender,usrname_var,project_name).setVisible(true);
+                    }
+                }
+            });
+            
+            jScrollPane1.setViewportView(message_table);
+        }
                              
-                          
+  
 
-    private void Home1ActionPerformed(ActionEvent evt) {                                      
-        // TODO add your handling code here:
-    }                                     
+        private void Home1ActionPerformed(ActionEvent evt) {                                      
+            UserPage nwusp = new UserPage(usrname_var);
+            nwusp.setVisible(true);
+            Window win = SwingUtilities.getWindowAncestor(Home1);
+            win.dispose();
+        }                                     
 
-    private void MessagesActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+        private void MessagesActionPerformed(ActionEvent evt) {                                         
+            UserMessagePage usrmsgp = new UserMessagePage(usrname_var);
+            usrmsgp.setVisible(true);
+            Window win = SwingUtilities.getWindowAncestor(Messages);
+            win.dispose();
+        }                                        
 
-    private void deconnexionActionPerformed(ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
+        private void deconnexionActionPerformed(ActionEvent evt) {                                            
+        	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+             if(wdws != null)
+             {
+             	wdws.dispose();
+             }
+        }                                           
 
-    private void ProjectsActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+        private void ProjectsActionPerformed(ActionEvent evt) {                                         
+            // TODO add your handling code here:
+        }                                        
 
-    private void RequestsActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+        private void RequestsActionPerformed(ActionEvent evt) {                                         
+        	UserRequestPage usrmsgp = new UserRequestPage(usrname_var);
+            usrmsgp.setVisible(true);
+            Window win = SwingUtilities.getWindowAncestor(Requests);
+            win.dispose();
+        }                                        
 
-    private void AgendaActionPerformed(ActionEvent evt) {                                       
-        // TODO add your handling code here:
-    }                                      
-
-    private void message_tableMouseClicked(MouseEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
-
-    private void message_tableMouseEntered(MouseEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
+        private void AgendaActionPerformed(ActionEvent evt) {                                       
+            // TODO add your handling code here:
+        } 
+        private void InvitationActionPerformed(ActionEvent evt)
+        {
+        	UserInvitationPage usr_inv_page = new UserInvitationPage(usrname_var);
+            usr_inv_page.setVisible(true);
+            Window win = SwingUtilities.getWindowAncestor(Invitation);
+            win.dispose();
+        }
 
     
 
@@ -309,11 +378,15 @@ public class UserMessagePage extends JFrame {
     private JScrollPane jScrollPane1;
     private JTable message_table;
     private JLabel userIcon;
+    protected String usrname_var ;
+    protected Vector<UserMessage> user_message_list ;
+    public static Connection con = Utilitaire.getConnection();
+    
+    public static void main (String args[])
+    {
+    	UserMessagePage usr = new UserMessagePage("yasser_moujtahid");
+    	usr.setVisible(true);
+    }
                       
     
-    public static void main(String args[])
-    {
-    	UserMessagePage usrmp = new UserMessagePage();
-    	usrmp.setVisible(true);
-    }
 }

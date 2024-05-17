@@ -76,7 +76,7 @@ public class UsersPage extends JFrame {
         Header.add(Username, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel1.setIcon(new ImageIcon(getClass().getResource("icons8-user-30.png"))); 
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); 
         jLabel1.setHorizontalTextPosition(SwingConstants.CENTER);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;

@@ -9,8 +9,6 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-
-
 public class JoinRequestPage extends JFrame {
 
     /**
@@ -30,10 +28,10 @@ public class JoinRequestPage extends JFrame {
 
         msg_shw_pan.setBackground(new Color(204, 204, 255));
         msg_shw_pan.setBorder(BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, 
-        		new Color(153, 0, 204)), "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Segoe UI", 0, 12), new Color(153, 0, 204))); // NOI18N
+        		new Color(153, 0, 204)), "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Segoe UI", 0, 12), new Color(153, 0, 204))); 
 
         close_button.setBackground(new Color(153, 0, 204));
-        close_button.setFont(new Font("Segoe UI Black", 1, 12)); // NOI18N
+        close_button.setFont(new Font("Segoe UI Black", 1, 12)); 
         close_button.setForeground(new Color(255, 255, 255));
         close_button.setText("close");
         close_button.addActionListener(new ActionListener() {
@@ -43,7 +41,7 @@ public class JoinRequestPage extends JFrame {
         });
 
         discard_button.setBackground(new Color(153, 0, 204));
-        discard_button.setFont(new Font("Segoe UI Black", 1, 12)); // NOI18N
+        discard_button.setFont(new Font("Segoe UI Black", 1, 12)); 
         discard_button.setForeground(new Color(255, 255, 255));
         discard_button.setText("discard");
         discard_button.addActionListener(new ActionListener() {
@@ -59,13 +57,13 @@ public class JoinRequestPage extends JFrame {
         TextArea.setRows(5);
         ScrollPane.setViewportView(TextArea);
 
-        proj_nam_lab.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+        proj_nam_lab.setFont(new Font("Segoe UI", 1, 14)); 
         proj_nam_lab.setText("Project name :");
 
-        is_private_lab.setFont(new Font("Segoe UI Black", 1, 14)); // NOI18N
+        is_private_lab.setFont(new Font("Segoe UI Black", 1, 14)); 
         is_private_lab.setText("Private");
 
-        descript_lab.setFont(new Font("Segoe UI Black", 1, 14)); // NOI18N
+        descript_lab.setFont(new Font("Segoe UI Black", 1, 14)); 
         descript_lab.setText("Description");
 
         GroupLayout msg_shw_panLayout = new GroupLayout(msg_shw_pan);

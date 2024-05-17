@@ -286,7 +286,7 @@ public class LoginForm extends JFrame {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     // if exists
-                    HomePageAdmin hpadm = new HomePageAdmin(username);
+                    HomePageUser hpadm = new HomePageUser(this.getId(username), username);
                     this.setVisible(false);
                     hpadm.setVisible(true);
                     hpadm.setLocationRelativeTo(null);

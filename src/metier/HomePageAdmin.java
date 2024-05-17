@@ -138,7 +138,7 @@ public class HomePageAdmin extends JFrame {
         Header.add(Username, gridBagConstraints);
 
         userIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("icons8-user-30.png")));
+        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png")));
         userIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -242,7 +242,7 @@ public class HomePageAdmin extends JFrame {
         UserStatis.setBackground(new Color(102, 0, 204));
         UserStatis.setLayout(new GridBagLayout());
 
-        IconUSt.setIcon(new ImageIcon(getClass().getResource("icons8-user-30.png"))); // NOI18N
+        IconUSt.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -306,7 +306,7 @@ public class HomePageAdmin extends JFrame {
         gridBagConstraints.insets = new Insets(17, 25, 11, 0);
         ProjectsStatis.add(nbrProjects, gridBagConstraints);
 
-        IconPSt.setIcon(new ImageIcon(getClass().getResource("icons8-project-30.png"))); // NOI18N
+        IconPSt.setIcon(new ImageIcon(getClass().getResource("assets/icons8-project-30.png"))); // NOI18N
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -349,7 +349,7 @@ public class HomePageAdmin extends JFrame {
         gridBagConstraints.insets = new Insets(17, 25, 10, 0);
         DemandesStatis.add(nbrDemandes, gridBagConstraints);
 
-        IconDSt.setIcon(new ImageIcon(getClass().getResource("icons8-code-fork-30 (1).png"))); // NOI18N
+        IconDSt.setIcon(new ImageIcon(getClass().getResource("assets/icons8-code-fork-30 (1).png"))); // NOI18N
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

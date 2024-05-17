@@ -188,6 +188,7 @@ public class HomePageUser extends javax.swing.JFrame {
 
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
+    	
     }                                      
 
     private void Home1ActionPerformed(java.awt.event.ActionEvent evt) {                                      

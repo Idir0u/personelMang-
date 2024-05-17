@@ -24,7 +24,7 @@ public class UserInvitationPage extends JFrame {
          Projects = new JButton();
          Requests = new JButton();
          Agenda = new JButton();
-         invitation_button = new JButton();
+         Invitation = new JButton();
          deconnexion = new JButton();
          DashBord = new JPanel();
          inv_lab = new JLabel();
@@ -34,7 +34,7 @@ public class UserInvitationPage extends JFrame {
          join_req_table = new JTable();
          proj_join_lab = new JLabel();
 
-         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
          body.setBackground(new Color(255, 255, 255));
          body.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(153,0,204)));
@@ -43,16 +43,16 @@ public class UserInvitationPage extends JFrame {
          Header.setBackground(new Color(153, 0, 204));
          Header.setPreferredSize(new Dimension(963, 50));
 
-         LOGO.setFont(new Font("Montserrat Black", 3, 24)); // NOI18N
+         LOGO.setFont(new Font("Montserrat Black", 3, 24)); 
          LOGO.setForeground(new Color(255, 255, 255));
          LOGO.setText("P4P");
 
          userIcon.setHorizontalAlignment(SwingConstants.CENTER);
          userIcon.setHorizontalTextPosition(SwingConstants.CENTER);
 
-         usr_name_lab.setFont(new Font("Segoe UI Black", 3, 14)); // NOI18N
+         usr_name_lab.setFont(new Font("Segoe UI Black", 3, 14)); 
          usr_name_lab.setForeground(new Color(255, 255, 255));
-         usr_name_lab.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
+         usr_name_lab.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); 
          usr_name_lab.setText(usrname);
 
          GroupLayout HeaderLayout = new GroupLayout(Header);
@@ -63,7 +63,7 @@ public class UserInvitationPage extends JFrame {
                  .addGap(67, 67, 67)
                  .addComponent(LOGO, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                  .addGap(608, 608, 608)
-                 .addComponent(usr_name_lab, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+                 .addComponent(usr_name_lab, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
                  .addGap(26, 26, 26)
                  .addComponent(userIcon, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                  .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -88,7 +88,8 @@ public class UserInvitationPage extends JFrame {
          Menu.setPreferredSize(new Dimension(180, 427));
          Menu.setLayout(new GridLayout(9, 0));
 
-         Home1.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         Home1.setFont(new Font("Segoe UI", 1, 14)); 
+         Home1.setBackground(new Color(255, 255, 255));
          Home1.setForeground(new Color(153, 0, 204));
          Home1.setText("Home");
          Home1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
@@ -100,7 +101,8 @@ public class UserInvitationPage extends JFrame {
          });
          Menu.add(Home1);
 
-         Messages.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         Messages.setFont(new Font("Segoe UI", 1, 14)); 
+         Messages.setBackground(new Color(255, 255, 255));
          Messages.setForeground(new Color(153, 0, 204));
          Messages.setText("Messages");
          Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -112,7 +114,8 @@ public class UserInvitationPage extends JFrame {
          });
          Menu.add(Messages);
 
-         Projects.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         Projects.setFont(new Font("Segoe UI", 1, 14)); 
+         Projects.setBackground(new Color(255, 255, 255));
          Projects.setForeground(new Color(153, 0, 204));
          Projects.setText("Projects");
          Projects.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -124,7 +127,8 @@ public class UserInvitationPage extends JFrame {
          });
          Menu.add(Projects);
 
-         Requests.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         Requests.setFont(new Font("Segoe UI", 1, 14)); 
+         Requests.setBackground(new Color(255, 255, 255));
          Requests.setForeground(new Color(153, 0, 204));
          Requests.setText("Requests");
          Requests.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -136,7 +140,8 @@ public class UserInvitationPage extends JFrame {
          });
          Menu.add(Requests);
 
-         Agenda.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         Agenda.setFont(new Font("Segoe UI", 1, 14)); 
+         Agenda.setBackground(new Color(255, 255, 255));
          Agenda.setForeground(new Color(153, 0, 204));
          Agenda.setText("Agenda");
          Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -148,14 +153,22 @@ public class UserInvitationPage extends JFrame {
          });
          Menu.add(Agenda);
 
-         invitation_button.setBackground(new Color(153, 0, 204));
-         invitation_button.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
-         invitation_button.setForeground(new Color(255, 255, 255));
-         invitation_button.setText("Invitation");
-         invitation_button.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(153, 0, 204)));
-         Menu.add(invitation_button);
+         Invitation.setBackground(new Color(153, 0, 204));
+         Invitation.setFont(new Font("Segoe UI", 1, 14)); 
+         Invitation.setForeground(new Color(255, 255, 255));
+         Invitation.setText("Invitation");
+         Invitation.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(153, 0, 204)));
+         Invitation.addActionListener(new ActionListener()
+ 		{
+ 			public void actionPerformed(ActionEvent evt)
+ 			{
+ 				InvitationActionPerformed(evt);
+ 			}
+ 		});
+         Menu.add(Invitation);
 
-         deconnexion.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
+         deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+         deconnexion.setBackground(new Color(255, 255, 255));
          deconnexion.setForeground(new Color(153, 0, 204));
          deconnexion.setText("Se_deconnecter");
          deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
@@ -171,9 +184,9 @@ public class UserInvitationPage extends JFrame {
 
          DashBord.setBackground(new Color(255, 255, 255));
 
-         inv_lab.setFont(new Font("Segoe UI Black", 3, 18)); // NOI18N
+         inv_lab.setFont(new Font("Segoe UI Black", 3, 18)); 
          inv_lab.setForeground(new Color(153, 0, 204));
-         inv_lab.setIcon(new ImageIcon(getClass().getResource("assets/invitation.png"))); // NOI18N
+         inv_lab.setIcon(new ImageIcon(getClass().getResource("assets/invitation.png"))); 
          inv_lab.setText("Invitation table");
 
          jScrollPane1.setBackground(new Color(255, 255, 255));
@@ -260,9 +273,9 @@ public class UserInvitationPage extends JFrame {
          jScrollPane2.setViewportView(join_req_table);
          join_req_table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-         proj_join_lab.setFont(new Font("Segoe UI Black", 3, 18)); // NOI18N
+         proj_join_lab.setFont(new Font("Segoe UI Black", 3, 18)); 
          proj_join_lab.setForeground(new Color(153, 0, 204));
-         proj_join_lab.setIcon(new ImageIcon(getClass().getResource("assets/invitation.png"))); // NOI18N
+         proj_join_lab.setIcon(new ImageIcon(getClass().getResource("assets/invitation.png"))); 
          proj_join_lab.setText("Project joining request");
 
          GroupLayout DashBordLayout = new GroupLayout(DashBord);
@@ -313,15 +326,25 @@ public class UserInvitationPage extends JFrame {
                         
 
     private void Home1ActionPerformed(ActionEvent evt) {                                      
-        // TODO add your handling code here:
+        UserPage nwusp = new UserPage(usrname);
+        nwusp.setVisible(true);
+        Window win = SwingUtilities.getWindowAncestor(Home1);
+        win.dispose();
     }                                     
 
     private void MessagesActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        UserMessagePage usrmsgp = new UserMessagePage(usrname);
+        usrmsgp.setVisible(true);
+        Window win = SwingUtilities.getWindowAncestor(Messages);
+        win.dispose();
     }                                        
 
     private void deconnexionActionPerformed(ActionEvent evt) {                                            
-        // TODO add your handling code here:
+    	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+         if(wdws != null)
+         {
+         	wdws.dispose();
+         }
     }                                           
 
     private void ProjectsActionPerformed(ActionEvent evt) {                                         
@@ -329,13 +352,22 @@ public class UserInvitationPage extends JFrame {
     }                                        
 
     private void RequestsActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    	UserRequestPage usrmsgp = new UserRequestPage(usrname);
+        usrmsgp.setVisible(true);
+        Window win = SwingUtilities.getWindowAncestor(Requests);
+        win.dispose();
     }                                        
 
     private void AgendaActionPerformed(ActionEvent evt) {                                       
         // TODO add your handling code here:
-    }                                      
-
+    } 
+    private void InvitationActionPerformed(ActionEvent evt)
+    {
+    	UserInvitationPage usr_inv_page = new UserInvitationPage(usrname);
+        usr_inv_page.setVisible(true);
+        Window win = SwingUtilities.getWindowAncestor(Invitation);
+        win.dispose();
+    }
     private void inv_tableMouseClicked(MouseEvent evt) {                                           
         // TODO add your handling code here:
     }                                          
@@ -366,7 +398,7 @@ public class UserInvitationPage extends JFrame {
     private JButton Requests;
     private JPanel body;
     private JButton deconnexion;
-    private JButton invitation_button;
+    private JButton Invitation;
     private JLabel usr_name_lab;
     private JLabel inv_lab;
     private JLabel proj_join_lab;
@@ -378,9 +410,9 @@ public class UserInvitationPage extends JFrame {
     protected String usrname ;
                       
     
-    public static void main (String args[])
+  /*  public static void main (String args[])
     {
     	UserInvitationPage ursinv = new UserInvitationPage("test");
     	ursinv.setVisible(true);
-    }
+    }*/
 }
