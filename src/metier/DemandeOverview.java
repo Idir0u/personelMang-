@@ -443,6 +443,7 @@ public class DemandeOverview extends JFrame {
             ResultSet rs = pstmt6.executeQuery();
             if(rs.next()) {
             	int idProjet = rs.getInt(1);
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(titre_evenement, description_evenement, ...)///////////////////
             	PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre, description, idProjet) VALUES ('creation', 'creation du projet', ?)");
             	PreparedStatement pstmt7 = conn.prepareStatement("UPDATE DEMANDE SET IdProjet = ? WHERE IdDemande = ?");
             	pstmt7.setInt(1, idProjet);
@@ -487,17 +488,7 @@ public class DemandeOverview extends JFrame {
             pstmt4.setInt(1, idProjet);
             pstmt5.setInt(1, idProjet);
             pstmt6.setInt(1, idProjet);
-            
-            /*
-            int et4 = pstmt4.executeUpdate();
-            int et5 = pstmt5.executeUpdate();
-            int et6 = pstmt6.executeUpdate();
-            int et3 = pstmt3.executeUpdate();
-            int et2 = pstmt2.executeUpdate();
-            int et1 = pstmt1.executeUpdate();*/
-            
-            
-            
+
 
             int totalAffected = pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
             

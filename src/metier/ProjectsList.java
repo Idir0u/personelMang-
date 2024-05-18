@@ -228,14 +228,14 @@ public class ProjectsList extends JFrame {
         
     	this.setVisible(false);
     	ProjectsList pl= new ProjectsList();
-    	pl.setSize(1000, 630);
+    	pl.setSize(1050, 650);
     	pl.setVisible(true);
     }
 
     public static void main(String args[]) {
         ProjectsList Usrpg = new ProjectsList();
         Usrpg.setVisible(true);
-        Usrpg.setSize(1000, 630);
+        Usrpg.setSize(1050, 650);
     }
 
     // Variables declaration - do not modify

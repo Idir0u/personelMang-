@@ -67,7 +67,6 @@ public class HomePageUser extends javax.swing.JFrame {
         Contenu = new javax.swing.JPanel();
         JScrollPane scrollPane = new JScrollPane(Contenu);
         
-
         Contenu.setLayout(new BorderLayout());
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -383,8 +382,7 @@ public class HomePageUser extends javax.swing.JFrame {
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
-    // End of variables declaration    
-
+       
     private JPanel DashBord;
     private JTable activity_table;
     /*private JButton deconnexion;
@@ -395,5 +393,7 @@ public class HomePageUser extends javax.swing.JFrame {
     private JScrollPane jScrollPane1;
     private JLabel last_connexion_date;
     protected Instant last_con_date ;
-   // protected static String usrname ; 
+    // protected static String usrname ; 
+
+    // End of variables declaration 
 }

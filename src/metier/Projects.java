@@ -78,6 +78,14 @@ public class Projects extends javax.swing.JFrame {
         projectsLabel.setForeground(Color.white);
         labelPanel.setBackground(new java.awt.Color(0, 51, 204));
         labelPanel.add(projectsLabel);
+        //IF a user does not have a project
+        JPanel emptyPanel = new JPanel();
+        JLabel emptyLabel = new JLabel("Your are not associated with any project !!");
+        emptyLabel.setFont(new Font("Segoe UI", Font.BOLD, 17));
+        emptyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        emptyLabel.setForeground(Color.red);
+        emptyPanel.setBackground(Color.white);
+        emptyPanel.add(emptyLabel);
 
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
@@ -90,7 +98,11 @@ public class Projects extends javax.swing.JFrame {
         }
 
         Contenu.add(labelPanel, BorderLayout.NORTH);
+        if(idprojets.size() == 0) {
+        	Contenu.add(emptyPanel, BorderLayout.CENTER);
+        }else {
         Contenu.add(projectsPanel, BorderLayout.CENTER);
+        }
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
 
@@ -269,7 +281,7 @@ public class Projects extends javax.swing.JFrame {
     } 
 
     public static void main(String args[]) {
-        Projects p = new Projects(0,"oubeza_idir");
+        Projects p = new Projects(9,"oubeza_idir");
         p.setVisible(true);
         p.setSize(1050, 650);
     }
