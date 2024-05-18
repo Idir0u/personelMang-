@@ -185,7 +185,8 @@ public class LoginForm extends JFrame {
                     JOptionPane.showMessageDialog(null, "Please enter your username and password !!", "Missing Information", JOptionPane.ERROR_MESSAGE);
                 }else{
                 	if (username.endsWith("-adm")) {
-                    authenticateAdminLogin(username, password);
+                		String adminUsername = username.substring(0, username.length() - 4);
+                	    authenticateAdminLogin(adminUsername, password);
                     System.out.println("Admin login successful.");
                     }else if(username.equalsIgnoreCase("guest") && password.equalsIgnoreCase("guest")){
                     	System.out.println("Guest login successful");
@@ -312,9 +313,10 @@ public class LoginForm extends JFrame {
             if (rs.next()) {
                 // if exists
                 //HomePage hp = new HomePage(/*new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))*/);
-                this.setVisible(false);
-                HomePageUser hmu = new HomePageUser(getId(username),username);//!!!!!!!!!!!!!!!!!homePageAdmin_platform
+                
+                HomePageAdmin hmu = new HomePageAdmin(username);//!!!!!!!!!!!!!!!!!homePageAdmin_platform
                 hmu.setVisible(true);
+                this.setVisible(false);
  
             }else{
                 // if not
