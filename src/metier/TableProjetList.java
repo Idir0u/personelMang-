@@ -193,8 +193,8 @@ public class TableProjetList extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == button1) {//About the project
-                int value = (int) table.getValueAt(selectedRow, 0);
-                String type = (String) table.getValueAt(selectedRow, 5);
+                /*int value = (int) table.getValueAt(selectedRow, 0);
+                String type = (String) table.getValueAt(selectedRow, 5);*/
                 JFrame frame = new JFrame("View Project");
                 frame.setLocationRelativeTo(null);
                 frame.setSize(520, 400);

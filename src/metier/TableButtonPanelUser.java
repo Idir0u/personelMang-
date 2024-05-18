@@ -132,12 +132,9 @@ public class TableButtonPanelUser extends JPanel {
         table = new JTable(model);
 
         // Set button column size
-        table.getColumnModel().getColumn(6).setPreferredWidth(30);////////////////////////////////////////////////////!!!!!!!!!/////////////////
-
-        // Add action listener to button column
+        table.getColumnModel().getColumn(6).setPreferredWidth(28);////////////////////////////////////////////////////!!!!!!!!!/////////////////
         table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
-        //table.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
-        table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(this.parent));
+        table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(parent));
         
      // Adjust column widths
         /*for (int i = 0; i < table.getColumnCount(); i++) {
@@ -188,7 +185,7 @@ public class TableButtonPanelUser extends JPanel {
 
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(40, 40);
+            return new Dimension(36, 36);
         }
     }
     // Button renderer class
