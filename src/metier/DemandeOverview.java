@@ -2,13 +2,12 @@ package metier;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
+import java.util.Date;
+
 //import java.lang.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -283,35 +282,37 @@ public class DemandeOverview extends JFrame {
     	// if it's closure -> public can refuse, but destroy the list of members and admins and the 2groups in the table groupe and user_group
     	try {
 	    	if(!projectEtat.getText().equalsIgnoreCase("Private") || !type.equalsIgnoreCase("closure")) {//admin can't refuse the closure of a private project
-	        	try {
-	        		
-	                PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
-	                pstmt.setObject(1,"Refused");
-	                pstmt.setInt(2, this.id);
-	                int et = pstmt.executeUpdate();                
-	                if (et >= 1) {
-	                    System.out.println("the status update has been done succesfuly"); 
-	                    
-	                    
-	                }else {
-	                	System.out.println(et +"lines affected!");
-	                	JOptionPane.showMessageDialog(null, "0 lines affected!", "Action unsuccesful", JOptionPane.ERROR_MESSAGE);
-	                	Window window = SwingUtilities.getWindowAncestor((Component) evt.getSource());
-	                    if (window != null) {
-	                        window.dispose();
-	                    }
-	                    return;
-	                }
-	            } catch (Exception e) {
-	                            System.out.println("Exception : "+ e);
-	                            JOptionPane.showMessageDialog(null, "Exception : "+ e, " DataBase Connection Error", JOptionPane.ERROR_MESSAGE);
-	                            Window window = SwingUtilities.getWindowAncestor((Component) evt.getSource());
-	    	                    if (window != null) {
-	    	                        window.dispose();
-	    	                    }
-	    	                    return;
-	            }
-	        	if(type.equalsIgnoreCase("closure")) {
+	        	if (type.equalsIgnoreCase("creation")) {
+					try {//create a function that contains the part below so that the update is not done untill the all the modification are done
+
+						PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
+						pstmt.setObject(1, "Refused");
+						pstmt.setInt(2, this.id);
+						int et = pstmt.executeUpdate();
+						if (et >= 1) {
+							System.out.println("the status update has been done succesfuly");
+
+						} else {
+							System.out.println(et + "lines affected!");
+							JOptionPane.showMessageDialog(null, "0 lines affected!", "Action unsuccesful",
+									JOptionPane.ERROR_MESSAGE);
+							Window window = SwingUtilities.getWindowAncestor((Component) evt.getSource());
+							if (window != null) {
+								window.dispose();
+							}
+							return;
+						}
+					} catch (Exception e) {
+						System.out.println("Exception : " + e);
+						JOptionPane.showMessageDialog(null, "Exception : " + e, " DataBase Connection Error",
+								JOptionPane.ERROR_MESSAGE);
+						Window window = SwingUtilities.getWindowAncestor((Component) evt.getSource());
+						if (window != null) {
+							window.dispose();
+						}
+						return;
+					} 
+				}else if(type.equalsIgnoreCase("closure")) {
 	        		//destroy the relationships of admins and members with there groups, then also the group (line ine db) itself, but not the project
 	        		closePublicProjectRefuse(idProjet, idGroupe);
 	        		JOptionPane.showMessageDialog(null, "the update has been done succesfuly", "Action conformation", JOptionPane.OK_OPTION);
@@ -335,38 +336,73 @@ public class DemandeOverview extends JFrame {
     	}
     }
     //-----------------------------------------
-    private void closePublicProjectRefuse(int idProjet, int idGroupe){
-    	try {
-    		
-    		System.out.println("I'm in closePublicProjectRefuse");
-    		if (idProjet <= 0 || idGroupe <= 0 ) {
+    private void closePublicProjectRefuse(int idProjet, int idGroupe) {
+        try {
+            System.out.println("I'm in closePublicProjectRefuse");
+            if (idProjet <= 0 || idGroupe <= 0 ) {
                 System.out.println("Invalid parameters provided.");
                 return;
             }
+
+            // Désactiver l'auto-commit
+            conn.setAutoCommit(false);
+
+            // Désactiver temporairement les contraintes de clés étrangères
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 0;");
+            
+            // Opérations de mise à jour et suppression
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
             PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE IdGroupe = ? OR IdGroupe = ?");
             PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE IdGroupe = ? OR IdGroupe = ?");
-            PreparedStatement pstmt4 = conn.prepareStatement("UPDATE PROJET SET etat = 'Closed' WHERE  IdProjet = ?");
+            PreparedStatement pstmt4 = conn.prepareStatement("UPDATE PROJET SET etat = 'Closed' WHERE IdProjet = ?");
+            
+            pstmt.setObject(1, "Refused");
+            pstmt.setInt(2, this.id);
             
             pstmt2.setInt(1, idGroupe - 1);
             pstmt2.setInt(2, idGroupe);
             
-            pstmt3.setInt(1,idGroupe - 1);
-            pstmt3.setInt(2,idGroupe);
+            pstmt3.setInt(1, idGroupe - 1);
+            pstmt3.setInt(2, idGroupe);
             
             pstmt4.setInt(1, idProjet);
             
-            int et =  pstmt3.executeUpdate() + pstmt2.executeUpdate(); 
-            int updt = pstmt4.executeUpdate(); 
-            if (et + updt>= 0) {
-                System.out.println("the delete has been done succesfuly; " + et + " lines affected!");          	
-            }else {
-            	System.out.println(et +"lines affected!");
+            int et = pstmt.executeUpdate() + pstmt2.executeUpdate() + pstmt3.executeUpdate(); 
+            int updt = pstmt4.executeUpdate();
+            
+            if (et + updt >= 4) {
+                System.out.println("The delete has been done successfully; " + et + " lines affected!");
+            } else {
+                System.out.println(et + " lines affected!");
             }
+            
+            // Réactiver les contraintes de clés étrangères
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1;");
+            
+            // Commit des transactions
+            conn.commit();
+            pstmt2.close();
+            pstmt3.close();
+            pstmt4.close();
         } catch (Exception e) {
-                        System.out.println("Exception : "+ e);
+            try {
+                // Rollback en cas d'erreur
+                conn.rollback();
+            } catch (SQLException se) {
+                System.out.println("Rollback exception: " + se);
+            }
+            System.out.println("Exception: " + e);
+        } finally {
+            try {
+                // Réactiver l'auto-commit
+                conn.setAutoCommit(true);
+            } catch (SQLException se) {
+                System.out.println("Auto-commit exception: " + se);
+            }
         }
-    	
     }
+
     ///////////////////////////////////////////////////////////////////////////////-
     private void acceptButtonActionPerformed(ActionEvent evt,int idUser, int idProjet, int idGroupe, String nom_court, String nom_long, String description, String theme, String type, boolean isPublic) {
     	//update the state(etat) of the demande from pending into Accepted
@@ -376,20 +412,7 @@ public class DemandeOverview extends JFrame {
     	//ps: idadmin = idmember +(-) 1;
     	//if it's closure -> public destroy everything the project line, 2 groupe lines(grpadmin, grpmember), all the realtionships lines in group_utilisateur(DELETE * FROM UTIL_GRP WHERE IDGROUP= idgrp_admin and (+-1)idgrp_membre
     	//if it's creation -> public and private (no condition) the only diff is in the insert line (etat: private ou public)
-    	
-    	try {
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
-            pstmt.setObject(1,"Accepted");
-            pstmt.setInt(2, this.id);
-            int et = pstmt.executeUpdate();                
-            if (et >= 1) {
-                System.out.println("the status update has been done succesfuly");          	
-            }else {
-            	System.out.println(et +"lines affected!");
-            }
-        } catch (Exception e) {
-                        System.out.println("Exception : "+ e);
-        }
+
     	if(type.equalsIgnoreCase("closure")) {
         	//if it's closure -> public destroy everything the project line, 2 groupe lines(grpadmin, grpmember),
     		//all the realtionships lines in group_utilisateur(DELETE * FROM UTIL_GRP WHERE IDGROUP= idgrp_admin and (+-1)idgrp_membre;
@@ -412,59 +435,92 @@ public class DemandeOverview extends JFrame {
     	
     }
     //-----------------------------------------
-    private void createProject(int idUser,String nom_court, String nom_long, String description, String theme, String type, boolean isPublic) {
-    	try {
+    private void createProject(int idUser, String nom_court, String nom_long, String description, String theme, String type, boolean isPublic) {
+        try {
+            conn.setAutoCommit(false); // Démarrer la transaction
 
-            PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court, nom_long, description, isPublic, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled') ");
-            PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court
-            PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court-adm
-            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO UTILISATEUR_GROUPE(idUtilsateur, idGroupe) VALUES(?, (SELECT (idGroupe) FROM GROUPE WHERE nom_groupe = ?)  )");//idUser, nom_court-adm
+            // Désactiver les contraintes de clés étrangères
+            PreparedStatement disableFK = conn.prepareStatement("SET FOREIGN_KEY_CHECKS=0;");
+            disableFK.executeUpdate();
+
+            // Préparer les instructions SQL
             
+                PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");   
+            PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court, nom_long, description, isPublic, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled')");
+            PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");
+            PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");
+            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO ULILISATEUR_GROUPE(idUtilisateur, idGroupe) VALUES(?, (SELECT idGroupe FROM GROUPE WHERE nom_groupe = ?))");
             PreparedStatement pstmt6 = conn.prepareStatement("SELECT idProjet FROM PROJET WHERE nom_court = ?");
+
+            // Définir les paramètres pour les instructions SQL
             
-            
-    
-            pstmt1.setString(1,nom_court);
-            pstmt1.setString(2,nom_long);
-            pstmt1.setString(3,description);
-            pstmt1.setBoolean(4,isPublic);
-            pstmt1.setString(5,theme);
-            pstmt1.setString(6,type);
-            
-            
+            pstmt.setObject(1,"Accepted");
+            pstmt.setInt(2, this.id);  
+            pstmt1.setString(1, nom_court);
+            pstmt1.setString(2, nom_long);
+            pstmt1.setString(3, description);
+            pstmt1.setBoolean(4, isPublic);
+            pstmt1.setString(5, theme);
+            pstmt1.setString(6, type);
+
             pstmt2.setString(1, nom_court);
-            pstmt3.setString(1,  nom_court + "-adm");
-            
+            pstmt3.setString(1, nom_court + "-adm");
+
             pstmt4.setInt(1, idUser);
             pstmt4.setString(2, nom_court + "-adm");
-            int et = pstmt1.executeUpdate() + pstmt2.executeUpdate() + pstmt3.executeUpdate() + pstmt4.executeUpdate(); 
+
+            // Exécuter les instructions SQL
+            int et =pstmt.executeUpdate() +  pstmt1.executeUpdate() + pstmt2.executeUpdate() + pstmt3.executeUpdate() + pstmt4.executeUpdate();
+
             pstmt6.setString(1, nom_court);
-            
             ResultSet rs = pstmt6.executeQuery();
-            if(rs.next()) {
-            	int idProjet = rs.getInt(1);
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!(titre_evenement, description_evenement, ...)///////////////////
-            	PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre, description, idProjet) VALUES ('creation', 'creation du projet', ?)");
-            	PreparedStatement pstmt7 = conn.prepareStatement("UPDATE DEMANDE SET IdProjet = ? WHERE IdDemande = ?");
-            	pstmt7.setInt(1, idProjet);
-            	pstmt7.setInt(2, id);
+            if (rs.next()) {
+                int idProjet = rs.getInt(1);
+
+                PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre, description, idProjet) VALUES ('creation', 'creation du projet', ?)");
+                PreparedStatement pstmt7 = conn.prepareStatement("UPDATE DEMANDE SET IdProjet = ? WHERE IdDemande = ?");
+                pstmt7.setInt(1, idProjet);
+                pstmt7.setInt(2, id);
                 pstmt5.setInt(1, idProjet);
                 pstmt7.executeUpdate();
-                et *= pstmt5.executeUpdate();
-            	
+                et += pstmt5.executeUpdate();
             }
-              
-            if (et >= 1) {
-                System.out.println("the update has been done succesfuly");          	
-            }else {
-            	System.out.println("creating the project has failed");
+
+            // Réactiver les contraintes de clés étrangères
+            PreparedStatement enableFK = conn.prepareStatement("SET FOREIGN_KEY_CHECKS=1;");
+            enableFK.executeUpdate();
+
+            // Valider la transaction si tout est réussi
+            if (et > 0) {
+                conn.commit();
+                pstmt1.close();
+                pstmt2.close();
+                pstmt3.close();
+                pstmt4.close();
+                pstmt6.close();
+                System.out.println("The update(creation) has been done successfully");
+            } else {
+                conn.rollback();
+                System.out.println("Creation of the project was not fully done");
             }
         } catch (Exception e) {
-              System.out.println("Exception : "+ e);
+            try {
+                // Annuler la transaction en cas d'exception
+                conn.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception during rollback: " + ex);
+            }
+            System.out.println("Exception: " + e);
+        } finally {
+            try {
+                // Réinitialiser le mode de commit automatique
+                conn.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println("Exception during setting auto commit: " + ex);
+            }
         }
-    	
-    	
     }
+
     //-----------------------------------------
     private void closeProjectAccept(int idProjet, int idGroupe, String nom_court) {
         try {
@@ -473,13 +529,23 @@ public class DemandeOverview extends JFrame {
                 return;
             }
 
+            // Désactiver l'auto-commit
+            conn.setAutoCommit(false);
+
+            // Désactiver temporairement les contraintes de clés étrangères
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 0;");
+            
+            // Opérations de suppression
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?"); 
             PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM PROJET WHERE idProjet = ?");
             PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE idGroupe = ? OR idGroupe = ?");
             PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
             PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM EVENEMENT WHERE idProjet = ?");
             PreparedStatement pstmt5 = conn.prepareStatement("DELETE FROM MESSAGE WHERE idProjet = ?");
             PreparedStatement pstmt6 = conn.prepareStatement("DELETE FROM DOCUMENT WHERE idProjet = ?");
-            
+            pstmt.setObject(1,"Accepted");
+            pstmt.setInt(2, this.id);  
             pstmt1.setInt(1, idProjet);
             pstmt2.setInt(1, idGroupe);
             pstmt2.setInt(2, idGroupe - 1);
@@ -489,18 +555,43 @@ public class DemandeOverview extends JFrame {
             pstmt5.setInt(1, idProjet);
             pstmt6.setInt(1, idProjet);
 
-
-            int totalAffected = pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
+            int totalAffected = pstmt.executeUpdate() + pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
             
-            if (totalAffected >= 5) {
+            if (totalAffected >= 7) {
                 System.out.println("All statements executed successfully.");
             } else {
                 System.out.println("Some statements failed. Total affected rows: " + totalAffected);
             }
+            
+            // Réactiver les contraintes de clés étrangères
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1;");
+            
+            // Commit des transactions
+            conn.commit();
+            pstmt1.close();
+            pstmt2.close();
+            pstmt3.close();
+            pstmt4.close();
+            pstmt5.close();
+            pstmt6.close();
         } catch (Exception e) {
+            try {
+                // Rollback en cas d'erreur
+                conn.rollback();
+            } catch (SQLException se) {
+                System.out.println("Rollback exception: " + se);
+            }
             System.out.println("Exception: " + e);
+        } finally {
+            try {
+                // Réactiver l'auto-commit
+                conn.setAutoCommit(true);
+            } catch (SQLException se) {
+                System.out.println("Auto-commit exception: " + se);
+            }
         }
     }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String args[]) {

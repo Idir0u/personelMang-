@@ -245,7 +245,6 @@ public class ProjectsList extends JFrame {
     	Profile pl= new Profile(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
-    	this.setVisible(false);
         
     }
 
@@ -277,7 +276,7 @@ public class ProjectsList extends JFrame {
         
     	
     	Requests rq= new Requests(username);
-    	rq.setSize(1000, 600);
+    	rq.setSize(1050, 650);
     	rq.setVisible(true);
     	this.setVisible(false);
     }

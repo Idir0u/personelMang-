@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -73,31 +74,57 @@ public class VerifierSupprimeDemande extends javax.swing.JFrame {
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
-    private void acceptButtonActionPerformed(ActionEvent evt, int idDemande) {
-            try {
-                if (idDemande <= 0) {
-                    System.out.println("Invalid parameters provided.");
-                    return;
-                }
-
-                PreparedStatement pstmt0 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idDemande = ?"); 
-                pstmt0.setInt(1, idDemande);
-
-                int totalAffected = pstmt0.executeUpdate();                
-                if (totalAffected >= 1) {
-                    System.out.println("All statements executed successfully.");
-                } else {
-                    System.out.println("Some statements failed. Total affected rows: " + totalAffected);
-                }
-                pstmt0.close();
-
-            } catch (Exception e) {
-                System.out.println("Exception: " + e);
-            }
-            
-        
     }
+    private void acceptButtonActionPerformed(ActionEvent evt, int idDemande) {
+        try {
+            if (idDemande <= 0) {
+                System.out.println("Invalid parameters provided.");
+                return;
+            }
+
+            // Désactiver l'auto-commit
+            conn.setAutoCommit(false);
+
+            // Désactiver temporairement les contraintes de clés étrangères
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 0;");
+
+            PreparedStatement pstmt0 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idDemande = ?");
+            pstmt0.setInt(1, idDemande);
+
+            int totalAffected = pstmt0.executeUpdate();                
+            if (totalAffected >= 1) {
+                System.out.println("All statements executed successfully.");
+            } else {
+                System.out.println("Some statements failed. Total affected rows: " + totalAffected);
+            }
+
+            // Réactiver les contraintes de clés étrangères
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+            // Commit des transactions
+            conn.commit();
+
+            pstmt0.close();
+            stmt.close();
+        } catch (Exception e) {
+            try {
+                // Rollback en cas d'erreur
+                conn.rollback();
+            } catch (SQLException se) {
+                System.out.println("Rollback exception: " + se);
+            }
+            System.out.println("Exception: " + e);
+        } finally {
+            try {
+                // Réactiver l'auto-commit
+                conn.setAutoCommit(true);
+            } catch (SQLException se) {
+                System.out.println("Auto-commit exception: " + se);
+            }
+        }
+    }
+
 
     /**
      * @param args the command line arguments

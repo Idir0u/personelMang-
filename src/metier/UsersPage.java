@@ -97,9 +97,9 @@ public class UsersPage extends JFrame {
         Menu.setPreferredSize(new Dimension(180, 427));
         Menu.setLayout(new GridLayout(9, 0));
 
-        Home1.setBackground(new Color(153, 0, 204));
+        Home1.setBackground(Color.white);
         Home1.setFont(new Font("Segoe UI", 1, 14));
-        Home1.setForeground(new Color(255, 255, 255));
+        Home1.setForeground(new Color(153, 0, 204));
         Home1.setText("Home");
         Home1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         Home1.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -111,9 +111,9 @@ public class UsersPage extends JFrame {
         Menu.add(Home1);
 
         Users.setFont(new Font("Segoe UI", 1, 14)); 
-        Users.setForeground(new Color(153, 0, 204));
+        Users.setForeground(Color.white);
         Users.setText("Users");
-        Users.setBackground(Color.white);
+        Users.setBackground(new Color(153, 0, 204));
         Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Users.addActionListener(new ActionListener() {
@@ -273,7 +273,6 @@ public class UsersPage extends JFrame {
     	Profile pl= new Profile(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
-    	this.setVisible(false);
         
     }
 
@@ -305,7 +304,7 @@ public class UsersPage extends JFrame {
         
     	
     	Requests rq= new Requests(username);
-    	rq.setSize(1000, 600);
+    	rq.setSize(1050, 650);
     	rq.setVisible(true);
     	this.setVisible(false);
     }

@@ -298,7 +298,6 @@ public class Requests extends JFrame {
     	Profile pl= new Profile(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
-    	this.setVisible(false);
         
     }
 
@@ -330,7 +329,7 @@ public class Requests extends JFrame {
         
     	
     	Requests rq= new Requests(username);
-    	rq.setSize(1000, 600);
+    	rq.setSize(1050, 650);
     	rq.setVisible(true);
     	this.setVisible(false);
     }
@@ -350,28 +349,12 @@ public class Requests extends JFrame {
     }
     
     public static void main(String args[]) {
-        
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Requests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Requests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Requests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Requests.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
 
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	Requests rq = new Requests("oubeza_idir-adm");
+            	Requests rq = new Requests("oubeza_idir");
             	rq.setSize(1050, 650);
             	rq.setVisible(true);
             }

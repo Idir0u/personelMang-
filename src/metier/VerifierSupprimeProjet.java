@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -75,59 +76,87 @@ public class VerifierSupprimeProjet extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void acceptButtonActionPerformed(ActionEvent evt, int idProjet) {
-            try {
-                if (idProjet <= 0) {
-                    System.out.println("Invalid parameters provided.");
-                    return;
-                }
-                PreparedStatement pstmt0 = conn.prepareStatement("SELECT idGroupe FROM GROUPE WHERE nom_groupe = (SELECT nom_court FROM PROJET WHERE IdProjet = ? )  ");
-                pstmt0.setInt(1, idProjet);
-                ResultSet rs = pstmt0.executeQuery();
-                if (!rs.next()) {
-                    System.out.println("No group found for the given project.");
-                    return;
-                }
-                int idGroupe = rs.getInt(1);
-                PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM PROJET WHERE idProjet = ?");
-                PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE idGroupe = ? OR idGroupe = ?");
-                PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
-                PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM EVENEMENT WHERE idProjet = ?");
-                PreparedStatement pstmt5 = conn.prepareStatement("DELETE FROM MESSAGE WHERE idProjet = ?");
-                PreparedStatement pstmt6 = conn.prepareStatement("DELETE FROM DOCUMENT WHERE idProjet = ?");
-                PreparedStatement pstmt7 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idProjet = ?");
-                
-                pstmt1.setInt(1, idProjet);
-                pstmt2.setInt(1, idGroupe);
-                pstmt2.setInt(2, idGroupe + 1);
-                pstmt3.setInt(1, idGroupe);
-                pstmt3.setInt(2, idGroupe + 1);
-                pstmt4.setInt(1, idProjet);
-                pstmt5.setInt(1, idProjet);
-                pstmt6.setInt(1, idProjet);
-                pstmt7.setInt(1, idProjet);
-
-                
-                int totalAffected = pstmt7.executeUpdate() + pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
-                
-                if (totalAffected >= 5) {
-                    System.out.println("All statements executed successfully.");
-                } else {
-                    System.out.println("Some statements failed. Total affected rows: " + totalAffected);
-                }
-                rs.close();
-                pstmt0.close();
-                pstmt1.close();
-                pstmt2.close();
-                pstmt3.close();
-                pstmt4.close();
-                pstmt5.close();
-                pstmt6.close();
-            } catch (Exception e) {
-                System.out.println("Exception: " + e);
+        try {
+            if (idProjet <= 0) {
+                System.out.println("Invalid parameters provided.");
+                return;
             }
-            
-        
+
+            // Désactiver l'auto-commit
+            conn.setAutoCommit(false);
+
+            // Désactiver temporairement les contraintes de clés étrangères
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 0;");
+
+            PreparedStatement pstmt0 = conn.prepareStatement("SELECT idGroupe FROM GROUPE WHERE nom_groupe = (SELECT nom_court FROM PROJET WHERE IdProjet = ?)");
+            pstmt0.setInt(1, idProjet);
+            ResultSet rs = pstmt0.executeQuery();
+            if (!rs.next()) {
+                System.out.println("No group found for the given project.");
+                return;
+            }
+            int idGroupe = rs.getInt(1);
+
+            PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM PROJET WHERE idProjet = ?");
+            PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE idGroupe = ? OR idGroupe = ?");
+            PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM UTILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
+            PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM EVENEMENT WHERE idProjet = ?");
+            PreparedStatement pstmt5 = conn.prepareStatement("DELETE FROM MESSAGE WHERE idProjet = ?");
+            PreparedStatement pstmt6 = conn.prepareStatement("DELETE FROM DOCUMENT WHERE idProjet = ?");
+            PreparedStatement pstmt7 = conn.prepareStatement("DELETE FROM DEMANDE WHERE idProjet = ?");
+
+            pstmt1.setInt(1, idProjet);
+            pstmt2.setInt(1, idGroupe);
+            pstmt2.setInt(2, idGroupe + 1);
+            pstmt3.setInt(1, idGroupe);
+            pstmt3.setInt(2, idGroupe + 1);
+            pstmt4.setInt(1, idProjet);
+            pstmt5.setInt(1, idProjet);
+            pstmt6.setInt(1, idProjet);
+            pstmt7.setInt(1, idProjet);
+
+            int totalAffected = pstmt7.executeUpdate() + pstmt4.executeUpdate() + pstmt5.executeUpdate() + pstmt6.executeUpdate() + pstmt3.executeUpdate() + pstmt2.executeUpdate() + pstmt1.executeUpdate();
+
+            if (totalAffected >= 5) {
+                System.out.println("All statements executed successfully.");
+            } else {
+                System.out.println("Some statements failed. Total affected rows: " + totalAffected);
+            }
+
+            // Réactiver les contraintes de clés étrangères
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1;");
+
+            // Commit des transactions
+            conn.commit();
+
+            rs.close();
+            pstmt0.close();
+            pstmt1.close();
+            pstmt2.close();
+            pstmt3.close();
+            pstmt4.close();
+            pstmt5.close();
+            pstmt6.close();
+            pstmt7.close();
+        } catch (Exception e) {
+            try {
+                // Rollback en cas d'erreur
+                conn.rollback();
+            } catch (SQLException se) {
+                System.out.println("Rollback exception: " + se);
+            }
+            System.out.println("Exception: " + e);
+        } finally {
+            try {
+                // Réactiver l'auto-commit
+                conn.setAutoCommit(true);
+            } catch (SQLException se) {
+                System.out.println("Auto-commit exception: " + se);
+            }
+        }
     }
+
 
     /**
      * @param args the command line arguments

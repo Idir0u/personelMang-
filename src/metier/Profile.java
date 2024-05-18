@@ -30,7 +30,7 @@ public class Profile extends javax.swing.JFrame {
         tableProjets = new TableProjets();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(new Dimension(1000, 600));
+        setSize(new Dimension(1050, 650));
 
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
@@ -86,17 +86,7 @@ public class Profile extends javax.swing.JFrame {
         Contenu.setBackground(new java.awt.Color(255, 255, 255));
         Contenu.setLayout(new java.awt.GridBagLayout());
 
-        lastseenValue.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lastseenValue.setForeground(new java.awt.Color(153, 153, 153));
-        lastseenValue.setText("dateDerniereconnexion");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 103;
-        gridBagConstraints.ipady = 20;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Contenu.add(lastseenValue, gridBagConstraints);
+        
 
         iconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-profile-100.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -134,18 +124,7 @@ public class Profile extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(60, 20, 0, 432);
         Contenu.add(username, gridBagConstraints);
 
-        lastseen.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lastseen.setForeground(new java.awt.Color(0, 0, 102));
-        lastseen.setText("Last seen :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 13;
-        gridBagConstraints.ipady = 18;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 80, 0, 0);
-        Contenu.add(lastseen, gridBagConstraints);
+        
 
         email.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         email.setForeground(new java.awt.Color(0, 0, 102));
@@ -175,17 +154,42 @@ public class Profile extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 0, 0);
         Contenu.add(emailValue, gridBagConstraints);
 
-        Projects.setFont(new java.awt.Font("Segoe UI", 1, 16)); 
-        Projects.setForeground(new java.awt.Color(0, 0, 102));
-        Projects.setText("Projects :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 80, 10, 0);
-        Contenu.add(Projects, gridBagConstraints);
+        if (iduser != 0) {
+        	lastseen.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+            lastseen.setForeground(new java.awt.Color(0, 0, 102));
+            lastseen.setText("Last seen :");
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 3;
+            gridBagConstraints.gridwidth = 2;
+            gridBagConstraints.ipadx = 13;
+            gridBagConstraints.ipady = 18;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new java.awt.Insets(0, 80, 0, 0);
+            Contenu.add(lastseen, gridBagConstraints);
+            
+            lastseenValue.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+            lastseenValue.setForeground(new java.awt.Color(153, 153, 153));
+            lastseenValue.setText("dateDerniereconnexion");
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 2;
+            gridBagConstraints.gridy = 3;
+            gridBagConstraints.gridwidth = 2;
+            gridBagConstraints.ipadx = 103;
+            gridBagConstraints.ipady = 20;
+            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            Contenu.add(lastseenValue, gridBagConstraints);
+            
+	        Projects.setFont(new java.awt.Font("Segoe UI", 1, 16)); 
+	        Projects.setForeground(new java.awt.Color(0, 0, 102));
+	        Projects.setText("Projects :");
+	        gridBagConstraints = new java.awt.GridBagConstraints();
+	        gridBagConstraints.gridx = 0;
+	        gridBagConstraints.gridy = 4;
+	        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+	        gridBagConstraints.insets = new java.awt.Insets(20, 80, 10, 0);
+	        Contenu.add(Projects, gridBagConstraints);
 
-        if (iduser == 0) {
 			tableProjets.setFont(new java.awt.Font("Segoe UI", 0, 14));
 			tableProjets.setPreferredSize(new Dimension(800, 300)); // Adjusted to fit within the frame
 			tableProjets.setForeground(new java.awt.Color(0, 0, 0));
@@ -205,7 +209,7 @@ public class Profile extends javax.swing.JFrame {
         pack();
     }
     public Profile(String username) {
-    	this(0, username);
+    	this(0, username + "-adm");
     }
     
 
@@ -215,17 +219,34 @@ public class Profile extends javax.swing.JFrame {
     
     
     private void fetchUserData(String usrname) {
+    	
         try {
-            String query = "SELECT nom, prenom, username, email, derniere_date_connexion FROM utilisateur WHERE username = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, usrname);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-            	fullename.setText(rs.getString("nom") + " " + rs.getString("prenom"));
-                username.setText(rs.getString("username"));
-                emailValue.setText(rs.getString("email"));
-                lastseenValue.setText(rs.getString("derniere_date_connexion"));
-            }
+        	
+            if (usrname.endsWith("-adm")) {
+            	String query = "SELECT nom, prenom, username, email FROM administrateur_plateforme WHERE username = ?";
+				PreparedStatement ps = conn.prepareStatement(query);
+				String adminUsername = usrname.substring(0, usrname.length() - 4);
+				ps.setString(1, adminUsername);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					fullename.setText(rs.getString("nom") + " " + rs.getString("prenom"));
+					username.setText(rs.getString("username"));
+					emailValue.setText(rs.getString("email"));
+					//lastseenValue.setText(rs.getString("derniere_date_connexion"));
+				} 
+				
+			}else {
+				String query = "SELECT nom, prenom, username, email, derniere_date_connexion FROM utilisateur WHERE username = ?";
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setString(1, usrname);
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					fullename.setText(rs.getString("nom") + " " + rs.getString("prenom"));
+					username.setText(rs.getString("username"));
+					emailValue.setText(rs.getString("email"));
+					lastseenValue.setText(rs.getString("derniere_date_connexion"));
+				} 
+			}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,7 +255,10 @@ public class Profile extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Profile(3, "oubeza_idir").setVisible(true);
+                Profile pf= new Profile("id_Oubeza");
+                pf.setSize(new Dimension(1050, 650));
+                pf.setVisible(true);
+                
             }
         });
     }
