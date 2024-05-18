@@ -120,7 +120,7 @@ public class HomePageAdmin extends JFrame {
         Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Username.setText(username);
+        Username.setText(username + "-adm");
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -162,25 +162,12 @@ public class HomePageAdmin extends JFrame {
         Home1.setText("Home");
         Home1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         Home1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-       /* Home1.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Home1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 Home1ActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Home1);
-
-        Messages.setFont(new Font("Segoe UI", 1, 14));
-        Messages.setBackground(Color.white);
-        Messages.setForeground(new Color(153, 0, 204));
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Messages.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });*/
-        Menu.add(Messages);
 
         Users.setFont(new Font("Segoe UI", 1, 14)); 
         Users.setBackground(Color.white);
@@ -188,11 +175,11 @@ public class HomePageAdmin extends JFrame {
         Users.setText("Users");
         Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Users.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Users.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 UsersActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Users);
 
         Projects.setFont(new Font("Segoe UI", 1, 14)); // NOI18N
@@ -201,11 +188,11 @@ public class HomePageAdmin extends JFrame {
         Projects.setText("Projects");
         Projects.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Projects.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Projects.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Projects.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 ProjectsActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Projects);
 
         Requests.setFont(new Font("Segoe UI", 1, 14)); 
@@ -214,11 +201,11 @@ public class HomePageAdmin extends JFrame {
         Requests.setText("Requests");
         Requests.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Requests.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Requests.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Requests.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 RequestsActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Requests);
 
         Agenda.setFont(new Font("Segoe UI", 1, 14)); 
@@ -593,6 +580,46 @@ public class HomePageAdmin extends JFrame {
             }
         });
     }
+    private void UsernameMouseClicked(MouseEvent evt) {
+    	Profile pl= new Profile(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+        
+    }
+
+    private void Home1ActionPerformed(ActionEvent evt) {
+    	HomePageAdmin pl= new HomePageAdmin(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+        
+    }
+
+
+    private void UsersActionPerformed(ActionEvent evt) {
+    	UsersPage usp= new UsersPage(username);
+    	usp.setSize(1050, 650);
+    	usp.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void ProjectsActionPerformed(ActionEvent evt) {
+    	
+    	ProjectsList pl= new ProjectsList(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void RequestsActionPerformed(ActionEvent evt) {
+        
+    	
+    	Requests rq= new Requests(username);
+    	rq.setSize(1000, 600);
+    	rq.setVisible(true);
+    	this.setVisible(false);
+    }
 
 	public String getNnbUsers() {
     	try {
@@ -700,5 +727,11 @@ public class HomePageAdmin extends JFrame {
     		System.out.println(s.getMessage());
     	}
     	return null;
+    }
+
+    public static void main(String args[]) {
+        HomePageAdmin p = new HomePageAdmin("oubeza_idir");
+        p.setVisible(true);
+        p.setSize(1050, 650);
     }
 }

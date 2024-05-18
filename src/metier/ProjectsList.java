@@ -12,8 +12,10 @@ public class ProjectsList extends JFrame {
     Connection conn = Utilitaire.getConnection();
     TableProjetList tableProjets;
     DefaultTableModel model;
+    private String username;
 
-    public ProjectsList() {
+    public ProjectsList(String username) {
+    	this.username = username;
         GridBagConstraints gridBagConstraints;
         tableProjets = new TableProjetList(this);
         body = new JPanel();
@@ -60,7 +62,7 @@ public class ProjectsList extends JFrame {
         Username.setFont(new Font("Segoe UI", 1, 14));
         Username.setForeground(new Color(255, 255, 255));
         Username.setHorizontalAlignment(SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username + "-adm");
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -224,16 +226,17 @@ public class ProjectsList extends JFrame {
             }
         });
     }
-    private void ProjectsActionPerformed(ActionEvent evt) {
+    
+	private void ProjectsActionPerformed(ActionEvent evt) {
         
     	this.setVisible(false);
-    	ProjectsList pl= new ProjectsList();
+    	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
     }
 
     public static void main(String args[]) {
-        ProjectsList Usrpg = new ProjectsList();
+        ProjectsList Usrpg = new ProjectsList("oubeza_idir-adm");
         Usrpg.setVisible(true);
         Usrpg.setSize(1050, 650);
     }

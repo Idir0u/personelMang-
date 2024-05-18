@@ -185,35 +185,40 @@ public class Profile extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(20, 80, 10, 0);
         Contenu.add(Projects, gridBagConstraints);
 
-        tableProjets.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        tableProjets.setPreferredSize(new Dimension(800, 300)); // Adjusted to fit within the frame
-        tableProjets.setForeground(new java.awt.Color(0, 0, 0));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 7; // Adjust as necessary
-        gridBagConstraints.gridheight = 1; // Added to ensure correct positioning
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 80, 20, 80); // Adjust the insets to properly position the table
-        Contenu.add(tableProjets, gridBagConstraints);
-
-        body.add(Contenu, java.awt.BorderLayout.CENTER);
+        if (iduser == 0) {
+			tableProjets.setFont(new java.awt.Font("Segoe UI", 0, 14));
+			tableProjets.setPreferredSize(new Dimension(800, 300)); // Adjusted to fit within the frame
+			tableProjets.setForeground(new java.awt.Color(0, 0, 0));
+			gridBagConstraints = new java.awt.GridBagConstraints();
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 5;
+			gridBagConstraints.gridwidth = 7; // Adjust as necessary
+			gridBagConstraints.gridheight = 1; // Added to ensure correct positioning
+			gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+			gridBagConstraints.insets = new java.awt.Insets(10, 80, 20, 80); // Adjust the insets to properly position the table
+			Contenu.add(tableProjets, gridBagConstraints);
+		}
+		body.add(Contenu, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(body, java.awt.BorderLayout.CENTER);
-        fetchUserData(iduser);
+        fetchUserData(usrname);
         pack();
     }
+    public Profile(String username) {
+    	this(0, username);
+    }
+    
 
     private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
     }
     
     
-    private void fetchUserData(int userId) {
+    private void fetchUserData(String usrname) {
         try {
-            String query = "SELECT nom, prenom, username, email, derniere_date_connexion FROM utilisateur WHERE IdUtilisateur = ?";
+            String query = "SELECT nom, prenom, username, email, derniere_date_connexion FROM utilisateur WHERE username = ?";
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, userId);
+            ps.setString(1, usrname);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
             	fullename.setText(rs.getString("nom") + " " + rs.getString("prenom"));

@@ -288,11 +288,10 @@ public class LoginForm extends JFrame {
                 if (rs.next()) {
                     // if exists
                     HomePageUser hp = new HomePageUser(this.getId(username), username);
-                    
-                    this.setVisible(false);
                     hp.setSize(1050, 650);
                     hp.setVisible(true);
                     hp.setLocationRelativeTo(null);
+                    this.setVisible(false);
                     
                     
                 }else{
@@ -306,7 +305,7 @@ public class LoginForm extends JFrame {
  	}
     public void authenticateAdminLogin(String username, String passwd) {
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ADMINISTRATEUR_PLATFORME WHERE username = ? AND mot_de_passe = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ADMINISTRATEUR_PLATEFORME WHERE username = ? AND mot_de_passe = ?");
             ps.setString(1, username);
             ps.setString(2, passwd);
             ResultSet rs = ps.executeQuery();
@@ -315,8 +314,11 @@ public class LoginForm extends JFrame {
                 //HomePage hp = new HomePage(/*new Utilisateur(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))*/);
                 
                 HomePageAdmin hmu = new HomePageAdmin(username);//!!!!!!!!!!!!!!!!!homePageAdmin_platform
+                hmu.setSize(1050, 650);
                 hmu.setVisible(true);
+                hmu.setLocationRelativeTo(null);
                 this.setVisible(false);
+                
  
             }else{
                 // if not

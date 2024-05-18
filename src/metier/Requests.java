@@ -15,13 +15,11 @@ import java.util.*;
  * @author IDIR
  */
 public class Requests extends JFrame {
+	private String username;
     
-    public Requests() {
-        initComponents();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void initComponents() {
+    public Requests(String username) {
+    	this.username = username;
+        
         GridBagConstraints gridBagConstraints;
 
         body = new JPanel();
@@ -69,7 +67,7 @@ public class Requests extends JFrame {
         Username.setFont(new Font("Segoe UI", 1, 14));
         Username.setForeground(new Color(255, 255, 255));
         Username.setHorizontalAlignment(SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username + "-adm");
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -117,19 +115,6 @@ public class Requests extends JFrame {
             }
         });
         Menu.add(Home1);
-
-        Messages.setBackground(Color.WHITE);
-        Messages.setFont(new Font("Segoe UI", 1, 14));
-        Messages.setForeground(new Color(153, 0, 204));
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Messages.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });
-        Menu.add(Messages);
 
         Users.setBackground(Color.WHITE);
         Users.setFont(new Font("Segoe UI", 1, 14)); 
@@ -310,31 +295,44 @@ public class Requests extends JFrame {
     }
 
     private void UsernameMouseClicked(MouseEvent evt) {
+    	Profile pl= new Profile(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
         
     }
 
     private void Home1ActionPerformed(ActionEvent evt) {
+    	HomePageAdmin pl= new HomePageAdmin(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
         
     }
 
-    private void MessagesActionPerformed(ActionEvent evt) {
-       
-    }
 
     private void UsersActionPerformed(ActionEvent evt) {
-        
+    	UsersPage usp= new UsersPage(username);
+    	usp.setSize(1050, 650);
+    	usp.setVisible(true);
+    	this.setVisible(false);
     }
 
     private void ProjectsActionPerformed(ActionEvent evt) {
-        
+    	
+    	ProjectsList pl= new ProjectsList(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
     }
 
     private void RequestsActionPerformed(ActionEvent evt) {
         
-    	this.setVisible(false);
-    	Requests rq= new Requests();
+    	
+    	Requests rq= new Requests(username);
     	rq.setSize(1000, 600);
     	rq.setVisible(true);
+    	this.setVisible(false);
     }
 
     private void AgendaActionPerformed(ActionEvent evt) {
@@ -373,7 +371,7 @@ public class Requests extends JFrame {
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	Requests rq = new Requests();
+            	Requests rq = new Requests("oubeza_idir-adm");
             	rq.setSize(1050, 650);
             	rq.setVisible(true);
             }

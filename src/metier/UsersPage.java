@@ -1,5 +1,6 @@
 package metier;
 import java.awt.*;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -9,9 +10,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class UsersPage extends JFrame {
 	Connection conn = Utilitaire.getConnection();
+	private String username;
 	
 	DefaultTableModel model;
-    public UsersPage() {
+    public UsersPage(String username) {
+    	this.username = username;
         GridBagConstraints gridBagConstraints;
 
         body = new JPanel();
@@ -58,15 +61,15 @@ public class UsersPage extends JFrame {
         Username.setFont(new Font("Segoe UI", 1, 14)); 
         Username.setForeground(new Color(255, 255, 255));
         Username.setHorizontalAlignment(SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username + "-adm");
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
-        /*Username.addMouseListener(new event.MouseAdapter() {
-            public void mouseClicked(event.MouseEvent evt) {
+        Username.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
                 UsernameMouseClicked(evt);
             }
-        });*/
+        });
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -100,11 +103,11 @@ public class UsersPage extends JFrame {
         Home1.setText("Home");
         Home1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         Home1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Home1.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Home1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 Home1ActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Home1);
 
         Messages.setFont(new Font("Segoe UI", 1, 14)); 
@@ -126,11 +129,11 @@ public class UsersPage extends JFrame {
         Users.setBackground(Color.white);
         Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
-       /* Users.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Users.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 UsersActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Users);
 
         Projects.setFont(new Font("Segoe UI", 1, 14)); 
@@ -139,11 +142,11 @@ public class UsersPage extends JFrame {
         Projects.setBackground(Color.white);
         Projects.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Projects.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Projects.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Projects.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 ProjectsActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Projects);
 
         Requests.setFont(new Font("Segoe UI", 1, 14));
@@ -152,11 +155,11 @@ public class UsersPage extends JFrame {
         Requests.setBackground(Color.white);
         Requests.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Requests.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Requests.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
+        Requests.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 RequestsActionPerformed(evt);
             }
-        });*/
+        });
         Menu.add(Requests);
 
         Agenda.setFont(new Font("Segoe UI", 1, 14));
@@ -279,6 +282,50 @@ public class UsersPage extends JFrame {
         pack();
     
 }
+    private void UsernameMouseClicked(MouseEvent evt) {
+    	Profile pl= new Profile(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+        
+    }
+
+    private void Home1ActionPerformed(ActionEvent evt) {
+    	HomePageAdmin pl= new HomePageAdmin(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+        
+    }
+
+
+    private void UsersActionPerformed(ActionEvent evt) {
+    	UsersPage usp= new UsersPage(username);
+    	usp.setSize(1050, 650);
+    	usp.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void ProjectsActionPerformed(ActionEvent evt) {
+    	
+    	ProjectsList pl= new ProjectsList(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void RequestsActionPerformed(ActionEvent evt) {
+        
+    	
+    	Requests rq= new Requests(username);
+    	rq.setSize(1000, 600);
+    	rq.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void AgendaActionPerformed(ActionEvent evt) {
+        
+    }
     public ArrayList<Object[]> getUsers() {
     	String query = "SELECT username,email,nom,prenom,derniere_date_connexion FROM utilisateur";
     	ArrayList<Object[]> users = new ArrayList<>();
@@ -344,9 +391,9 @@ public class UsersPage extends JFrame {
     
     
     public static void main(String args[]) {
-		UsersPage Usrpg = new UsersPage();
+		UsersPage Usrpg = new UsersPage("oubeza_idir-adm");
         Usrpg.setVisible(true);
-        Usrpg.setSize(1000, 580);
+        Usrpg.setSize(1050, 650);
     }
     
 
