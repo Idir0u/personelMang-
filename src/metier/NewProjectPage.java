@@ -58,7 +58,7 @@ public class NewProjectPage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         champDescription = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
@@ -333,7 +333,6 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipadx = 74;
         gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -366,12 +365,12 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 326;
         gridBagConstraints.ipady = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 60, 0, 110);
+        gridBagConstraints.insets = new java.awt.Insets(20, 60, 0, 0);
         background_formulaire.add(champNom_court, gridBagConstraints);
 
         champNom_long.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -383,12 +382,12 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 326;
         gridBagConstraints.ipady = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 60, 0, 110);
+        gridBagConstraints.insets = new java.awt.Insets(30, 60, 0, 0);
         background_formulaire.add(champNom_long, gridBagConstraints);
 
         champ_theme.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -400,12 +399,12 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 326;
         gridBagConstraints.ipady = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(40, 60, 0, 110);
+        gridBagConstraints.insets = new java.awt.Insets(40, 60, 0, 0);
         background_formulaire.add(champ_theme, gridBagConstraints);
 
         champ_type.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -417,12 +416,12 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 326;
         gridBagConstraints.ipady = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(40, 60, 0, 110);
+        gridBagConstraints.insets = new java.awt.Insets(40, 60, 0, 0);
         background_formulaire.add(champ_type, gridBagConstraints);
 
         envoyer.setBackground(new java.awt.Color(102, 0, 204));
@@ -435,13 +434,13 @@ public class NewProjectPage extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 70;
         gridBagConstraints.ipady = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(14, 110, 10, 0);
+        gridBagConstraints.insets = new java.awt.Insets(20, 30, 10, 0);
         background_formulaire.add(envoyer, gridBagConstraints);
 
         champDescription.setColumns(20);
@@ -455,8 +454,8 @@ public class NewProjectPage extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 374;
-        gridBagConstraints.ipady = 70;
+        gridBagConstraints.ipadx = 484;
+        gridBagConstraints.ipady = 84;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -480,11 +479,11 @@ public class NewProjectPage extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 1102, Short.MAX_VALUE))
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 1222, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+            .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
         );
 
         pack();
@@ -503,7 +502,7 @@ public class NewProjectPage extends javax.swing.JFrame {
     }//GEN-LAST:event_menuActionPerformed
 
     private void agendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendaActionPerformed
-        //new UserAgendaPage().setVisible(true);
+        new UserAgendaPage().setVisible(true);
     }//GEN-LAST:event_agendaActionPerformed
 
     private void projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsActionPerformed

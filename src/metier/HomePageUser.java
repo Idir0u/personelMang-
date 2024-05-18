@@ -1,7 +1,13 @@
 package metier;
 import java.awt.*;
 import java.sql.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.*;
 
 public class HomePageUser extends javax.swing.JFrame {
@@ -9,7 +15,9 @@ public class HomePageUser extends javax.swing.JFrame {
     private int iduser;
     private String username;
     
+    
     public Vector<Integer> fetchProjectsForUser(int iduser) {
+    	
         Vector<Integer> projectIds = new Vector<>();
 
         String query = "SELECT IdProjet FROM projet";
@@ -34,6 +42,7 @@ public class HomePageUser extends javax.swing.JFrame {
     public HomePageUser(int iduser, String username) {
     	this.username = username;
     	this.iduser = iduser;
+    	this.last_con_date = Instant.now();
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
@@ -48,8 +57,16 @@ public class HomePageUser extends javax.swing.JFrame {
         Requests = new javax.swing.JButton();
         Invitations = new javax.swing.JButton();
         Agenda = new javax.swing.JButton();
+        jLabel1 = new JLabel();
+        DashBord = new JPanel();
+        last_connexion_date = new JLabel();
+        jLabel2 = new JLabel();
+        jLabel3 = new JLabel();
+        jScrollPane1 = new JScrollPane();
+        activity_table = new JTable();
         Contenu = new javax.swing.JPanel();
         JScrollPane scrollPane = new JScrollPane(Contenu);
+        
 
         Contenu.setLayout(new BorderLayout());
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -63,7 +80,85 @@ public class HomePageUser extends javax.swing.JFrame {
         projectsLabel.setForeground(Color.white);
         labelPanel.setBackground(new java.awt.Color(0, 51, 204));
         labelPanel.add(projectsLabel);*/
+        DashBord.setBackground(new Color(255, 255, 255));
+	        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
+        last_connexion_date.setText("Last connexion date :" + formatter.format(last_con_date));
+
+        jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
+        jLabel3.setForeground(new Color(153, 0, 204));
+        jLabel3.setText("Your recent activities");
+
+        jScrollPane1.setBackground(new Color(255, 255, 255));
+
+        activity_table.setModel(new DefaultTableModel(
+            new Object [][] {
+                {"envoi d'un message a Zakariae","15/05/2024","14h05"},
+                {"téléchargement d'un fichier du projet Site Builder","14/05/2024","18h00"},
+                {"ajout évènement dans votre agenda","13/05/2024","13h05"},
+                {"dépot de fichier pour le projet Site Builder","13/05/2024","00h05"},
+                {"demande de création de nouveau projet","12/05/2024","17h30"},
+                {"demande cloture projet Online Car Rent","12/05/2024","16h02"},
+                {"retrait participant au projet site Builder","11/05/2024","13h05"},
+                {"envoi d'un message à Idir","10/05/2024","14h05"},
+            },
+            new String [] {
+                "Description", "Date", "Time"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        activity_table.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(activity_table);
+        activity_table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        GroupLayout DashBordLayout = new GroupLayout(DashBord);
+        DashBord.setLayout(DashBordLayout);
+        DashBordLayout.setHorizontalGroup(
+            DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(DashBordLayout.createSequentialGroup()
+                .addGroup(DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(DashBordLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(last_connexion_date, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DashBordLayout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(DashBordLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 595, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+        DashBordLayout.setVerticalGroup(
+            DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(DashBordLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(DashBordLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(last_connexion_date, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(200, Short.MAX_VALUE))
+        );
+        Contenu.add(DashBord, BorderLayout.NORTH);
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
         projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -268,6 +363,7 @@ public class HomePageUser extends javax.swing.JFrame {
     } 
 
     public static void main(String args[]) {
+    	System.out.println("i'm in the main function");
         HomePageUser p = new HomePageUser(0,"oubeza_idir");
         p.setVisible(true);
         p.setSize(1050, 650);
@@ -287,5 +383,17 @@ public class HomePageUser extends javax.swing.JFrame {
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
-    // End of variables declaration                   
+    // End of variables declaration    
+
+    private JPanel DashBord;
+    private JTable activity_table;
+    /*private JButton deconnexion;
+    private JButton Invitation;*/
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JScrollPane jScrollPane1;
+    private JLabel last_connexion_date;
+    protected Instant last_con_date ;
+   // protected static String usrname ; 
 }

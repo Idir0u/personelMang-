@@ -192,11 +192,9 @@ public class UserPage extends JFrame {
 
  	        DashBord.setBackground(new Color(255, 255, 255));
  	        
- 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-                     .withZone(ZoneId.systemDefault());
+ 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
  	        last_connexion_date.setText("Last connexion date :" + formatter.format(last_con_date));
-
 
  	        jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
  	        jLabel3.setForeground(new Color(153, 0, 204));

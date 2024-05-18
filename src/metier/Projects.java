@@ -60,6 +60,8 @@ public class Projects extends javax.swing.JFrame {
         Invitations = new javax.swing.JButton();
         Agenda = new javax.swing.JButton();
         Contenu = new javax.swing.JPanel();
+        
+        
         JScrollPane scrollPane = new JScrollPane(Contenu);
 
         Contenu.setLayout(new BorderLayout());
@@ -286,5 +288,9 @@ public class Projects extends javax.swing.JFrame {
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
-    // End of variables declaration                   
+    
+    
+    
+    // End of variables declaration   
+ 
 }
