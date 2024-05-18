@@ -124,11 +124,11 @@ public class HomePageAdmin extends JFrame {
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Username.setIconTextGap(1);
-       /* Username.addMouseListener(new java.awt.event.MouseAdapter() {
+        Username.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 UsernameMouseClicked(evt);
             }
-        });*/
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;

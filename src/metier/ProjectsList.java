@@ -3,6 +3,8 @@ package metier;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 
 import javax.swing.*;
@@ -66,6 +68,11 @@ public class ProjectsList extends JFrame {
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
+        Username.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                UsernameMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -99,15 +106,13 @@ public class ProjectsList extends JFrame {
         Home1.setText("Home");
         Home1.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
         Home1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Home1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                Home1ActionPerformed(evt);
+            }
+        });
         Menu.add(Home1);
 
-        Messages.setFont(new Font("Segoe UI", 1, 14));
-        Messages.setForeground(new Color(153, 0, 204));
-        Messages.setBackground(Color.white);
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Menu.add(Messages);
 
         Users.setFont(new Font("Segoe UI", 1, 14));
         Users.setForeground(new Color(153, 0, 204));
@@ -115,6 +120,11 @@ public class ProjectsList extends JFrame {
         Users.setBackground(Color.white);
         Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Users.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                UsersActionPerformed(evt);
+            }
+        });
         Menu.add(Users);
 
         Projects.setFont(new Font("Segoe UI", 1, 14));
@@ -136,6 +146,11 @@ public class ProjectsList extends JFrame {
         Requests.setBackground(Color.white);
         Requests.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
         Requests.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Requests.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                RequestsActionPerformed(evt);
+            }
+        });
         Menu.add(Requests);
 
         Agenda.setFont(new Font("Segoe UI", 1, 14));
@@ -226,14 +241,51 @@ public class ProjectsList extends JFrame {
             }
         });
     }
-    
-	private void ProjectsActionPerformed(ActionEvent evt) {
-        
+    private void UsernameMouseClicked(MouseEvent evt) {
+    	Profile pl= new Profile(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
     	this.setVisible(false);
+        
+    }
+
+    private void Home1ActionPerformed(ActionEvent evt) {
+    	HomePageAdmin pl= new HomePageAdmin(username);
+    	pl.setSize(1050, 650);
+    	pl.setVisible(true);
+    	this.setVisible(false);
+        
+    }
+
+
+    private void UsersActionPerformed(ActionEvent evt) {
+    	UsersPage usp= new UsersPage(username);
+    	usp.setSize(1050, 650);
+    	usp.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void ProjectsActionPerformed(ActionEvent evt) {
+    	
     	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	this.setVisible(false);
     }
+
+    private void RequestsActionPerformed(ActionEvent evt) {
+        
+    	
+    	Requests rq= new Requests(username);
+    	rq.setSize(1000, 600);
+    	rq.setVisible(true);
+    	this.setVisible(false);
+    }
+
+    private void AgendaActionPerformed(ActionEvent evt) {
+        
+    }
+
 
     public static void main(String args[]) {
         ProjectsList Usrpg = new ProjectsList("oubeza_idir-adm");

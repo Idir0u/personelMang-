@@ -110,19 +110,6 @@ public class UsersPage extends JFrame {
         });
         Menu.add(Home1);
 
-        Messages.setFont(new Font("Segoe UI", 1, 14)); 
-        Messages.setForeground(new Color(153, 0, 204));
-        Messages.setBackground(Color.white);
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Messages.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });*/
-        Menu.add(Messages);
-
         Users.setFont(new Font("Segoe UI", 1, 14)); 
         Users.setForeground(new Color(153, 0, 204));
         Users.setText("Users");
