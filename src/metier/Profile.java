@@ -4,10 +4,13 @@ import java.awt.Dimension;
 import java.sql.*;
 
 public class Profile extends javax.swing.JFrame {
-
+	private int iduser;
+	private String usrname;
     TableProjets tableProjets;
     Connection conn = Utilitaire.getConnection();
-    public Profile() {
+    public Profile(int iduser, String usrname) {
+    	this.iduser = iduser;
+    	this.usrname = usrname;
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
@@ -26,7 +29,7 @@ public class Profile extends javax.swing.JFrame {
         Projects = new javax.swing.JLabel();
         tableProjets = new TableProjets();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new Dimension(1000, 600));
 
         body.setBackground(new java.awt.Color(255, 255, 255));
@@ -49,7 +52,7 @@ public class Profile extends javax.swing.JFrame {
         Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(usrname);
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -119,7 +122,7 @@ public class Profile extends javax.swing.JFrame {
 
         username.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         username.setForeground(new java.awt.Color(153, 153, 153));
-        username.setText("UsenameXXXXXXX");
+        username.setText(usrname);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -197,7 +200,7 @@ public class Profile extends javax.swing.JFrame {
         body.add(Contenu, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(body, java.awt.BorderLayout.CENTER);
-        fetchUserData(2);
+        fetchUserData(iduser);
         pack();
     }
 
@@ -226,7 +229,7 @@ public class Profile extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Profile().setVisible(true);
+                new Profile(3, "oubeza_idir").setVisible(true);
             }
         });
     }

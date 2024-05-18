@@ -418,7 +418,8 @@ public class DemandeOverview extends JFrame {
             PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court, nom_long, description, isPublic, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled') ");
             PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court
             PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");//nom_court-adm
-            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO UTILSATEUR_GROUPE(idUtilsateur, idGroupe) VALUES(?, (SELECT (idGroupe) FROM GROUPE WHERE nom_groupe = ?)  )");//idUser, nom_court-adm
+            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO UTILISATEUR_GROUPE(idUtilsateur, idGroupe) VALUES(?, (SELECT (idGroupe) FROM GROUPE WHERE nom_groupe = ?)  )");//idUser, nom_court-adm
+            
             PreparedStatement pstmt6 = conn.prepareStatement("SELECT idProjet FROM PROJET WHERE nom_court = ?");
             
             
@@ -437,6 +438,7 @@ public class DemandeOverview extends JFrame {
             pstmt4.setInt(1, idUser);
             pstmt4.setString(2, nom_court + "-adm");
             int et = pstmt1.executeUpdate() + pstmt2.executeUpdate() + pstmt3.executeUpdate() + pstmt4.executeUpdate(); 
+            pstmt6.setString(1, nom_court);
             
             ResultSet rs = pstmt6.executeQuery();
             if(rs.next()) {

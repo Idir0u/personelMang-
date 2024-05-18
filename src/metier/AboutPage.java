@@ -135,6 +135,7 @@ public class AboutPage extends javax.swing.JFrame {
                 projectsActionPerformed(evt);
             }
         });
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;

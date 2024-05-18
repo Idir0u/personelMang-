@@ -1,43 +1,97 @@
 package metier;
-
 import java.awt.*;
-
-import javax.swing.BorderFactory;
+import java.sql.*;
+import javax.swing.*;
+import java.util.*;
 
 public class HomePageUser extends javax.swing.JFrame {
-	int iduser;
-    String username;
-    public HomePageUser(int iduser,String username) {
-        this.iduser = iduser;
-        this.username = username;
+    Connection conn = Utilitaire.getConnection();
+    private int iduser;
+    private String username;
+    
+    public Vector<Integer> fetchProjectsForUser(int iduser) {
+        Vector<Integer> projectIds = new Vector<>();
+
+        String query = "SELECT IdProjet FROM projet";
+         
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                projectIds.add(rs.getInt("IdProjet"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception: " + e);
+        }
+
+        return projectIds;
+    }
+
+
+
+
+    public HomePageUser(int iduser, String username) {
+    	this.username = username;
+    	this.iduser = iduser;
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         body = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         LOGO = new javax.swing.JLabel();
         Username = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        userIcon = new javax.swing.JLabel();
         Menu = new javax.swing.JPanel();
-        Agenda = new javax.swing.JButton();
         Home1 = new javax.swing.JButton();
-        Messages = new javax.swing.JButton();
         Projects = new javax.swing.JButton();
+        Messages = new javax.swing.JButton();
         Requests = new javax.swing.JButton();
+        Invitations = new javax.swing.JButton();
+        Agenda = new javax.swing.JButton();
         Contenu = new javax.swing.JPanel();
+        JScrollPane scrollPane = new JScrollPane(Contenu);
 
+        Contenu.setLayout(new BorderLayout());
+        Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1050, 650));
 
+        // Panel for the label
+        /*JPanel labelPanel = new JPanel();
+        JLabel projectsLabel = new JLabel("My Projects");
+        projectsLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        projectsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        projectsLabel.setForeground(Color.white);
+        labelPanel.setBackground(new java.awt.Color(0, 51, 204));
+        labelPanel.add(projectsLabel);*/
+
+        // Panel for the project panels
+        JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
+        projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        projectsPanel.setBackground(Color.white);
+        Vector<Integer> idprojets = fetchProjectsForUser(iduser);
+        for (int id : idprojets) {
+            JPanel projectPanel = createProjectPanel(id);
+            projectsPanel.add(projectPanel);
+        }
+
+        //Contenu.add(labelPanel, BorderLayout.NORTH);
+        Contenu.add(projectsPanel, BorderLayout.CENTER);
         body.setBackground(new java.awt.Color(255, 255, 255));
-        body.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(153,0,204)));
         body.setLayout(new java.awt.BorderLayout());
 
         Header.setBackground(new java.awt.Color(153, 0, 204));
+        Header.setLayout(new java.awt.GridBagLayout());
 
         LOGO.setFont(new java.awt.Font("Montserrat Black", 3, 24)); // NOI18N
         LOGO.setForeground(new java.awt.Color(255, 255, 255));
         LOGO.setText("P4P");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 67, 10, 0);
+        Header.add(LOGO, gridBagConstraints);
 
         Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
@@ -51,172 +105,180 @@ public class HomePageUser extends javax.swing.JFrame {
                 UsernameMouseClicked(evt);
             }
         });
+        
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 10, 49);
+        Header.add(Username, gridBagConstraints);
 
-        javax.swing.GroupLayout HeaderLayout = new javax.swing.GroupLayout(Header);
-        Header.setLayout(HeaderLayout);
-        HeaderLayout.setHorizontalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HeaderLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(LOGO, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(625, 625, 625)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Username)
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-        HeaderLayout.setVerticalGroup(
-            HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LOGO, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        userIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
+        userIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 623, 10, 0);
+        Header.add(userIcon, gridBagConstraints);
 
         body.add(Header, java.awt.BorderLayout.NORTH);
 
         Menu.setBackground(new java.awt.Color(255, 255, 255));
         Menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Menu.setPreferredSize(new java.awt.Dimension(180, 427));
-        Menu.setLayout(new java.awt.GridBagLayout());
-
-        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Agenda.setForeground(new java.awt.Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Agenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AgendaActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 126;
-        gridBagConstraints.ipady = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 192, 0);
-        Menu.add(Agenda, gridBagConstraints);
+        Menu.setLayout(new java.awt.GridLayout(9, 0));
 
         Home1.setBackground(new java.awt.Color(153, 0, 204));
         Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Home1.setForeground(new java.awt.Color(255, 255, 255));
+        Home1.setForeground(Color.white);
         Home1.setText("Home");
         Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Home1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Home1ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 137;
-        gridBagConstraints.ipady = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(Home1, gridBagConstraints);
 
-        Messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Messages.setForeground(new java.awt.Color(153, 0, 204));
-        Messages.setText("Messages");
-        Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Messages.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 114;
-        gridBagConstraints.ipady = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(Messages, gridBagConstraints);
+        Menu.add(Home1);
 
-        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Projects.setBackground(Color.white);
         Projects.setForeground(new java.awt.Color(153, 0, 204));
         Projects.setText("Projects");
         Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Projects.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProjectsActionPerformed(evt);
+                projectsActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 124;
-        gridBagConstraints.ipady = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(Projects, gridBagConstraints);
 
-        Requests.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Menu.add(Projects);
+
+        Messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Messages.setForeground(new java.awt.Color(153, 0, 204));
+        Messages.setText("Messages");
+        Messages.setBackground(Color.white);
+        Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        Menu.add(Messages);
+
+        Requests.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Requests.setBackground(Color.white);
         Requests.setForeground(new java.awt.Color(153, 0, 204));
         Requests.setText("Requests");
         Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Requests.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RequestsActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 119;
-        gridBagConstraints.ipady = 28;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(Requests, gridBagConstraints);
 
+        Menu.add(Requests);
+
+        Invitations.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Invitations.setBackground(Color.white);
+        Invitations.setForeground(new java.awt.Color(153, 0, 204));
+        Invitations.setText("Invitations");
+        Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        Menu.add(Invitations);
+
+        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Agenda.setBackground(Color.white);
+        Agenda.setForeground(new java.awt.Color(153, 0, 204));
+        Agenda.setText("Agenda");
+        Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        Menu.add(Agenda);
+        
         body.add(Menu, java.awt.BorderLayout.WEST);
 
         Contenu.setBackground(new java.awt.Color(255, 255, 255));
-        Contenu.setLayout(new java.awt.GridBagLayout());
-        body.add(Contenu, java.awt.BorderLayout.CENTER);
+
+        body.add(scrollPane, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(body, java.awt.BorderLayout.CENTER);
 
         pack();
-    }// </editor-fold>                        
+    }
 
-    private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private JPanel createProjectPanel(int id) {
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setPreferredSize(new Dimension(225, 250)); // Set preferred size
+
+        // Add padding inside the panel and retain the original border
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(0, 51, 204), 2), // External visible border
+            BorderFactory.createEmptyBorder(10, 15, 10, 15) // Inner padding
+        ));
+
+        JLabel projectName = new JLabel("Project Name");
+        projectName.setFont(new Font("Segoe UI", 1, 16));
+        projectName.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(projectName, BorderLayout.NORTH);
+        panel.setBackground(Color.white);
+
+        JTextArea projectDescription = new JTextArea();
+        projectDescription.setBackground(new java.awt.Color(255, 255, 255));
+        projectDescription.setEditable(false);
+        projectDescription.setWrapStyleWord(true);
+        projectDescription.setLineWrap(true);
+
+        JScrollPane scrollPane = new JScrollPane(projectDescription);
+        panel.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setBorder(null);
+
+        JButton ButtonSeeMore = new JButton();
+        ButtonSeeMore.setBackground(new java.awt.Color(0, 51, 204));
+        ButtonSeeMore.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ButtonSeeMore.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonSeeMore.setText("See more >");
+        panel.add(ButtonSeeMore, BorderLayout.SOUTH);
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM PROJET WHERE IDPROJET = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                projectName.setText(rs.getString(2));
+                projectDescription.setText(rs.getString(4));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return panel;
+    }
+    
+    private void projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsActionPerformed
+    	Projects prs = new Projects(iduser, username);
+    	prs.setSize(1050, 650);
+    	prs.setVisible(true);
+    	this.setVisible(false);
         // TODO add your handling code here:
-    	
-    }                                      
-
-    private void Home1ActionPerformed(java.awt.event.ActionEvent evt) {                                      
-        // TODO add your handling code here:
-    }                                     
-
-    private void MessagesActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void ProjectsActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void RequestsActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
+    }//GEN-LAST:event_projectsActionPerformed
     private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
-    }                                     
-    
+    	Profile pf = new Profile(iduser, username);
+    	pf.setVisible(true);
+    	pf.setSize(1050, 650);
+    	
+    } 
+
+    public static void main(String args[]) {
+        HomePageUser p = new HomePageUser(0,"oubeza_idir");
+        p.setVisible(true);
+        p.setSize(1050, 650);
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton Agenda;
     private javax.swing.JPanel Contenu;
     private javax.swing.JPanel Header;
     private javax.swing.JButton Home1;
+    private javax.swing.JButton Invitations;
     private javax.swing.JLabel LOGO;
     private javax.swing.JPanel Menu;
     private javax.swing.JButton Messages;
@@ -224,7 +286,6 @@ public class HomePageUser extends javax.swing.JFrame {
     private javax.swing.JButton Requests;
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JLabel userIcon;
     // End of variables declaration                   
 }

@@ -2,11 +2,49 @@ package metier;
 import java.awt.*;
 import java.sql.*;
 import javax.swing.*;
+import java.util.*;
 
 public class Projects extends javax.swing.JFrame {
     Connection conn = Utilitaire.getConnection();
+    private int iduser;
+    private String username;
+    
+    public Vector<Integer> fetchProjectsForUser(int iduser) {
+        Vector<Integer> projectIds = new Vector<>();
 
-    public Projects() {
+        String query;
+        if (iduser == 0) {
+            query = "SELECT IdProjet FROM projet";
+        } else {
+            query = "SELECT DISTINCT p.IdProjet " +
+                    "FROM projet p " +
+                    "JOIN groupe g ON (p.nom_court = g.nom_groupe OR p.nom_court = CONCAT(g.nom_groupe, '-adm')) " +
+                    "JOIN ulilisateur_groupe ug ON g.IdGroupe = ug.IdGroupe " +
+                    "WHERE ug.IdUtilisateur = ?";
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            if (iduser != 0) {
+                ps.setInt(1, iduser);
+            }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                projectIds.add(rs.getInt("IdProjet"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception: " + e);
+        }
+
+        return projectIds;
+    }
+
+
+
+
+    public Projects(int iduser, String username) {
+    	this.username = username;
+    	this.iduser = iduser;
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
@@ -27,7 +65,9 @@ public class Projects extends javax.swing.JFrame {
         Contenu.setLayout(new BorderLayout());
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        //setLocationRelativeTo(null);
+        setPreferredSize(new Dimension(1050, 650));
+        
         // Panel for the label
         JPanel labelPanel = new JPanel();
         JLabel projectsLabel = new JLabel("My Projects");
@@ -41,8 +81,9 @@ public class Projects extends javax.swing.JFrame {
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
         projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         projectsPanel.setBackground(Color.white);
-        for (int i = 1; i <= 5; i++) {
-            JPanel projectPanel = createProjectPanel(i);
+        Vector<Integer> idprojets = fetchProjectsForUser(iduser);
+        for (int id : idprojets) {
+            JPanel projectPanel = createProjectPanel(id);
             projectsPanel.add(projectPanel);
         }
 
@@ -68,10 +109,16 @@ public class Projects extends javax.swing.JFrame {
         Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username);
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Username.setIconTextGap(1);
+        Username.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UsernameMouseClicked(evt);
+            }
+        });
+        
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -82,7 +129,7 @@ public class Projects extends javax.swing.JFrame {
         Header.add(Username, gridBagConstraints);
 
         userIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("icons8-user-30.png"))); // NOI18N
+        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
         userIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -212,11 +259,17 @@ public class Projects extends javax.swing.JFrame {
 
         return panel;
     }
+    private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        // TODO add your handling code here:
+    	Profile pf = new Profile(iduser, username);
+    	pf.setVisible(true);
+    	
+    } 
 
     public static void main(String args[]) {
-        Projects p = new Projects();
+        Projects p = new Projects(0,"oubeza_idir");
         p.setVisible(true);
-        p.setSize(1000, 600);
+        p.setSize(1050, 650);
     }
 
     // Variables declaration - do not modify                     
