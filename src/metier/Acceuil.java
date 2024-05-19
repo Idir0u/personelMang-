@@ -132,6 +132,12 @@ public class Acceuil extends javax.swing.JFrame {
         gridBagConstraints.ipady = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 0);
+        aboutUsButton.addActionListener(e -> {
+        	AboutUs aboutUs = new AboutUs();
+        	aboutUs.setVisible(true);
+        	aboutUs.setSize(1050, 650);
+        	aboutUs.setLocationRelativeTo(null);
+        });
         body.add(aboutUsButton, gridBagConstraints);
 
         getContentPane().add(body, java.awt.BorderLayout.CENTER);

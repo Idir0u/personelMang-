@@ -19,9 +19,9 @@ public class TableProjets extends JPanel {
 
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT p.IdProjet AS idp, p.nom_court AS npc, p.theme AS tm,"
-            		+ " p.type AS tp, p.etat AS et, isPublic AS isp, g.IdGroupe AS idg, g.nom_groupe AS ng ,IF(g.nom_groupe LIKE '%_adm', 'Admin', 'Member') AS role FROM projet AS p,"
-            		+ " groupe AS g, utilisateur AS u, ulilisateur_groupe AS ug WHERE u.IdUtilisateur = ? AND ug.IdUtilisateur = u.IdUtilisateur "
-            		+ "AND g.IdGroupe = ug.IdGroupe AND (g.nom_groupe IN (p.nom_court , CONCAT(p.nom_court,'_adm') ))");
+            		+ " p.type AS tp, p.etat AS et, isPublic AS isp, g.IdGroupe AS idg, g.nom_groupe AS ng ,IF(g.nom_groupe LIKE '%-adm', 'Admin', 'Member') AS role FROM projet AS p,"
+            		+ " groupe AS g, utilisateur AS u, utilisateur_groupe AS ug WHERE u.IdUtilisateur = ? AND ug.IdUtilisateur = u.IdUtilisateur "
+            		+ "AND g.IdGroupe = ug.IdGroupe AND (g.nom_groupe IN (p.nom_court , CONCAT(p.nom_court,'-adm') ))");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             

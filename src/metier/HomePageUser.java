@@ -1,5 +1,7 @@
 package metier;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -16,19 +18,27 @@ public class HomePageUser extends javax.swing.JFrame {
     private String username;
     
     
-    public Vector<Integer> fetchProjectsForUser(int iduser) {
+    public Vector<Integer> fetchProjectsForUser(String searchQuery) {
     	
         Vector<Integer> projectIds = new Vector<>();
-
-        String query = "SELECT IdProjet FROM projet";
-         
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                projectIds.add(rs.getInt("IdProjet"));
+        
+        try {
+        	String query = "SELECT IdProjet, nom_court, theme, type, etat, isPublic FROM projet";
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                query += " WHERE nom_court LIKE ?";
             }
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                String searchPattern = "%" + searchQuery + "%";
+                ps.setString(1, searchPattern);
+            }
+
+            ResultSet rs = ps.executeQuery();	
+            while (rs.next()) {
+					projectIds.add(rs.getInt("IdProjet"));
+				} 
+            
         } catch (SQLException e) {
             System.out.println("Exception: " + e);
         }
@@ -44,6 +54,7 @@ public class HomePageUser extends javax.swing.JFrame {
     	this.iduser = iduser;
     	this.last_con_date = Instant.now();
         java.awt.GridBagConstraints gridBagConstraints;
+        tableProjets = new TableProjetList(this);
 
         body = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
@@ -65,6 +76,10 @@ public class HomePageUser extends javax.swing.JFrame {
         jScrollPane1 = new JScrollPane();
         activity_table = new JTable();
         Contenu = new javax.swing.JPanel();
+        barContenu = new JPanel();
+        h1Bar = new JLabel();
+        recherche = new JTextField();
+        rechercheButton = new JButton();
         JScrollPane scrollPane = new JScrollPane(Contenu);
         
         Contenu.setLayout(new BorderLayout());
@@ -79,7 +94,7 @@ public class HomePageUser extends javax.swing.JFrame {
         projectsLabel.setForeground(Color.white);
         labelPanel.setBackground(new java.awt.Color(0, 51, 204));
         labelPanel.add(projectsLabel);*/
-        DashBord.setBackground(new Color(255, 255, 255));
+/*        DashBord.setBackground(new Color(255, 255, 255));
 	        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
 
@@ -121,6 +136,7 @@ public class HomePageUser extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        /*
         activity_table.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(activity_table);
         activity_table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -157,12 +173,12 @@ public class HomePageUser extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(200, Short.MAX_VALUE))
         );
-        Contenu.add(DashBord, BorderLayout.NORTH);
+        Contenu.add(DashBord, BorderLayout.NORTH);*/
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
         projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         projectsPanel.setBackground(Color.white);
-        Vector<Integer> idprojets = fetchProjectsForUser(iduser);
+        Vector<Integer> idprojets = fetchProjectsForUser(recherche.getText());
         for (int id : idprojets) {
             JPanel projectPanel = createProjectPanel(id);
             projectsPanel.add(projectPanel);
@@ -170,6 +186,73 @@ public class HomePageUser extends javax.swing.JFrame {
 
         //Contenu.add(labelPanel, BorderLayout.NORTH);
         Contenu.add(projectsPanel, BorderLayout.CENTER);
+        barContenu.setBackground(new Color(102, 0, 204));
+        barContenu.setLayout(new GridBagLayout());
+
+        h1Bar.setFont(new Font("Segoe UI", 1, 24));
+        h1Bar.setForeground(new Color(255, 255, 255));
+        h1Bar.setText("Projects list");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(20, 30, 30, 0);
+        barContenu.add(h1Bar, gridBagConstraints);
+
+        recherche.setHorizontalAlignment(JTextField.LEFT);
+        recherche.setBorder(null);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 136;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(30, 337, 30, 0);
+        barContenu.add(recherche, gridBagConstraints);
+
+        rechercheButton.setBackground(new Color(153, 204, 0));
+        rechercheButton.setFont(new Font("Segoe UI", 1, 12));
+        rechercheButton.setForeground(new Color(255, 255, 255));
+        rechercheButton.setText("Rechercher");
+        rechercheButton.setBorder(null);
+        rechercheButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! look here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            	// i want to clear the projectsPanel before resetting the displayed projects
+            	projectsPanel.removeAll(); // Clear the projectsPanel
+                projectsPanel.revalidate(); // Revalidate the panel to update the UI
+                projectsPanel.repaint(); // Repaint the panel to reflect the changes
+
+                Vector<Integer> idprojets = fetchProjectsForUser(recherche.getText());
+                for (int id : idprojets) {
+                    JPanel projectPanel = createProjectPanel(id);
+                    projectsPanel.add(projectPanel);
+                }
+
+                projectsPanel.revalidate(); // Revalidate the panel again to add the new components
+                projectsPanel.repaint(); // Repaint the panel again to reflect the changes
+            
+            }
+        });
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(30, 0, 30, 20);
+        barContenu.add(rechercheButton, gridBagConstraints);
+
+        /*
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -10;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(10, 15, 0, 10);*/
+        Contenu.add(barContenu, BorderLayout.NORTH);
+        
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
 
@@ -347,6 +430,7 @@ public class HomePageUser extends javax.swing.JFrame {
     }
     
     private void projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsActionPerformed
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
     	Projects prs = new Projects(iduser, username);
     	prs.setSize(1050, 650);
     	prs.setVisible(true);
@@ -355,15 +439,15 @@ public class HomePageUser extends javax.swing.JFrame {
     }//GEN-LAST:event_projectsActionPerformed
     private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
     	Profile pf = new Profile(iduser, username);
     	pf.setVisible(true);
     	pf.setSize(1050, 650);
-    	
     } 
 
     public static void main(String args[]) {
     	System.out.println("i'm in the main function");
-        HomePageUser p = new HomePageUser(0,"oubeza_idir");
+        HomePageUser p = new HomePageUser(9,"oubeza_idir");
         p.setVisible(true);
         p.setSize(1050, 650);
     }
@@ -382,6 +466,8 @@ public class HomePageUser extends javax.swing.JFrame {
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
+    
+    private TableProjetList tableProjets;
        
     private JPanel DashBord;
     private JTable activity_table;
@@ -393,6 +479,10 @@ public class HomePageUser extends javax.swing.JFrame {
     private JScrollPane jScrollPane1;
     private JLabel last_connexion_date;
     protected Instant last_con_date ;
+    private JPanel barContenu;
+    private JLabel h1Bar;
+    private JTextField recherche;
+    private JButton rechercheButton;
     // protected static String usrname ; 
 
     // End of variables declaration 

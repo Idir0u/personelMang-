@@ -18,8 +18,8 @@ public class Projects extends javax.swing.JFrame {
         } else {
             query = "SELECT DISTINCT p.IdProjet " +
                     "FROM projet p " +
-                    "JOIN groupe g ON (p.nom_court = g.nom_groupe OR p.nom_court = CONCAT(g.nom_groupe, '-adm')) " +
-                    "JOIN ulilisateur_groupe ug ON g.IdGroupe = ug.IdGroupe " +
+                    "JOIN groupe g ON ( g.nom_groupe = p.nom_court OR g.nom_groupe = CONCAT(p.nom_court, '-adm')) " +
+                    "JOIN utilisateur_groupe ug ON g.IdGroupe = ug.IdGroupe " +
                     "WHERE ug.IdUtilisateur = ?";
         }
 
@@ -276,6 +276,7 @@ public class Projects extends javax.swing.JFrame {
     private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
     	Profile pf = new Profile(iduser, username);
+    	pf.setLocationRelativeTo(null);
     	pf.setVisible(true);
     	
     } 

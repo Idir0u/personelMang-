@@ -187,6 +187,7 @@ public class UserPage extends JFrame {
  	            }
  	        });
  	        Menu.add(deconnexion);
+ 	        
 
  	        body.add(Menu, BorderLayout.WEST);
 
@@ -323,6 +324,8 @@ public class UserPage extends JFrame {
       if(wdws != null)
       {
       	wdws.dispose();
+      	LoginForm usrmsgp = new LoginForm();
+        usrmsgp.setVisible(true);
       }
  }                                           
 

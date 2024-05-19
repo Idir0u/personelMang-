@@ -33,7 +33,7 @@ public class Requests extends JFrame {
         Users = new JButton();
         Projects = new JButton();
         Requests = new JButton();
-        Agenda = new JButton();
+        deconnexion = new JButton();
         Contenu = new JPanel();
         ReviewedRequests = new JButton();
         newRequests = new JButton();
@@ -155,18 +155,18 @@ public class Requests extends JFrame {
         });
         Menu.add(Requests);
         
-        Agenda.setBackground(Color.WHITE);
-        Agenda.setFont(new Font("Segoe UI", 1, 14));
-        Agenda.setForeground(new Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Agenda.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Agenda.addActionListener(new ActionListener() {
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                AgendaActionPerformed(evt);
+                deconnexionActionPerformed(evt);
             }
         });
-        Menu.add(Agenda);
+        Menu.add(deconnexion);
 
         body.add(Menu, BorderLayout.WEST);
 
@@ -298,6 +298,7 @@ public class Requests extends JFrame {
     	Profile pl= new Profile(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
         
     }
 
@@ -305,6 +306,7 @@ public class Requests extends JFrame {
     	HomePageAdmin pl= new HomePageAdmin(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
         
     }
@@ -314,6 +316,7 @@ public class Requests extends JFrame {
     	UsersPage usp= new UsersPage(username);
     	usp.setSize(1050, 650);
     	usp.setVisible(true);
+    	usp.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -322,6 +325,7 @@ public class Requests extends JFrame {
     	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -331,12 +335,10 @@ public class Requests extends JFrame {
     	Requests rq= new Requests(username);
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
+    	rq.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
-    private void AgendaActionPerformed(ActionEvent evt) {
-        
-    }
     private void ReviewedRqActionPerformed(ActionEvent evt) {
     	jScrollPane1.setVisible(false);
     	jScrollPane2.setVisible(true);
@@ -347,6 +349,17 @@ public class Requests extends JFrame {
     	jScrollPane1.setVisible(true);
     	
     }
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+   	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+        if(wdws != null)
+        {
+        	
+        	LoginForm usrmsgp = new LoginForm();
+          usrmsgp.setVisible(true);
+          usrmsgp.setLocationRelativeTo(null);
+          wdws.dispose();
+        }
+   }  
     
     public static void main(String args[]) {
 
@@ -354,14 +367,14 @@ public class Requests extends JFrame {
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	Requests rq = new Requests("oubeza_idir");
+            	Requests rq = new Requests("idir_oubeza");
             	rq.setSize(1050, 650);
             	rq.setVisible(true);
             }
         });
     }
-
-    private JButton Agenda;
+ 
+    private JButton deconnexion;
     private JPanel Contenu;
     private JPanel Header;
     private JButton Home1;

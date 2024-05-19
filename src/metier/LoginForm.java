@@ -280,32 +280,47 @@ public class LoginForm extends JFrame {
         su.setLocationRelativeTo(null);
     }
     public void authenticateUserLogin(String username, String passwd) {
-            try {
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM UTILISATEUR WHERE username = ? AND mot_de_passe = ?");
-                ps.setString(1, username);
-                ps.setString(2, passwd);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    // if exists
-                    HomePageUser hp = new HomePageUser(this.getId(username), username);
-                    hp.setSize(1050, 650);
-                    hp.setVisible(true);
-                    hp.setLocationRelativeTo(null);
-                    this.setVisible(false);
-                    
-                    
-                }else{
-                    // if not
-                    JOptionPane.showMessageDialog(null, "Incorrect username or password", "Incorrect Information", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                System.out.println("Exception : " + e);
+        try {
+            // Enable auto-commit if it was disabled
+            conn.setAutoCommit(true);
+
+            // Disable foreign key constraints temporarily
+            Statement stmt = conn.createStatement();
+            stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM UTILISATEUR WHERE username = ? AND mot_de_passe = ?");
+            ps.setString(1, username);
+            ps.setString(2, passwd);
+            PreparedStatement ps2 = conn.prepareStatement("UPDATE UTILISATEUR SET derniere_date_connexion = CURRENT_TIMESTAMP WHERE username = ?");
+            ps2.setString(1, username);
+            int rowsAffected = ps2.executeUpdate();
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                // if exists
+                HomePageUser hp = new HomePageUser(this.getId(username), username);
+                hp.setSize(1050, 650);
+                hp.setVisible(true);
+                hp.setLocationRelativeTo(null);
+                this.setVisible(false);
+            } else {
+                // if not
+                JOptionPane.showMessageDialog(null, "Incorrect username or password", "Incorrect Information", JOptionPane.ERROR_MESSAGE);
             }
-            
- 	}
+
+            // Re-enable foreign key constraints
+            stmt.execute("SET FOREIGN_KEY_CHECKS=1");
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+    }
+
     public void authenticateAdminLogin(String username, String passwd) {
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ADMINISTRATEUR_PLATEFORME WHERE username = ? AND mot_de_passe = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ADMINISTRATEUR_PLATEFORME WHERE identifiant_connexion = ? AND mot_de_passe = ?");
             ps.setString(1, username);
             ps.setString(2, passwd);
             ResultSet rs = ps.executeQuery();

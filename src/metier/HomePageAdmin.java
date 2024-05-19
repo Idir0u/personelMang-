@@ -10,7 +10,7 @@ public class HomePageAdmin extends JFrame {
 	private String username;
 	private JProgressBar ARprogress;
     private JLabel AcceptedRequests;
-    private JButton Agenda;
+    private JButton deconnexion;
     private JProgressBar ClosedProgress;
     private JLabel Closedprojects;
     private JPanel DashBord;
@@ -64,8 +64,8 @@ public class HomePageAdmin extends JFrame {
         Users = new JButton();
         Projects = new JButton();
         Requests = new JButton();
-        Agenda = new JButton();
-        DashBord = new JPanel();
+        deconnexion = new JButton();
+        DashBord = new JPanel(); 
         UserStatis = new JPanel();
         IconUSt = new JLabel();
         H1UserSt = new JLabel();
@@ -208,19 +208,19 @@ public class HomePageAdmin extends JFrame {
         });
         Menu.add(Requests);
 
-        Agenda.setFont(new Font("Segoe UI", 1, 14)); 
-        Agenda.setBackground(Color.white);
-        Agenda.setForeground(new Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Agenda.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Agenda.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
-                AgendaActionPerformed(evt);
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
             }
-        });*/
-        Menu.add(Agenda);
-
+        });
+        Menu.add(deconnexion);
+        
         body.add(Menu, BorderLayout.WEST);
 
         DashBord.setBackground(new Color(255, 255, 255));
@@ -582,8 +582,9 @@ public class HomePageAdmin extends JFrame {
     }
     private void UsernameMouseClicked(MouseEvent evt) {
     	Profile pl= new Profile(username);
-    	pl.setSize(1050, 650);
+    	pl.setSize(800, 500);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	
         
     }
@@ -592,15 +593,17 @@ public class HomePageAdmin extends JFrame {
     	HomePageAdmin pl= new HomePageAdmin(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
         
     }
 
 
     private void UsersActionPerformed(ActionEvent evt) {
-    	UsersPage usp= new UsersPage(username);
+    	UsersPage usp= new UsersPage(username); 
     	usp.setSize(1050, 650);
     	usp.setVisible(true);
+    	usp.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -609,6 +612,7 @@ public class HomePageAdmin extends JFrame {
     	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -618,8 +622,19 @@ public class HomePageAdmin extends JFrame {
     	Requests rq= new Requests(username);
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
+    	rq.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+    	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+         if(wdws != null)
+         {
+         	wdws.dispose();
+         	LoginForm usrmsgp = new LoginForm();
+         	usrmsgp.setLocationRelativeTo(null);
+           usrmsgp.setVisible(true);
+         }
+    }  
 
 	public String getNnbUsers() {
     	try {
@@ -732,6 +747,7 @@ public class HomePageAdmin extends JFrame {
     public static void main(String args[]) {
         HomePageAdmin p = new HomePageAdmin("oubeza_idir");
         p.setVisible(true);
+        p.setLocationRelativeTo(null);
         p.setSize(1050, 650);
     }
 }

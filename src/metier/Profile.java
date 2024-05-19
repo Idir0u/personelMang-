@@ -223,14 +223,14 @@ public class Profile extends javax.swing.JFrame {
         try {
         	
             if (usrname.endsWith("-adm")) {
-            	String query = "SELECT nom, prenom, username, email FROM administrateur_plateforme WHERE username = ?";
+            	String query = "SELECT nom, prenom, identifiant_connexion, email FROM administrateur_plateforme WHERE identifiant_connexion = ?";
 				PreparedStatement ps = conn.prepareStatement(query);
 				String adminUsername = usrname.substring(0, usrname.length() - 4);
 				ps.setString(1, adminUsername);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					fullename.setText(rs.getString("nom") + " " + rs.getString("prenom"));
-					username.setText(rs.getString("username"));
+					username.setText(rs.getString("identifiant_connexion"));
 					emailValue.setText(rs.getString("email"));
 					//lastseenValue.setText(rs.getString("derniere_date_connexion"));
 				} 
@@ -255,7 +255,7 @@ public class Profile extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Profile pf= new Profile("id_Oubeza");
+                Profile pf= new Profile(9, "oubeza_idir");
                 pf.setSize(new Dimension(1050, 650));
                 pf.setVisible(true);
                 

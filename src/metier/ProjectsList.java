@@ -32,6 +32,7 @@ public class ProjectsList extends JFrame {
         Projects = new JButton();
         Requests = new JButton();
         Agenda = new JButton();
+        deconnexion = new JButton();
         Contenu = new JPanel();
         barContenu = new JPanel();
         h1Bar = new JLabel();
@@ -153,13 +154,18 @@ public class ProjectsList extends JFrame {
         });
         Menu.add(Requests);
 
-        Agenda.setFont(new Font("Segoe UI", 1, 14));
-        Agenda.setForeground(new Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBackground(Color.white);
-        Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Agenda.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Menu.add(Agenda);
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
+    Menu.add(deconnexion);
 
         body.add(Menu, BorderLayout.WEST);
 
@@ -230,7 +236,7 @@ public class ProjectsList extends JFrame {
         getContentPane().add(body, BorderLayout.CENTER);
 
         pack();
-
+ 
         // Action listener for search button
         rechercheButton.addActionListener(new ActionListener() {
             @Override
@@ -243,8 +249,8 @@ public class ProjectsList extends JFrame {
     }
     private void UsernameMouseClicked(MouseEvent evt) {
     	Profile pl= new Profile(username);
-    	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
         
     }
 
@@ -252,6 +258,8 @@ public class ProjectsList extends JFrame {
     	HomePageAdmin pl= new HomePageAdmin(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
+        
     	this.setVisible(false);
         
     }
@@ -261,6 +269,7 @@ public class ProjectsList extends JFrame {
     	UsersPage usp= new UsersPage(username);
     	usp.setSize(1050, 650);
     	usp.setVisible(true);
+    	usp.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -269,6 +278,7 @@ public class ProjectsList extends JFrame {
     	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -278,12 +288,21 @@ public class ProjectsList extends JFrame {
     	Requests rq= new Requests(username);
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
+    	rq.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
-    private void AgendaActionPerformed(ActionEvent evt) {
-        
-    }
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+    	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+         if(wdws != null)
+         {
+         	
+         	LoginForm usrmsgp = new LoginForm();
+           usrmsgp.setVisible(true);
+           usrmsgp.setLocationRelativeTo(null);
+           wdws.dispose();
+         }
+    }  
 
 
     public static void main(String args[]) {
@@ -294,6 +313,7 @@ public class ProjectsList extends JFrame {
 
     // Variables declaration - do not modify
     private JButton Agenda;
+    private JButton deconnexion;
     private JPanel Contenu;
     private JPanel Header;
     private JButton Home1;

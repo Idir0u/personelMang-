@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.*;
-import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 
 public class UsersPage extends JFrame {
@@ -28,7 +27,7 @@ public class UsersPage extends JFrame {
         Users = new JButton();
         Projects = new JButton();
         Requests = new JButton();
-        Agenda = new JButton();
+        deconnexion = new JButton();
         Contenu = new JPanel();
         barContenu = new JPanel();
         h1Bar = new JLabel();
@@ -36,6 +35,8 @@ public class UsersPage extends JFrame {
         rechercheButton = new JButton();
         jScrollPane1 = new JScrollPane();
         UserTable = new JTable();
+        supprimeButton = new JButton();
+        consulteButton = new JButton();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jScrollPane1.setForeground(new Color(102,0,204));
@@ -148,30 +149,32 @@ public class UsersPage extends JFrame {
             }
         });
         Menu.add(Requests);
-
-        Agenda.setFont(new Font("Segoe UI", 1, 14));
-        Agenda.setForeground(new Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBackground(Color.white);
-        Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Agenda.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        /*Agenda.addActionListener(new event.ActionListener() {
-            public void actionPerformed(event.ActionEvent evt) {
-                AgendaActionPerformed(evt);
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
             }
-        });*/
-        Menu.add(Agenda);
+        });
+        Menu.add(deconnexion);
+        
+
+        
 
         body.add(Menu, BorderLayout.WEST);
 
-        Contenu.setBackground(new Color(255, 255, 255));
+Contenu.setBackground(new Color(255, 255, 255));
         
         Contenu.setLayout(new GridBagLayout());
-
+        
         barContenu.setBackground(new Color(102, 0, 204));
         barContenu.setLayout(new GridBagLayout());
-
-        h1Bar.setFont(new Font("Segoe UI", 1, 24)); 
+        barContenu.setPreferredSize(new Dimension(700,50));
+        h1Bar.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
         h1Bar.setForeground(new Color(255, 255, 255));
         h1Bar.setText("Users list");
         gridBagConstraints = new GridBagConstraints();
@@ -195,7 +198,7 @@ public class UsersPage extends JFrame {
         barContenu.add(recherche, gridBagConstraints);
 
         rechercheButton.setBackground(new Color(153, 204, 0));
-        rechercheButton.setFont(new Font("Segoe UI", 1, 12)); 
+        rechercheButton.setFont(new Font("Segoe UI", 1, 12)); // NOI18N
         rechercheButton.setForeground(new Color(255, 255, 255));
         rechercheButton.setText("Rechrecher");
         rechercheButton.setBorder(null);
@@ -205,7 +208,7 @@ public class UsersPage extends JFrame {
         gridBagConstraints.ipadx = 15;
         gridBagConstraints.ipady = 14;
         gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new Insets(30, 0, 30, 20);
+        gridBagConstraints.insets = new Insets(30, 0, 30, 25);
         barContenu.add(rechercheButton, gridBagConstraints);
 
         gridBagConstraints = new GridBagConstraints();
@@ -216,7 +219,11 @@ public class UsersPage extends JFrame {
         gridBagConstraints.insets = new Insets(10, 50, 0, 10);
         Contenu.add(barContenu, gridBagConstraints);
 
-        UserTable.setAutoCreateRowSorter(true);
+        
+        
+        
+        
+       UserTable.setAutoCreateRowSorter(true);
         UserTable.setFont(new Font("Segoe UI", 1, 12));
 
         
@@ -250,18 +257,72 @@ public class UsersPage extends JFrame {
         jScrollPane1.setViewportView(UserTable);
         UserTable.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 734;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 694;
         gridBagConstraints.ipady = 320;
-        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new Insets(20, 20, 0, 15);
+        gridBagConstraints.insets = new java.awt.Insets(20, 21, 1, 0);
         Contenu.add(jScrollPane1, gridBagConstraints);
 
+        consulteButton.setBackground(new java.awt.Color(102, 102, 255));
+        consulteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/view.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 16;
+        gridBagConstraints.ipady = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 9, 0, 5);
+        Contenu.add(consulteButton, gridBagConstraints);
+        consulteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = UserTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    String username = (String) UserTable.getValueAt(selectedRow, 0);
+                    int userId = getUserIdByUsername(username);
+                    Profile profile = new Profile(userId, username);
+                    profile.setVisible(true);
+                    profile.setLocationRelativeTo(null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Veuillez sélectionner un utilisateur à consulter.", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        supprimeButton.setBackground(new java.awt.Color(255, 102, 102));
+        
+        supprimeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-x-30.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.ipady = -7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 9, 0, 5);
+        Contenu.add(supprimeButton, gridBagConstraints);
+        supprimeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = UserTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    String username = (String) UserTable.getValueAt(selectedRow, 0);
+                    int userId = getUserIdByUsername(username);
+                    VerifierSupprissionCompte verification = new VerifierSupprissionCompte(userId);
+                    verification.setVisible(true);
+                    verification.setLocationRelativeTo(null);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Veuillez sélectionner un utilisateur à supprimer.", "Avertissement", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
         body.add(Contenu, BorderLayout.CENTER);
 
         getContentPane().add(body, BorderLayout.CENTER);
@@ -272,6 +333,7 @@ public class UsersPage extends JFrame {
     private void UsernameMouseClicked(MouseEvent evt) {
     	Profile pl= new Profile(username);
     	pl.setSize(1050, 650);
+    	pl.setLocationRelativeTo(null);
     	pl.setVisible(true);
         
     }
@@ -280,6 +342,7 @@ public class UsersPage extends JFrame {
     	HomePageAdmin pl= new HomePageAdmin(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
         
     }
@@ -289,6 +352,7 @@ public class UsersPage extends JFrame {
     	UsersPage usp= new UsersPage(username);
     	usp.setSize(1050, 650);
     	usp.setVisible(true);
+    	usp.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -297,6 +361,7 @@ public class UsersPage extends JFrame {
     	ProjectsList pl= new ProjectsList(username);
     	pl.setSize(1050, 650);
     	pl.setVisible(true);
+    	pl.setLocationRelativeTo(null);
     	this.setVisible(false);
     }
 
@@ -306,11 +371,8 @@ public class UsersPage extends JFrame {
     	Requests rq= new Requests(username);
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
+    	rq.setLocationRelativeTo(null);
     	this.setVisible(false);
-    }
-
-    private void AgendaActionPerformed(ActionEvent evt) {
-        
     }
     public ArrayList<Object[]> getUsers() {
     	String query = "SELECT username,email,nom,prenom,derniere_date_connexion FROM utilisateur";
@@ -374,17 +436,40 @@ public class UsersPage extends JFrame {
             return null;
         }
     }
-    
+    private int getUserIdByUsername(String username) {
+        String query = "SELECT IdUtilisateur FROM utilisateur WHERE username = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IdUtilisateur");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Indique une erreur ou utilisateur non trouvé
+    }
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+      	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+           if(wdws != null)
+           {
+           	wdws.dispose();
+           	LoginForm usrmsgp = new LoginForm();
+           	usrmsgp.setLocationRelativeTo(null);
+             usrmsgp.setVisible(true);
+           }
+      }  
     
     public static void main(String args[]) {
-		UsersPage Usrpg = new UsersPage("oubeza_idir-adm");
+		UsersPage Usrpg = new UsersPage("oubeza_idir");
         Usrpg.setVisible(true);
         Usrpg.setSize(1050, 650);
     }
     
 
                       
-    private JButton Agenda;
+    private JButton deconnexion;
     private JPanel Contenu;
     private JPanel Header;
     private JButton Home1;
@@ -403,6 +488,8 @@ public class UsersPage extends JFrame {
     private JScrollPane jScrollPane1;
     private JTextField recherche;
     private JButton rechercheButton;
+    private JButton supprimeButton;
+    private JButton consulteButton;
                      
 
 }

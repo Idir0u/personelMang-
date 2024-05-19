@@ -40,6 +40,7 @@ public class UserRequests extends JFrame {
         Projects = new JButton();
         Requests = new JButton();
         Agenda = new JButton();
+        deconnexion = new JButton();
         Contenu = new JPanel();
         ReviewedRequests = new JButton();
         newRequests = new JButton();
@@ -174,18 +175,19 @@ public class UserRequests extends JFrame {
         });
         Menu.add(Requests);
         
-        Agenda.setBackground(Color.WHITE);
-        Agenda.setFont(new Font("Segoe UI", 1, 14));
-        Agenda.setForeground(new Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Agenda.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Agenda.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                AgendaActionPerformed(evt);
-            }
-        });
-        Menu.add(Agenda);
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+	        deconnexion.setBackground(new Color(255, 255, 255));
+	        deconnexion.setForeground(new Color(153, 0, 204));
+	        deconnexion.setText("Se_deconnecter");
+	        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+	        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	        deconnexion.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent evt) {
+	                deconnexionActionPerformed(evt);
+	            }
+	        });
+	    Menu.add(deconnexion);
+	      
 
         body.add(Menu, BorderLayout.WEST);
 
@@ -340,10 +342,15 @@ public class UserRequests extends JFrame {
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
     }
-
-    private void AgendaActionPerformed(ActionEvent evt) {
-    	
-    }
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+    	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+         if(wdws != null)
+         {
+         	wdws.dispose();
+         	LoginForm usrmsgp = new LoginForm();
+           usrmsgp.setVisible(true);
+         }
+    }  
     private void ReviewedRqActionPerformed(ActionEvent evt) {
     	jScrollPane1.setVisible(false);
     	jScrollPane2.setVisible(true);
@@ -401,5 +408,6 @@ public class UserRequests extends JFrame {
     private JTable jTable2;
     private JButton newRequests;
     private JLabel userIcon;
+    private JButton deconnexion ;
 
 }

@@ -354,7 +354,7 @@ public class DemandeOverview extends JFrame {
             // Opérations de mise à jour et suppression
             PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?");
             PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE IdGroupe = ? OR IdGroupe = ?");
-            PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE IdGroupe = ? OR IdGroupe = ?");
+            PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM UTILISATEUR_GROUPE WHERE IdGroupe = ? OR IdGroupe = ?");
             PreparedStatement pstmt4 = conn.prepareStatement("UPDATE PROJET SET etat = 'Closed' WHERE IdProjet = ?");
             
             pstmt.setObject(1, "Refused");
@@ -449,7 +449,7 @@ public class DemandeOverview extends JFrame {
             PreparedStatement pstmt1 = conn.prepareStatement("INSERT INTO PROJET(nom_court, nom_long, description, isPublic, theme, type, etat) VALUES(?, ?, ?, ?, ?, ?, 'Enabled')");
             PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");
             PreparedStatement pstmt3 = conn.prepareStatement("INSERT INTO GROUPE(nom_groupe) VALUES (?)");
-            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO ULILISATEUR_GROUPE(idUtilisateur, idGroupe) VALUES(?, (SELECT idGroupe FROM GROUPE WHERE nom_groupe = ?))");
+            PreparedStatement pstmt4 = conn.prepareStatement("INSERT INTO UTILISATEUR_GROUPE(idUtilisateur, idGroupe) VALUES(?, (SELECT idGroupe FROM GROUPE WHERE nom_groupe = ?))");
             PreparedStatement pstmt6 = conn.prepareStatement("SELECT idProjet FROM PROJET WHERE nom_court = ?");
 
             // Définir les paramètres pour les instructions SQL
@@ -477,7 +477,7 @@ public class DemandeOverview extends JFrame {
             if (rs.next()) {
                 int idProjet = rs.getInt(1);
 
-                PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre, description, idProjet) VALUES ('creation', 'creation du projet', ?)");
+                PreparedStatement pstmt5 = conn.prepareStatement("INSERT INTO EVENEMENT (titre_evenement, description_evenement, idProjet) VALUES ('creation', 'creation du projet', ?)");
                 PreparedStatement pstmt7 = conn.prepareStatement("UPDATE DEMANDE SET IdProjet = ? WHERE IdDemande = ?");
                 pstmt7.setInt(1, idProjet);
                 pstmt7.setInt(2, id);
@@ -540,7 +540,7 @@ public class DemandeOverview extends JFrame {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE DEMANDE SET etat = ? WHERE IdDemande = ?"); 
             PreparedStatement pstmt1 = conn.prepareStatement("DELETE FROM PROJET WHERE idProjet = ?");
             PreparedStatement pstmt2 = conn.prepareStatement("DELETE FROM GROUPE WHERE idGroupe = ? OR idGroupe = ?");
-            PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM ULILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
+            PreparedStatement pstmt3 = conn.prepareStatement("DELETE FROM UTILISATEUR_GROUPE WHERE idGroupe = ? OR idGroupe = ?");
             PreparedStatement pstmt4 = conn.prepareStatement("DELETE FROM EVENEMENT WHERE idProjet = ?");
             PreparedStatement pstmt5 = conn.prepareStatement("DELETE FROM MESSAGE WHERE idProjet = ?");
             PreparedStatement pstmt6 = conn.prepareStatement("DELETE FROM DOCUMENT WHERE idProjet = ?");

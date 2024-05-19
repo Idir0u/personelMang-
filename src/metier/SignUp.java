@@ -248,6 +248,8 @@ public class SignUp extends JFrame {
                             
                             HomePageUser hmu = new HomePageUser(getId(username),username);
                             hmu.setVisible(true);
+                            hmu.setLocationRelativeTo(null);
+                            hmu.setSize(1050, 650);
                         }
                     }
                 }
