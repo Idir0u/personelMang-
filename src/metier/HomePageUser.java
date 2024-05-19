@@ -383,7 +383,7 @@ public class HomePageUser extends javax.swing.JFrame {
 
     private JPanel createProjectPanel(int id) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setPreferredSize(new Dimension(225, 250)); // Set preferred size
+        panel.setPreferredSize(new Dimension(225, 285)); // Set preferred size to accommodate additional label
 
         // Add padding inside the panel and retain the original border
         panel.setBorder(BorderFactory.createCompoundBorder(
@@ -407,20 +407,39 @@ public class HomePageUser extends javax.swing.JFrame {
         panel.add(scrollPane, BorderLayout.CENTER);
         scrollPane.setBorder(null);
 
+        // Create a panel for the privacy label and the button
+        JPanel southPanel = new JPanel(new BorderLayout());
+        southPanel.setBackground(Color.white);
+
+        JLabel projectPrivacy = new JLabel("Privacy: ");
+        projectPrivacy.setFont(new Font("Segoe UI", 0, 14));
+        projectPrivacy.setHorizontalAlignment(SwingConstants.CENTER);
+        projectPrivacy.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.white, 2), // External visible border
+                BorderFactory.createEmptyBorder(5, 15, 5, 15) // Inner padding
+            ));
+
+        southPanel.add(projectPrivacy, BorderLayout.NORTH);
+        southPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Add padding around the south panel
+
         JButton ButtonSeeMore = new JButton();
         ButtonSeeMore.setBackground(new java.awt.Color(0, 51, 204));
         ButtonSeeMore.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ButtonSeeMore.setForeground(new java.awt.Color(255, 255, 255));
         ButtonSeeMore.setText("See more >");
-        panel.add(ButtonSeeMore, BorderLayout.SOUTH);
+        southPanel.add(ButtonSeeMore, BorderLayout.SOUTH);
+
+        panel.add(southPanel, BorderLayout.SOUTH);
 
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM PROJET WHERE IDPROJET = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                projectName.setText(rs.getString(2));
-                projectDescription.setText(rs.getString(4));
+                projectName.setText(rs.getString("nom_court")); // Use the correct column name
+                projectDescription.setText(rs.getString("description")); // Use the correct column name
+                boolean isPublic = rs.getBoolean("isPublic");
+                projectPrivacy.setText("Privacy: " + (isPublic ? "Public" : "Private"));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

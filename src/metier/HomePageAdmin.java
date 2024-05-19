@@ -629,12 +629,12 @@ public class HomePageAdmin extends JFrame {
     	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
          if(wdws != null)
          {
-         	wdws.dispose();
-         	LoginForm usrmsgp = new LoginForm();
-         	usrmsgp.setLocationRelativeTo(null);
-           usrmsgp.setVisible(true);
+        	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+      		vd.setLocationRelativeTo(null);
+         	vd.setVisible(true);
+         	vd.setSize(400, 300);
          }
-    }  
+    }
 
 	public String getNnbUsers() {
     	try {

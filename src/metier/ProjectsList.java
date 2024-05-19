@@ -296,11 +296,10 @@ public class ProjectsList extends JFrame {
     	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
          if(wdws != null)
          {
-         	
-         	LoginForm usrmsgp = new LoginForm();
-           usrmsgp.setVisible(true);
-           usrmsgp.setLocationRelativeTo(null);
-           wdws.dispose();
+    	 	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+     		vd.setLocationRelativeTo(null);
+        	vd.setVisible(true);
+        	vd.setSize(400, 300);
          }
     }  
 

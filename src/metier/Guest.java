@@ -1,37 +1,43 @@
 package metier;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.*;
 
-public class Projects extends javax.swing.JFrame {
+public class Guest extends javax.swing.JFrame {
     Connection conn = Utilitaire.getConnection();
-    private int iduser;
     private String username;
     
-    public Vector<Integer> fetchProjectsForUser(int iduser) {
+    
+    public Vector<Integer> fetchProjectsForUser(String searchQuery) {
+    	
         Vector<Integer> projectIds = new Vector<>();
-
-        String query;
-        if (iduser == 0) {
-            query = "SELECT IdProjet FROM projet";
-        } else {
-            query = "SELECT DISTINCT p.IdProjet " +
-                    "FROM projet p " +
-                    "JOIN groupe g ON ( g.nom_groupe = p.nom_court OR g.nom_groupe = CONCAT(p.nom_court, '-adm')) " +
-                    "JOIN utilisateur_groupe ug ON g.IdGroupe = ug.IdGroupe " +
-                    "WHERE ug.IdUtilisateur = ?";
-        }
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            if (iduser != 0) {
-                ps.setInt(1, iduser);
+        
+        try {
+        	String query = "SELECT IdProjet, nom_court, theme, type, etat, isPublic FROM projet";
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                query += " WHERE nom_court LIKE ?";
             }
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            if (searchQuery != null && !searchQuery.isEmpty()) {
+                String searchPattern = "%" + searchQuery + "%";
+                ps.setString(1, searchPattern);
+            }
+
+            ResultSet rs = ps.executeQuery();	
             while (rs.next()) {
-                projectIds.add(rs.getInt("IdProjet"));
-            }
+					projectIds.add(rs.getInt("IdProjet"));
+				} 
+            
         } catch (SQLException e) {
             System.out.println("Exception: " + e);
         }
@@ -42,9 +48,9 @@ public class Projects extends javax.swing.JFrame {
 
 
 
-    public Projects(int iduser, String username) {
+    public Guest(String username) {
     	this.username = username;
-    	this.iduser = iduser;
+    	this.last_con_date = Instant.now();
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
@@ -54,55 +60,92 @@ public class Projects extends javax.swing.JFrame {
         userIcon = new javax.swing.JLabel();
         Menu = new javax.swing.JPanel();
         Home1 = new javax.swing.JButton();
-        Projects = new javax.swing.JButton();
-        Messages = new javax.swing.JButton();
-        Requests = new javax.swing.JButton();
-        Invitations = new javax.swing.JButton();
-        Agenda = new javax.swing.JButton();
-        Contenu = new javax.swing.JPanel();
-        
-        
-        JScrollPane scrollPane = new JScrollPane(Contenu);
+        SignUp = new javax.swing.JButton();
 
+        Contenu = new javax.swing.JPanel();
+        barContenu = new JPanel();
+        h1Bar = new JLabel();
+        recherche = new JTextField();
+        rechercheButton = new JButton();
+        JScrollPane scrollPane = new JScrollPane(Contenu);
+        
         Contenu.setLayout(new BorderLayout());
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        //setLocationRelativeTo(null);
-        setPreferredSize(new Dimension(1050, 650));
-        
-        // Panel for the label
-        JPanel labelPanel = new JPanel();
-        JLabel projectsLabel = new JLabel("My Projects");
-        projectsLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        projectsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        projectsLabel.setForeground(Color.white);
-        labelPanel.setBackground(new java.awt.Color(0, 51, 204));
-        labelPanel.add(projectsLabel);
-        //IF a user does not have a project
-        JPanel emptyPanel = new JPanel();
-        JLabel emptyLabel = new JLabel("Your are not associated with any project !!");
-        emptyLabel.setFont(new Font("Segoe UI", Font.BOLD, 17));
-        emptyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        emptyLabel.setForeground(Color.red);
-        emptyPanel.setBackground(Color.white);
-        emptyPanel.add(emptyLabel);
 
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
         projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         projectsPanel.setBackground(Color.white);
-        Vector<Integer> idprojets = fetchProjectsForUser(iduser);
+        Vector<Integer> idprojets = fetchProjectsForUser(recherche.getText());
         for (int id : idprojets) {
             JPanel projectPanel = createProjectPanel(id);
             projectsPanel.add(projectPanel);
         }
 
-        Contenu.add(labelPanel, BorderLayout.NORTH);
-        if(idprojets.size() == 0) {
-        	Contenu.add(emptyPanel, BorderLayout.CENTER);
-        }else {
+        //Contenu.add(labelPanel, BorderLayout.NORTH);
         Contenu.add(projectsPanel, BorderLayout.CENTER);
-        }
+        barContenu.setBackground(new Color(102, 0, 204));
+        barContenu.setLayout(new GridBagLayout());
+
+        h1Bar.setFont(new Font("Segoe UI", 1, 24));
+        h1Bar.setForeground(new Color(255, 255, 255));
+        h1Bar.setText("Projects list");
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(20, 30, 30, 0);
+        barContenu.add(h1Bar, gridBagConstraints);
+
+        recherche.setHorizontalAlignment(JTextField.LEFT);
+        recherche.setBorder(null);
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 136;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(30, 337, 30, 0);
+        barContenu.add(recherche, gridBagConstraints);
+
+        rechercheButton.setBackground(new Color(153, 204, 0));
+        rechercheButton.setFont(new Font("Segoe UI", 1, 12));
+        rechercheButton.setForeground(new Color(255, 255, 255));
+        rechercheButton.setText("Rechercher");
+        rechercheButton.setBorder(null);
+        rechercheButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! look here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            	// i want to clear the projectsPanel before resetting the displayed projects
+            	projectsPanel.removeAll(); // Clear the projectsPanel
+                projectsPanel.revalidate(); // Revalidate the panel to update the UI
+                projectsPanel.repaint(); // Repaint the panel to reflect the changes
+
+                Vector<Integer> idprojets = fetchProjectsForUser(recherche.getText());
+                for (int id : idprojets) {
+                    JPanel projectPanel = createProjectPanel(id);
+                    projectsPanel.add(projectPanel);
+                }
+
+                projectsPanel.revalidate(); // Revalidate the panel again to add the new components
+                projectsPanel.repaint(); // Repaint the panel again to reflect the changes
+            
+            }
+        });
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(30, 0, 30, 20);
+        barContenu.add(rechercheButton, gridBagConstraints);
+
+
+        Contenu.add(barContenu, BorderLayout.NORTH);
+        
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
 
@@ -127,11 +170,7 @@ public class Projects extends javax.swing.JFrame {
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Username.setIconTextGap(1);
-        Username.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                UsernameMouseClicked(evt);
-            }
-        });
+
         
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -159,62 +198,45 @@ public class Projects extends javax.swing.JFrame {
         Menu.setBackground(new java.awt.Color(255, 255, 255));
         Menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Menu.setPreferredSize(new java.awt.Dimension(180, 427));
-        Menu.setLayout(new java.awt.GridLayout(8, 0));
+        Menu.setLayout(new java.awt.GridLayout(9, 0));
 
-        Home1.setBackground(Color.white);
-        Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Home1.setForeground(new java.awt.Color(153, 0, 204));
+        Home1.setBackground(new java.awt.Color(153, 0, 204));
+        Home1.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Home1.setForeground(Color.white);
         Home1.setText("Home");
         Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         Menu.add(Home1);
 
-        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        Projects.setBackground(new java.awt.Color(153, 0, 204));
-        Projects.setForeground(Color.white);
-        Projects.setText("Projects");
-        Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        Menu.add(Projects);
-
-        Messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Messages.setForeground(new java.awt.Color(153, 0, 204));
-        Messages.setText("Messages");
-        Messages.setBackground(Color.white);
-        Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        Menu.add(Messages);
-
-        Requests.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        Requests.setBackground(Color.white);
-        Requests.setForeground(new java.awt.Color(153, 0, 204));
-        Requests.setText("Requests");
-        Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        Menu.add(Requests);
-
-        Invitations.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        Invitations.setBackground(Color.white);
-        Invitations.setForeground(new java.awt.Color(153, 0, 204));
-        Invitations.setText("Invitations");
-        Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        Menu.add(Invitations);
-
-        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        Agenda.setBackground(Color.white);
-        Agenda.setForeground(new java.awt.Color(153, 0, 204));
-        Agenda.setText("Agenda");
-        Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        Menu.add(Agenda);
+        SignUp.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        SignUp.setBackground(Color.white);
+        SignUp.setForeground(new java.awt.Color(153, 0, 204));
+        SignUp.setText("SignUp");
+        SignUp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        SignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SignUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+            	SignUpAction(evt);
+            }
+        });
         
+
+        Menu.add(SignUp);
+
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
+        
+        Menu.add(deconnexion);
         body.add(Menu, java.awt.BorderLayout.WEST);
 
         Contenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -225,7 +247,7 @@ public class Projects extends javax.swing.JFrame {
 
         pack();
     }
-
+//////////////////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private JPanel createProjectPanel(int id) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setPreferredSize(new Dimension(225, 285)); // Set preferred size to accommodate additional label
@@ -292,37 +314,52 @@ public class Projects extends javax.swing.JFrame {
 
         return panel;
     }
-    private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        // TODO add your handling code here:
-    	Profile pf = new Profile(iduser, username);
-    	pf.setLocationRelativeTo(null);
-    	pf.setVisible(true);
-    	
-    } 
 
-    public static void main(String args[]) {
-        Projects p = new Projects(9,"oubeza_idir");
-        p.setVisible(true);
-        p.setSize(1050, 650);
-    }
 
-    // Variables declaration - do not modify                     
-    private javax.swing.JButton Agenda;
+
+    // Variables declaration - do not modify  
     private javax.swing.JPanel Contenu;
     private javax.swing.JPanel Header;
     private javax.swing.JButton Home1;
-    private javax.swing.JButton Invitations;
     private javax.swing.JLabel LOGO;
     private javax.swing.JPanel Menu;
-    private javax.swing.JButton Messages;
-    private javax.swing.JButton Projects;
-    private javax.swing.JButton Requests;
+    private javax.swing.JButton SignUp;
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
-    
-    
-    
-    // End of variables declaration   
- 
+
+    /*private JButton deconnexion;
+    private JButton Invitation;*/
+    protected Instant last_con_date ;
+    private JPanel barContenu;
+    private JLabel h1Bar;
+    private JTextField recherche;
+    private JButton rechercheButton;
+    // protected static String usrname ; 
+    private JButton deconnexion = new JButton();
+
+    // End of variables declaration 
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+      	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+           if(wdws != null)
+           {
+          	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+        		vd.setLocationRelativeTo(null);
+           	vd.setVisible(true);
+           	vd.setSize(400, 300);
+           }
+      }
+    private void SignUpAction(ActionEvent evt) {
+	    SignUp sp = new SignUp();
+	    sp.setVisible(true);
+	    this.setVisible(false);
+	    sp.setLocationRelativeTo(null);
+    }
+ public static void main(String args[]) {
+        
+        Guest gp = new Guest("guest");
+        gp.setVisible(true);
+        gp.setLocationRelativeTo(null);
+        gp.setSize(1050, 650);
+    }
 }
