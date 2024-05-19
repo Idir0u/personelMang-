@@ -1,23 +1,22 @@
 package metier;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.*;
-
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.Vector;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 import javax.swing.table.*;
 public class UserMessagePage extends JFrame {
+	private int iduser;
 
     
-    public UserMessagePage(String username) {
+    public UserMessagePage(int iduser, String username) {
         GridBagConstraints gridBagConstraints;
         this.usrname_var = username ;
+        this.iduser = iduser;
 
         body = new JPanel();
         Header = new JPanel();
@@ -56,7 +55,7 @@ public class UserMessagePage extends JFrame {
 
         usrname.setFont(new Font("Segoe UI Black", 3, 14)); 
         usrname.setForeground(new Color(255, 255, 255));
-        usrname.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); 
+        usrname.setIcon(new ImageIcon(getClass().getResource("icons8-user-30.png"))); 
         usrname.setText(usrname_var);
 
         GroupLayout HeaderLayout = new GroupLayout(Header);
@@ -190,7 +189,7 @@ public class UserMessagePage extends JFrame {
 
         jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
         jLabel3.setForeground(new Color(153, 0, 204));
-        jLabel3.setIcon(new ImageIcon(getClass().getResource("assets/mail.png"))); 
+        jLabel3.setIcon(new ImageIcon(getClass().getResource("mail.png"))); 
         jLabel3.setText("WELCOME TO YOUR MESSAGE BOX");
 
         jScrollPane1.setBackground(new Color(255, 255, 255));
@@ -315,14 +314,14 @@ public class UserMessagePage extends JFrame {
   
 
         private void Home1ActionPerformed(ActionEvent evt) {                                      
-            UserPage nwusp = new UserPage(usrname_var);
+            HomePageUser nwusp = new HomePageUser(iduser, usrname_var);
             nwusp.setVisible(true);
             Window win = SwingUtilities.getWindowAncestor(Home1);
             win.dispose();
         }                                     
 
         private void MessagesActionPerformed(ActionEvent evt) {                                         
-            UserMessagePage usrmsgp = new UserMessagePage(usrname_var);
+            UserMessagePage usrmsgp = new UserMessagePage(iduser, usrname_var);
             usrmsgp.setVisible(true);
             Window win = SwingUtilities.getWindowAncestor(Messages);
             win.dispose();
@@ -337,27 +336,29 @@ public class UserMessagePage extends JFrame {
         }                                           
 
         private void ProjectsActionPerformed(ActionEvent evt) {                                         
-            // TODO add your handling code here:
+            Projects pp = new Projects(iduser, usrname_var);
+            pp.setVisible(true);
+            Window win =SwingUtilities.getWindowAncestor(Projects);
+            win.dispose();
         }                                        
 
         private void RequestsActionPerformed(ActionEvent evt) {                                         
-        	UserRequestPage usrmsgp = new UserRequestPage(usrname_var);
+        	UserRequests usrmsgp = new UserRequests(iduser, usrname_var);
             usrmsgp.setVisible(true);
             Window win = SwingUtilities.getWindowAncestor(Requests);
             win.dispose();
         }                                        
 
         private void AgendaActionPerformed(ActionEvent evt) {                                       
-            // TODO add your handling code here:
+            new UserAgendaPage(iduser, usrname_var).setVisible(true);
         } 
         private void InvitationActionPerformed(ActionEvent evt)
         {
-        	UserInvitationPage usr_inv_page = new UserInvitationPage(usrname_var);
+        	Invitation_demande usr_inv_page = new Invitation_demande(iduser, usrname_var);
             usr_inv_page.setVisible(true);
             Window win = SwingUtilities.getWindowAncestor(Invitation);
             win.dispose();
         }
-
     
 
                        
@@ -384,7 +385,7 @@ public class UserMessagePage extends JFrame {
     
     public static void main (String args[])
     {
-    	UserMessagePage usr = new UserMessagePage("yasser_moujtahid");
+    	UserMessagePage usr = new UserMessagePage(8, "yasser_moujtahid");
     	usr.setVisible(true);
     }
                       

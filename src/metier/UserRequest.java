@@ -1,5 +1,4 @@
 package metier;
-
 import java.sql.Date;
 
 public class UserRequest 

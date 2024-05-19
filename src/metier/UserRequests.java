@@ -17,15 +17,12 @@ import java.util.*;
  */
 public class UserRequests extends JFrame {
 	private int id; 
+	private String username;
 	Connection conn = Utilitaire.getConnection();
     
-    public UserRequests(int id) {
+    public UserRequests(int id, String username) {
     	this.id=id;
-        initComponents();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void initComponents() {
+        this.username = username;
         GridBagConstraints gridBagConstraints;
 
         body = new JPanel();
@@ -74,7 +71,7 @@ public class UserRequests extends JFrame {
         Username.setFont(new Font("Segoe UI", 1, 14));
         Username.setForeground(new Color(255, 255, 255));
         Username.setHorizontalAlignment(SwingConstants.CENTER);
-        Username.setText("Username_XXXXX");
+        Username.setText(username);
         Username.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
@@ -338,7 +335,7 @@ public class UserRequests extends JFrame {
     private void RequestsActionPerformed(ActionEvent evt) {
         
     	this.setVisible(false);
-    	UserRequests rq= new UserRequests(id);
+    	UserRequests rq= new UserRequests(id, username);
     	rq.setSize(1050, 650);
     	rq.setVisible(true);
     }
@@ -372,7 +369,7 @@ public class UserRequests extends JFrame {
         /* Create and display the form */
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	UserRequests rq = new UserRequests(3);
+            	UserRequests rq = new UserRequests(9, "oubeza_idir");
             	rq.setSize(1050, 650);
             	rq.setVisible(true);
             }

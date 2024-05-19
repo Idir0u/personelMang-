@@ -1,5 +1,6 @@
 package metier;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.sql.*;
 import javax.swing.*;
 import java.util.*;
@@ -167,6 +168,11 @@ public class Projects extends javax.swing.JFrame {
         Home1.setText("Home");
         Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Home1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                home1ActionPerformed(evt);
+            }
+        });
 
         Menu.add(Home1);
 
@@ -176,6 +182,11 @@ public class Projects extends javax.swing.JFrame {
         Projects.setText("Projects");
         Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Projects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projectsActionPerformed(evt);
+            }
+        });
 
         Menu.add(Projects);
 
@@ -185,6 +196,11 @@ public class Projects extends javax.swing.JFrame {
         Messages.setBackground(Color.white);
         Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Messages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messagesActionPerformed(evt);
+            }
+        });
 
         Menu.add(Messages);
 
@@ -194,6 +210,11 @@ public class Projects extends javax.swing.JFrame {
         Requests.setText("Requests");
         Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Requests.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestsActionPerformed(evt);
+            }
+        });
 
         Menu.add(Requests);
 
@@ -203,6 +224,11 @@ public class Projects extends javax.swing.JFrame {
         Invitations.setText("Invitations");
         Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Invitations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invitationsActionPerformed(evt);
+            }
+        });
 
         Menu.add(Invitations);
 
@@ -212,6 +238,11 @@ public class Projects extends javax.swing.JFrame {
         Agenda.setText("Agenda");
         Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Agenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agendaActionPerformed(evt);
+            }
+        });
 
         Menu.add(Agenda);
         
@@ -272,6 +303,8 @@ public class Projects extends javax.swing.JFrame {
         ButtonSeeMore.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ButtonSeeMore.setForeground(new java.awt.Color(255, 255, 255));
         ButtonSeeMore.setText("See more >");
+        
+        //AboutPage(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court,String username)
         southPanel.add(ButtonSeeMore, BorderLayout.SOUTH);
 
         panel.add(southPanel, BorderLayout.SOUTH);
@@ -285,6 +318,19 @@ public class Projects extends javax.swing.JFrame {
                 projectDescription.setText(rs.getString("description")); // Use the correct column name
                 boolean isPublic = rs.getBoolean("isPublic");
                 projectPrivacy.setText("Privacy: " + (isPublic ? "Public" : "Private"));
+                ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        try {
+							AboutPage ap = new AboutPage(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date"), rs.getInt("idprojet"), rs.getString("nom_court"), rs.getString("username"));
+							ap.setVisible(true);
+							ap.setSize(1050, 650);
+							ap.setLocationRelativeTo(null);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                    }
+                });
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -292,12 +338,72 @@ public class Projects extends javax.swing.JFrame {
 
         return panel;
     }
+    private void home1ActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+    	HomePageUser pf = new HomePageUser(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void agendaActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserAgendaPage pf = new UserAgendaPage(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void messagesActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserMessagePage pf = new UserMessagePage(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void requestsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserRequests pf = new UserRequests(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void invitationsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		Invitation_demande inv = new Invitation_demande(iduser, username);
+    	inv.setVisible(true);
+    	inv.setLocationRelativeTo(null);
+    	inv.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+    
+    private void projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsActionPerformed
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
+    	Projects prs = new Projects(iduser, username);
+    	prs.setSize(1050, 650);
+    	prs.setLocationRelativeTo(null);
+    	prs.setVisible(true);
+    	this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_projectsActionPerformed
     private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
     	Profile pf = new Profile(iduser, username);
-    	pf.setLocationRelativeTo(null);
     	pf.setVisible(true);
-    	
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
     } 
 
     public static void main(String args[]) {

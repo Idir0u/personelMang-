@@ -345,7 +345,7 @@ public class LoginForm extends JFrame {
         
 	}
     public void connectGuest(String username) {
-    	GuestPage gp = new GuestPage(username);
+    	Guest gp = new Guest(username);
     	gp.setVisible(true);
     	this.setVisible(false);
     }
