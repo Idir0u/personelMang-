@@ -282,7 +282,7 @@ public class LoginForm extends JFrame {
     public void authenticateUserLogin(String username, String passwd) {
         try {
             // Enable auto-commit if it was disabled
-            conn.setAutoCommit(true);
+            //conn.setAutoCommit(true);
 
             // Disable foreign key constraints temporarily
             Statement stmt = conn.createStatement();

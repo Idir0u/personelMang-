@@ -62,12 +62,12 @@ public class TableProjets extends JPanel {
         return maxWidth;
     }
 
-    public TableProjets() {
+    public TableProjets(int id) {
         setLayout(new BorderLayout());
 
         String[] columns = {"IdProject", "nom_long", "theme", "type", "etat", "visibility","role", "actions"};
 
-        Vector<Object[]> projet = fetchProjects(2);
+        Vector<Object[]> projet = fetchProjects(id);
 
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
             @Override

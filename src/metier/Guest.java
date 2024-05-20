@@ -294,6 +294,8 @@ public class Guest extends javax.swing.JFrame {
         ButtonSeeMore.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ButtonSeeMore.setForeground(new java.awt.Color(255, 255, 255));
         ButtonSeeMore.setText("See more >");
+        
+        //AboutPage(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court,String username)
         southPanel.add(ButtonSeeMore, BorderLayout.SOUTH);
 
         panel.add(southPanel, BorderLayout.SOUTH);
@@ -307,6 +309,19 @@ public class Guest extends javax.swing.JFrame {
                 projectDescription.setText(rs.getString("description")); // Use the correct column name
                 boolean isPublic = rs.getBoolean("isPublic");
                 projectPrivacy.setText("Privacy: " + (isPublic ? "Public" : "Private"));
+                ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        try {
+							AboutPage ap = new AboutPage(new Info(0, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username));
+							ap.setVisible(true);
+							ap.setSize(950, 550);
+							ap.setLocationRelativeTo(null);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                    }
+                });
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

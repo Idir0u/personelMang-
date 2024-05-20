@@ -1,16 +1,11 @@
 package metier;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
 import java.util.*;
 
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class Invitation_demande extends javax.swing.JFrame {
@@ -36,6 +31,7 @@ public class Invitation_demande extends javax.swing.JFrame {
         Requests = new javax.swing.JButton();
         Agenda = new javax.swing.JButton();
         Invitations = new javax.swing.JButton();
+        deconnexion = new JButton();
         Contenu = new javax.swing.JPanel();
         request = new javax.swing.JButton();
         Invitation = new javax.swing.JButton();
@@ -108,6 +104,7 @@ public class Invitation_demande extends javax.swing.JFrame {
         Home1.setBackground(Color.white);
         Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Home1.setForeground(new java.awt.Color(153, 0, 204));
+        Home1.setBackground(Color.white);
         Home1.setText("Home");
         Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -119,8 +116,24 @@ public class Invitation_demande extends javax.swing.JFrame {
         
         Menu.add(Home1);
 
+
+        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Projects.setForeground(new java.awt.Color(153, 0, 204));
+        Projects.setBackground(Color.white);
+        Projects.setText("Projects");
+        Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Projects.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projectsActionPerformed(evt);
+            }
+        });
+        
+        Menu.add(Projects);
+        
         Messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Messages.setForeground(new java.awt.Color(153, 0, 204));
+        Messages.setBackground(Color.white);
         Messages.setText("Messages");
         Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -132,22 +145,9 @@ public class Invitation_demande extends javax.swing.JFrame {
         
         Menu.add(Messages);
 
-        Projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Projects.setForeground(new java.awt.Color(153, 0, 204));
-        Projects.setText("Projects");
-        Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Projects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectsActionPerformed(evt);
-            }
-        });
-        
-        Menu.add(Projects);
-
         Requests.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Requests.setForeground(Color.white);
-        Requests.setBackground(new java.awt.Color(153, 0, 204));
+        Requests.setForeground(new java.awt.Color(153, 0, 204));
+        Requests.setBackground(Color.white);
         Requests.setText("Requests");
         Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -161,6 +161,7 @@ public class Invitation_demande extends javax.swing.JFrame {
 
         Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Agenda.setForeground(new java.awt.Color(153, 0, 204));
+        Agenda.setBackground(Color.white);
         Agenda.setText("Agenda");
         Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -173,7 +174,8 @@ public class Invitation_demande extends javax.swing.JFrame {
         Menu.add(Agenda);
 
         Invitations.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Invitations.setForeground(new java.awt.Color(153, 0, 204));
+        Invitations.setForeground(Color.white);
+        Invitations.setBackground(new java.awt.Color(153, 0, 204));
         Invitations.setText("Invitations");
         Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -184,6 +186,19 @@ public class Invitation_demande extends javax.swing.JFrame {
         });
         
         Menu.add(Invitations);
+        
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBackground(Color.white);
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
+        Menu.add(deconnexion);
 
         body.add(Menu, java.awt.BorderLayout.WEST);
 
@@ -234,7 +249,7 @@ public class Invitation_demande extends javax.swing.JFrame {
         });
         InvitationList.setAutoCreateRowSorter(true);
         InvitationList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        String[] columnInvitation = {"Invitation_Id","Username", "Project", "invitation date"};
+        String[] columnInvitation = {"Invitation_Id","idgroupe", "Username", "Project", "invitation date"};
 
         Object[][] dataInvitation = {
         };
@@ -295,12 +310,13 @@ public class Invitation_demande extends javax.swing.JFrame {
          if (selectedRow >= 0) {
              // Récupération de l'invitationId (supposons que c'est la première colonne)
              Integer invitationId = (Integer) InvitationList.getValueAt(selectedRow, 0);
-                updateInvitationStatus(invitationId,"Accepted");
+                updateInvitationStatus(invitationId,"Accepted", (Integer) InvitationList.getValueAt(selectedRow, 1));
+                
             }
         });
 
         RefuseButton.setBackground(new java.awt.Color(255, 0, 0));
-        RefuseButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        RefuseButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); 
         RefuseButton.setForeground(new java.awt.Color(255, 255, 255));
         RefuseButton.setText("Refuse");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -317,25 +333,26 @@ public class Invitation_demande extends javax.swing.JFrame {
             if (selectedRow >= 0) {
                 // Récupération de l'invitationId (supposons que c'est la première colonne)
                 Integer invitationId = (Integer) InvitationList.getValueAt(selectedRow, 0);
-                   updateInvitationStatus(invitationId,"Accepted");
+                   updateInvitationStatus(invitationId,"Refused", 0);
                }
            });
         requestsList.setAutoCreateRowSorter(true);
         requestsList.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        String[] columnDemande= {"Request_Id","Username", "Project name", "Request date","State"};
-
+        String[] columnDemande= {"Request_Id", "Username", "Project name", "Request date","State"};
+//Object[] row = {rs.getInt("Invitation_Id"), rs.getString("host"),rs.getString("nom_Projet"),rs.getString("date"), rs.getString("etat")};
         Object[][] dataDemande = {
-        		{1,"zakariae_zemat", "Agence_rec", "2024/04/12", null},
-                {2,"zakariae_zemat", "Agence_rec", "2024/04/12", null},
-                {3,"zakariae_zemat", "Agence_rec", "2024/04/12", null},
-                {4,"zakariae_zemat", "Agence_rec", "2024/04/12", null},
-                {null, null, null, null}
         };
         DefaultTableModel modell = new DefaultTableModel(dataDemande, columnDemande) {
         	public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+        ArrayList<Object[]> requests = getRequests(username);
+        if(requests != null) {
+	        for(Object[] o : requests) {
+	        	modell.addRow(o);
+	        }
+        }
         requestsList.setModel(modell);
         requestsList.setToolTipText("");
         requestsList.setColumnSelectionAllowed(true);
@@ -374,14 +391,31 @@ public class Invitation_demande extends javax.swing.JFrame {
     	
     	ArrayList<Object[]> invitations = new ArrayList<>();
     	try {
-    		PreparedStatement s = conn.prepareStatement("SELECT Invitation_Id,host,nom_Projet,date FROM invitation_demande where etat = 'Pending' AND type = 'invitation' AND user = ?");
+    		PreparedStatement s = conn.prepareStatement("SELECT Invitation_Id,host,idgroupe, nom_Projet,date FROM invitation_demande where etat = 'Pending' AND type = 'invitation' AND user = ?");
     		s.setString(1, username);
     		ResultSet rs = s.executeQuery();
     		while(rs.next()) {
-    			Object[] row = {rs.getInt("Invitation_Id"),rs.getString("host"),rs.getString("nom_Projet"),rs.getString("date")};
+    			Object[] row = {rs.getInt("Invitation_Id"),rs.getInt("idgroupe"), rs.getString("host"),rs.getString("nom_Projet"),rs.getString("date")};
     			invitations.add(row);
     		}
     		return invitations;
+    	}catch(SQLException s) {
+    		System.out.println(s.getMessage());
+    	}
+    	return null;
+    }
+public ArrayList<Object[]> getRequests(String username) {
+    	
+    	ArrayList<Object[]> requests = new ArrayList<>();
+    	try {
+    		PreparedStatement s = conn.prepareStatement("SELECT * FROM invitation_demande where type = 'demande' AND user = ?");
+    		s.setString(1, username);
+    		ResultSet rs = s.executeQuery();
+    		while(rs.next()) {
+    			Object[] row = {rs.getInt("Invitation_Id"), rs.getString("host"),rs.getString("nom_Projet"),rs.getString("date"), rs.getString("etat")};
+    			requests.add(row);
+    		}
+    		return requests;
     	}catch(SQLException s) {
     		System.out.println(s.getMessage());
     	}
@@ -411,24 +445,58 @@ public class Invitation_demande extends javax.swing.JFrame {
     }
     
     
-    void updateInvitationStatus(int invitationId, String status) {
+    void updateInvitationStatus(int invitationId, String status, int idgroupe) {
         try {
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE  invitation_demande SET etat = ? WHERE invitation_id = ?");
+            conn.setAutoCommit(false);
+
+            // Temporarily disable foreign key checks
+            Statement disableFK = conn.createStatement();
+            disableFK.execute("SET FOREIGN_KEY_CHECKS = 0");
+
+            // Update the invitation status
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE invitation_demande SET etat = ? WHERE invitation_id = ?");
             pstmt.setString(1, status);
             pstmt.setInt(2, invitationId);
             int rowsAffected = pstmt.executeUpdate();
+
             if (rowsAffected > 0) {
-            	int selectedRow = InvitationList.getSelectedRow();
+                int selectedRow = InvitationList.getSelectedRow();
                 if (selectedRow != -1) {
-                    // Supprimer la ligne du modèle de la table, pas de la table elle-même
+                    // Remove the row from the table model, not from the table itself
                     ((DefaultTableModel) InvitationList.getModel()).removeRow(InvitationList.convertRowIndexToModel(selectedRow));
                 }
                 refreshTable();
             }
+
+            if (status.equalsIgnoreCase("accepted")) {
+                    PreparedStatement pstmt2 = conn.prepareStatement("INSERT INTO UTILISATEUR_GROUPE(idUtilisateur, idGroupe) VALUES(?, ?)");
+                    pstmt2.setInt(1, this.iduser);
+                    pstmt2.setInt(2, idgroupe);
+                    pstmt2.executeUpdate();
+                
+            }
+
+            // Re-enable foreign key checks
+            Statement enableFK = conn.createStatement();
+            enableFK.execute("SET FOREIGN_KEY_CHECKS = 1");
+
+            conn.commit();
         } catch (SQLException ex) {
+            try {
+                conn.rollback();
+            } catch (SQLException rollbackEx) {
+                System.out.println("Rollback failed: " + rollbackEx.getMessage());
+            }
             System.out.println(ex.getMessage());
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException autoCommitEx) {
+                System.out.println("Failed to set auto-commit: " + autoCommitEx.getMessage());
+            }
         }
     }
+
     private void home1ActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
     	HomePageUser pf = new HomePageUser(iduser, username);
@@ -497,13 +565,24 @@ public class Invitation_demande extends javax.swing.JFrame {
     	pf.setSize(1050, 650);
     } 
     
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+    	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+         if(wdws != null)
+         {
+        	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+      		vd.setLocationRelativeTo(null);
+         	vd.setVisible(true);
+         	vd.setSize(400, 300);
+         }
+    }  
+    
     
     
     
     public static void main(String args[]) {
-            	Invitation_demande i = new Invitation_demande(9, "oubeza_idir");
+            	Invitation_demande i = new Invitation_demande(24, "zakariae_zemat");
             	i.setVisible(true);
-            	i.setSize(1000,600);
+            	i.setSize(1050,650);
                 i.setLocationRelativeTo(null);
             
     }
@@ -521,6 +600,7 @@ public class Invitation_demande extends javax.swing.JFrame {
     private javax.swing.JPanel Menu;
     private javax.swing.JButton Messages;
     private javax.swing.JButton Projects;
+    private JButton deconnexion;
     private javax.swing.JButton RefuseButton;
     private javax.swing.JButton Requests;
     private javax.swing.JLabel Username;

@@ -4,24 +4,24 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 
-import java.awt.*;
+import java.awt.*; 
 import java.awt.event.*;
 import java.sql.*;
 import java.util.*;
 
-
+  
 
 /**
  *
  * @author IDIR
  */
 public class UserRequests extends JFrame {
-	private int id; 
+	private int iduser; 
 	private String username;
 	Connection conn = Utilitaire.getConnection();
     
-    public UserRequests(int id, String username) {
-    	this.id=id;
+    public UserRequests(int iduser, String username) {
+    	this.iduser =iduser;
         this.username = username;
         GridBagConstraints gridBagConstraints;
 
@@ -37,11 +37,12 @@ public class UserRequests extends JFrame {
         Projects = new JButton();
         Requests = new JButton();
         Agenda = new JButton();
+        Invitations = new JButton();
         deconnexion = new JButton();
         Contenu = new JPanel();
         ReviewedRequests = new JButton();
         newRequests = new JButton();
-        tablePanel = new TableButtonPanelUser(this, this.id);
+        tablePanel = new TableButtonPanelUser(this, this.iduser);
         jScrollPane1 = new JScrollPane();
         jTable1 = tablePanel.getTable();
         jScrollPane2 = new JScrollPane();
@@ -115,36 +116,13 @@ public class UserRequests extends JFrame {
         Home1.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Home1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                Home1ActionPerformed(evt);
+                home1ActionPerformed(evt);
             }
         });
         Menu.add(Home1);
 
-        Messages.setBackground(Color.WHITE);
-        Messages.setFont(new Font("Segoe UI", 1, 14));
-        Messages.setForeground(new Color(153, 0, 204));
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Messages.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });
-        Menu.add(Messages);
+        
 
-        Users.setBackground(Color.WHITE);
-        Users.setFont(new Font("Segoe UI", 1, 14)); 
-        Users.setForeground(new Color(153, 0, 204));
-        Users.setText("Users");
-        Users.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Users.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Users.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                UsersActionPerformed(evt);
-            }
-        });
-        Menu.add(Users);
 
         Projects.setBackground(Color.WHITE);
         Projects.setFont(new Font("Segoe UI", 1, 14));
@@ -154,10 +132,23 @@ public class UserRequests extends JFrame {
         Projects.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Projects.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                ProjectsActionPerformed(evt);
+                projectsActionPerformed(evt);
             }
         });
         Menu.add(Projects);
+        
+        Messages.setBackground(Color.WHITE);
+        Messages.setFont(new Font("Segoe UI", 1, 14));
+        Messages.setForeground(new Color(153, 0, 204));
+        Messages.setText("Messages");
+        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Messages.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                messagesActionPerformed(evt);
+            }
+        });
+        Menu.add(Messages);
 
         Requests.setBackground(new Color(153, 0, 204));
         Requests.setFont(new Font("Segoe UI", 1, 14));
@@ -167,10 +158,38 @@ public class UserRequests extends JFrame {
         Requests.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Requests.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                RequestsActionPerformed(evt);
+                requestsActionPerformed(evt);
             }
         });
         Menu.add(Requests);
+        
+        Invitations.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Invitations.setBackground(Color.white);
+        Invitations.setForeground(new java.awt.Color(153, 0, 204));
+        Invitations.setText("Invitations");
+        Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Invitations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invitationsActionPerformed(evt);
+            }
+        });
+
+        Menu.add(Invitations);
+
+        Agenda.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        Agenda.setBackground(Color.white);
+        Agenda.setForeground(new java.awt.Color(153, 0, 204));
+        Agenda.setText("Agenda");
+        Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Agenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agendaActionPerformed(evt);
+            }
+        });
+
+        Menu.add(Agenda);
         
         deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
 	        deconnexion.setBackground(new Color(255, 255, 255));
@@ -312,33 +331,73 @@ public class UserRequests extends JFrame {
         pack();
     }
 
-    private void UsernameMouseClicked(MouseEvent evt) {
-       
-    }
-
-    private void Home1ActionPerformed(ActionEvent evt) {
-    	
-    }
-
-    private void MessagesActionPerformed(ActionEvent evt) {
-    	
-    }
-
-    private void UsersActionPerformed(ActionEvent evt) {
-        
-    }
-
-    private void ProjectsActionPerformed(ActionEvent evt) {
-        
-    }
-
-    private void RequestsActionPerformed(ActionEvent evt) {
-        
+    private void home1ActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+    	HomePageUser pf = new HomePageUser(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
     	this.setVisible(false);
-    	UserRequests rq= new UserRequests(id, username);
-    	rq.setSize(1050, 650);
-    	rq.setVisible(true);
-    }
+		
+	}
+
+	private void agendaActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserAgendaPage pf = new UserAgendaPage(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void messagesActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserMessagePage pf = new UserMessagePage(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void requestsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		UserRequests pf = new UserRequests(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+
+	private void invitationsActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		Invitation_demande inv = new Invitation_demande(iduser, username);
+    	inv.setVisible(true);
+    	inv.setLocationRelativeTo(null);
+    	inv.setSize(1050, 650);
+    	this.setVisible(false);
+		
+	}
+    
+    private void projectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectsActionPerformed
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
+    	Projects prs = new Projects(iduser, username);
+    	prs.setSize(1050, 650);
+    	prs.setLocationRelativeTo(null);
+    	prs.setVisible(true);
+    	this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_projectsActionPerformed
+    private void UsernameMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        // TODO add your handling code here:
+    	System.out.println("in homepageuser "+ iduser +" "+ username);
+    	Profile pf = new Profile(iduser, username);
+    	pf.setVisible(true);
+    	pf.setLocationRelativeTo(null);
+    	pf.setSize(1050, 650);
+    } 
     private void deconnexionActionPerformed(ActionEvent evt) {                                            
     	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
          if(wdws != null)
@@ -346,6 +405,7 @@ public class UserRequests extends JFrame {
          	wdws.dispose();
          	LoginForm usrmsgp = new LoginForm();
            usrmsgp.setVisible(true);
+           usrmsgp.setLocationRelativeTo(null);
          }
     }  
     private void ReviewedRqActionPerformed(ActionEvent evt) {
@@ -377,12 +437,12 @@ public class UserRequests extends JFrame {
     }
 
     public int getId() {
-		return id;
+		return iduser;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int iduser) {
+		this.iduser = iduser;
 	}
 
     private JButton Agenda;
@@ -397,6 +457,7 @@ public class UserRequests extends JFrame {
     private JButton ReviewedRequests;
     private JLabel Username;
     private JButton Users;
+    private JButton Invitations;
     private JPanel body;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;

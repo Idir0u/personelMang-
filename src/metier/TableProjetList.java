@@ -13,13 +13,14 @@ public class TableProjetList extends JPanel {
     private JTable table;
     private DefaultTableModel model;
     private JFrame parent;
+    private Info info;
     Connection conn = Utilitaire.getConnection();
 
     Vector<Object[]> fetchProjects(String searchQuery) {
         Vector<Object[]> projets = new Vector<>();
-
+        Vector<Info> infos = new Vector<Info>();
         try {
-            String query = "SELECT IdProjet, nom_court, theme, type, etat, isPublic FROM projet";
+            String query = "SELECT * FROM projet";
             if (searchQuery != null && !searchQuery.isEmpty()) {
                 query += " WHERE nom_court LIKE ?";
             }
@@ -35,13 +36,15 @@ public class TableProjetList extends JPanel {
             while (rs.next()) {
                 String isPublicValue = rs.getBoolean("ispublic") ? "public" : "privé";
                 Object[] row = {
-                    rs.getInt(1),
-                    rs.getString(2),
+                    rs.getInt("IdProjet"),
+                    rs.getString("nom_court"),
                     rs.getString("theme"),
                     rs.getString("type"),
                     rs.getString("etat"),
                     isPublicValue
                 };
+                
+                
                 projets.add(row);
             }
         } catch (Exception e) {
@@ -193,12 +196,29 @@ public class TableProjetList extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == button1) {//About the project
-                /*int value = (int) table.getValueAt(selectedRow, 0);
-                String type = (String) table.getValueAt(selectedRow, 5);*/
-                JFrame frame = new JFrame("View Project");
-                frame.setLocationRelativeTo(null);
-                frame.setSize(520, 400);
-                frame.setVisible(true);
+                
+                try {
+                int idDemande = (int) table.getValueAt(selectedRow, 0);
+                PreparedStatement pstm = conn.prepareStatement("SELECT * FROM DEMANDE WHERE iddemande = ?");
+                pstm.setInt(1, idDemande);
+                ResultSet rs = pstm.executeQuery(); 
+                //(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court, String username)
+                Info info;
+				if (rs.next()) {
+					info = new Info(0, rs.getString("nom_long_projet"), rs.getString("description_projet"), "18/05/2024",
+							rs.getInt("IdProjet"), rs.getString("nom_court_projet"), "Guest");
+					AboutPage frame = new AboutPage(info);frame.setLocationRelativeTo(null);
+	                frame.setSize(950, 550);
+	                frame.setLocationRelativeTo(null);
+	                frame.setVisible(true);
+                
+				}
+
+                
+                
+            } catch(SQLException t) {
+            	t.printStackTrace();
+            }
             } else if (e.getSource() == button2) {//Verification before deleting the project
                 int value = (int) table.getValueAt(selectedRow, 0);
                 VerifierSupprimeProjet popUp = new VerifierSupprimeProjet(value);

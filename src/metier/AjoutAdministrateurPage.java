@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AjoutAdministrateurPage extends javax.swing.JFrame {
@@ -13,11 +14,9 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
     Connection conn = Utilitaire.getConnection();
 
     private javax.swing.JLabel FormulaireAjout;
-    private javax.swing.JPanel Menu;
     private javax.swing.JLabel P4P;
     private javax.swing.JLabel Username;
     private javax.swing.JButton Valider;
-    private javax.swing.JButton agenda;
     private javax.swing.JPanel background_formulaire;
     private javax.swing.JPanel barre_FormulaireCreation;
     private javax.swing.JPanel body;
@@ -26,37 +25,20 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
     private javax.swing.JTextField champ_prenom;
     private javax.swing.JPanel contenu;
     private javax.swing.JPanel header;
-    private javax.swing.JButton invitation;
-    private javax.swing.JButton menu;
-    private javax.swing.JButton messages;
     private javax.swing.JLabel username;
     private javax.swing.JLabel nom;
-    private javax.swing.JButton projects;
-    private javax.swing.JButton requests;
-    private javax.swing.JButton se_deconnecter;
     private javax.swing.JLabel prenom;
 
     static String NomCourt;
+    private String usrname;
     
-    public AjoutAdministrateurPage(String nomCourt) {
+    public AjoutAdministrateurPage(String usrname, String nomCourt) {
         NomCourt = nomCourt;
-        initComponents();
-    }
-
-    
-    
-    private void initComponents() {
+        this.usrname = usrname;
+        
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
-        Menu = new javax.swing.JPanel();
-        messages = new javax.swing.JButton();
-        requests = new javax.swing.JButton();
-        menu = new javax.swing.JButton();
-        agenda = new javax.swing.JButton();
-        projects = new javax.swing.JButton();
-        invitation = new javax.swing.JButton();
-        se_deconnecter = new javax.swing.JButton();
         header = new javax.swing.JPanel();
         P4P = new javax.swing.JLabel();
         Username = new javax.swing.JLabel();
@@ -77,148 +59,8 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
 
-        Menu.setBackground(new java.awt.Color(255, 255, 255));
-        Menu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 0, 204), 1, true));
-        Menu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Menu.setLayout(new java.awt.GridBagLayout());
-
-        messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        messages.setForeground(new java.awt.Color(153, 0, 204));
-        messages.setText("Messages");
-        messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        messages.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                messagesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 82;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        Menu.add(messages, gridBagConstraints);
-
-        requests.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        requests.setForeground(new java.awt.Color(153, 0, 204));
-        requests.setText("Requests");
-        requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        requests.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestsActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 86;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        Menu.add(requests, gridBagConstraints);
-
-        menu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        menu.setForeground(new java.awt.Color(153, 0, 204));
-        menu.setText("Menu");
-        menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 109;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 2, 0, 0);
-        Menu.add(menu, gridBagConstraints);
-
-        agenda.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        agenda.setForeground(new java.awt.Color(153, 0, 204));
-        agenda.setText("Agenda");
-        agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 95;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        Menu.add(agenda, gridBagConstraints);
 
-        projects.setBackground(new java.awt.Color(153, 0, 204));
-        projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        projects.setForeground(new java.awt.Color(255, 255, 255));
-        projects.setText("Projects");
-        projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        projects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectsActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 94;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        Menu.add(projects, gridBagConstraints);
-
-        invitation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        invitation.setForeground(new java.awt.Color(153, 0, 204));
-        invitation.setText("Invitation");
-        invitation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        invitation.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        invitation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                invitationActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 82;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(68, 1, 0, 0);
-        Menu.add(invitation, gridBagConstraints);
-
-        se_deconnecter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        se_deconnecter.setForeground(new java.awt.Color(153, 0, 204));
-        se_deconnecter.setText("se_deconnecter");
-        se_deconnecter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        se_deconnecter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        se_deconnecter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                se_deconnecterActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 43;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 1, 26, 0);
-        Menu.add(se_deconnecter, gridBagConstraints);
-
-        body.add(Menu, java.awt.BorderLayout.LINE_START);
 
         header.setBackground(new java.awt.Color(153, 0, 204));
         header.setLayout(new java.awt.GridBagLayout());
@@ -239,8 +81,8 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         Username.setBackground(new java.awt.Color(255, 255, 255));
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
-        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-user-30.png"))); // NOI18N
-        Username.setText("Username_xxxx");
+        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
+        Username.setText(usrname);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -320,11 +162,7 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         background_formulaire.add(prenom, gridBagConstraints);
 
         Champ_username.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Champ_username.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                champNom_courtActionPerformed(evt);
-            }
-        });
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -337,11 +175,7 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         background_formulaire.add(Champ_username, gridBagConstraints);
 
         champ_nom.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        champ_nom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                champNom_longActionPerformed(evt);
-            }
-        });
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -354,11 +188,7 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         background_formulaire.add(champ_nom, gridBagConstraints);
 
         champ_prenom.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        champ_prenom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                champ_themeActionPerformed(evt);
-            }
-        });
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -415,44 +245,7 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
         pack();
     }
 
-    private void messagesActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
-
-    private void requestsActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
-
-    private void menuActionPerformed(java.awt.event.ActionEvent evt) {
-    }
-
-
-
-    private void projectsActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
-
-    private void invitationActionPerformed(java.awt.event.ActionEvent evt) {
-
-    }
-
-    private void se_deconnecterActionPerformed(java.awt.event.ActionEvent evt) {
-
-    }
     
-    private void champNom_courtActionPerformed(java.awt.event.ActionEvent evt) {
-    
-        
-    }
-    
-    private void champNom_longActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
-    
-    private void champ_themeActionPerformed(java.awt.event.ActionEvent evt) {
-        
-        
-    }
     int cp = 0;
     int cp1 = 0;
     Object id1;
@@ -469,7 +262,7 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
     private void ValiderActionPerformed(java.awt.event.ActionEvent evt) {
         try {
 
-           PreparedStatement ps = conn.prepareStatement("SELECT username, nom, prenom FROM utilisateur WHERE idUtilisateur IN (SELECT IdUtilisateur FROM ulilisateur_groupe WHERE IdGroupe IN (SELECT IdGroupe FROM groupe WHERE nom_groupe LIKE ?))");
+           PreparedStatement ps = conn.prepareStatement("SELECT username, nom, prenom FROM utilisateur WHERE idUtilisateur IN (SELECT IdUtilisateur FROM utilisateur_groupe WHERE IdGroupe IN (SELECT IdGroupe FROM groupe WHERE nom_groupe LIKE ?))");
            ps.setString(1, NomCourt+"-adm");
            rs = ps.executeQuery();
 
@@ -522,8 +315,8 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
                 }
                 if(cp == 1)
                 {
-                    Message_Validation mv = new Message_Validation("L'utilisateur est déjà un administrateur du projet!!");
-                    mv.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "L'utilisateur est déjà un administrateur simple du projet!!", "Incorrect Information", JOptionPane.ERROR_MESSAGE);
+
                 }
                 else{
                     
@@ -585,13 +378,13 @@ public class AjoutAdministrateurPage extends javax.swing.JFrame {
                             ps2.setString(8, "invitation");
                             ps2.executeUpdate();
                             
-                            Message_Validation mv = new Message_Validation("Invitation envoyée avec succès!!");
-                            mv.setVisible(true);
+                            JOptionPane.showMessageDialog(null, "Invitation envoyée avec succès!!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
                         }
                         else
                         {
-                            Message_Validation mv = new Message_Validation("Cet utilisateur n'a pas un compte sur la plateforme!!");
-                            mv.setVisible(true);
+                            JOptionPane.showMessageDialog(null, "Cet utilisateur n'a pas un compte sur la plateforme!!", "erreur", JOptionPane.ERROR_MESSAGE);
+
                         }
                 }
             }

@@ -23,35 +23,22 @@ public class MembersPage extends javax.swing.JFrame {
     private javax.swing.JPanel body;
     private javax.swing.JPanel contenu;
     private javax.swing.JPanel header;
-    private javax.swing.JButton invitation;
+    private javax.swing.JButton adhesion;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton membres;
-    private javax.swing.JButton menu;
-    private javax.swing.JButton messages;
-    private javax.swing.JButton projects;
-    private javax.swing.JButton requests;
     private javax.swing.JButton ressources;
-    private javax.swing.JButton se_deconnecter;
-    private int iduser;
-    private String username;
+    private Info info;
 
     
-    public MembersPage(int iduser, String username, String nom_court) {
-    	NomCourt = nom_court;
-    	this.iduser = iduser;
-    	this.username = username;
+    public MembersPage(Info info) {
+    	this.info = info;
+    	
     	
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
-        messages = new javax.swing.JButton();
-        requests = new javax.swing.JButton();
-        menu = new javax.swing.JButton();
         agenda = new javax.swing.JButton();
-        projects = new javax.swing.JButton();
-        invitation = new javax.swing.JButton();
-        se_deconnecter = new javax.swing.JButton();
         header = new javax.swing.JPanel();
         P4P = new javax.swing.JLabel();
         Username = new javax.swing.JLabel();
@@ -62,146 +49,17 @@ public class MembersPage extends javax.swing.JFrame {
         ressources = new javax.swing.JButton();
         Agenda = new javax.swing.JButton();
         membres = new javax.swing.JButton();
+        adhesion = new javax.swing.JButton();
         barreAjouterMembre = new javax.swing.JPanel();
         ajouter_administrateur = new javax.swing.JButton();
         ajouter_membre_simple = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         body.setBackground(new java.awt.Color(255, 255, 255));
         body.setLayout(new java.awt.BorderLayout());
 
-        Menu.setBackground(new java.awt.Color(255, 255, 255));
-        Menu.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 0, 204), 1, true));
-        Menu.setFont(new java.awt.Font("Segoe UI", 1, 18));    
-        Menu.setLayout(new java.awt.GridBagLayout());
-
-        messages.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        messages.setForeground(new java.awt.Color(153, 0, 204));
-        messages.setText("Messages");
-        messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        messages.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                messagesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 82;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(messages, gridBagConstraints);
-
-        requests.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        requests.setForeground(new java.awt.Color(153, 0, 204));
-        requests.setText("Requests");
-        requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        requests.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestsActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 86;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(requests, gridBagConstraints);
-
-        menu.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        menu.setForeground(new java.awt.Color(153, 0, 204));
-        menu.setText("Menu");
-        menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 109;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 0, 0, 0);
-        Menu.add(menu, gridBagConstraints);
-
-        agenda.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        agenda.setForeground(new java.awt.Color(153, 0, 204));
-        agenda.setText("Agenda");
-        agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 95;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(agenda, gridBagConstraints);
-
-        projects.setBackground(new java.awt.Color(153, 0, 204));
-        projects.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        projects.setForeground(new java.awt.Color(255, 255, 255));
-        projects.setText("Projects");
-        projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        projects.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                projectsActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 94;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(projects, gridBagConstraints);
-
-        invitation.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        invitation.setForeground(new java.awt.Color(153, 0, 204));
-        invitation.setText("Invitation");
-        invitation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        invitation.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        invitation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                invitationActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipadx = 82;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        Menu.add(invitation, gridBagConstraints);
-
-        se_deconnecter.setFont(new java.awt.Font("Segoe UI", 1, 14));    
-        se_deconnecter.setForeground(new java.awt.Color(153, 0, 204));
-        se_deconnecter.setText("se_deconnecter");
-        se_deconnecter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
-        se_deconnecter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        se_deconnecter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                se_deconnecterActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 43;
-        gridBagConstraints.ipady = 48;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 93, 0);
-        Menu.add(se_deconnecter, gridBagConstraints);
-
-        body.add(Menu, java.awt.BorderLayout.LINE_START);
 
         header.setBackground(new java.awt.Color(153, 0, 204));
         header.setLayout(new java.awt.GridBagLayout());
@@ -222,8 +80,8 @@ public class MembersPage extends javax.swing.JFrame {
         Username.setBackground(new java.awt.Color(255, 255, 255));
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24));    
         Username.setForeground(new java.awt.Color(255, 255, 255));
-        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-user-30.png")));    
-        Username.setText("Username_xxxx");
+        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png")));    
+        Username.setText(info.getUsername());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -289,6 +147,11 @@ public class MembersPage extends javax.swing.JFrame {
         ressources.setFont(new java.awt.Font("Segoe UI", 1, 24));    
         ressources.setForeground(new java.awt.Color(255, 255, 255));
         ressources.setText("Ressources");
+        ressources.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ressourcesActionPerformed(evt);
+            }
+        });
         
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -334,6 +197,25 @@ public class MembersPage extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 120, 0, 0);
         contenu.add(membres, gridBagConstraints);
+        
+        
+        adhesion.setBackground(new java.awt.Color(153, 0, 204));
+        adhesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        adhesion.setForeground(new java.awt.Color(255, 255, 255));
+        adhesion.setText("Adhésion");
+        adhesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adhesionActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 24;
+        gridBagConstraints.ipady = 32;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        contenu.add(adhesion, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -410,63 +292,79 @@ public class MembersPage extends javax.swing.JFrame {
         pack();
     }
 
-    private void messagesActionPerformed(java.awt.event.ActionEvent evt) {
-       
-    }
-    private void requestsActionPerformed(java.awt.event.ActionEvent evt) {
+    private void membresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membresActionPerformed
+        MembersPage mp = new MembersPage(info);
+        mp.RemplirTable(info.getNom_court());
+        mp.setVisible(true);
+        mp.setSize(1900, 1000);
+        mp.setLocationRelativeTo(null);
+        this.setVisible(false);
+    }//GEN-LAST:event_membresActionPerformed
+
+    private void ressourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ressourcesActionPerformed
+    	RessourcesPage rsp = new RessourcesPage(info);
+        rsp.setVisible(true);
+        rsp.setLocationRelativeTo(null);
+        rsp.setSize(950, 550);
+        this.setVisible(false);
+    }//GEN-LAST:event_ressourcesActionPerformed
+
+   
+
+    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
+    	AboutPage rsp = new AboutPage(info);
+        rsp.setVisible(true);
+        rsp.setLocationRelativeTo(null);
+        rsp.setSize(950, 550);
+        this.setVisible(false);
+    }//GEN-LAST:event_aboutActionPerformed
+
+    
+
+    private void adhesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adhesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adhesionActionPerformed
+
+    private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
+        AgendaPage ag = new AgendaPage(info);
+        ag.RemplirTable(info.getIdprojetAboutPage());
+        ag.setVisible(true);
+        ag.setLocationRelativeTo(null);
+        ag.setSize(950, 550);
+        this.setVisible(false);
     }
 
-    private void menuActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
 
-
-
-    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {
-       
-    }
-    private void membresActionPerformed(java.awt.event.ActionEvent evt) {
-
-    }
-    private void projectsActionPerformed(java.awt.event.ActionEvent evt) {
-    }
-    private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {
-        new AgendaPage(iduser, username, NomCourt).setVisible(true);
-    }
-
-    private void invitationActionPerformed(java.awt.event.ActionEvent evt) {
-      
-    }
 
     static String NomCourt;
 
     private void ajouter_administrateurActionPerformed(java.awt.event.ActionEvent evt) {
-        AjoutAdministrateurPage admp = new AjoutAdministrateurPage(NomCourt);
+        AjoutAdministrateurPage admp = new AjoutAdministrateurPage(info.getUsername(), info.getNom_court());
         admp.setVisible(true);
-    }
-
-    private void se_deconnecterActionPerformed(java.awt.event.ActionEvent evt) {
-
+        admp.setSize(950, 600);
+        admp.setLocationRelativeTo(null);
     }
     
 
     private void ajouter_membre_simpleActionPerformed(java.awt.event.ActionEvent evt) {
-        AjoutMembreSimplePage amsp = new AjoutMembreSimplePage(iduser, username, NomCourt);
+        AjoutMembreSimplePage amsp = new AjoutMembreSimplePage(info.getIduser(), info.getUsername(), info.getNom_court());
         amsp.setVisible(true);
+        amsp.setSize(950, 600);
+        amsp.setLocationRelativeTo(null);
     }
 
-    ResultSet rs;
+    
     DefaultTableModel tableModel = new DefaultTableModel();
     public void RemplirTable(String nomCourt) {
 
-        NomCourt = nomCourt;
+        info.setNom_court(nomCourt);
 
 
         try {
 
-           PreparedStatement ps = conn.prepareStatement("SELECT nom, prenom, email, adresse FROM utilisateur WHERE idUtilisateur IN (SELECT IdUtilisateur FROM ulilisateur_groupe WHERE IdGroupe IN (SELECT IdGroupe FROM groupe WHERE nom_groupe LIKE ?))");
+           PreparedStatement ps = conn.prepareStatement("SELECT nom, prenom, email FROM utilisateur WHERE idUtilisateur IN (SELECT IdUtilisateur FROM utilisateur_groupe WHERE IdGroupe IN (SELECT IdGroupe FROM groupe WHERE nom_groupe LIKE ?))");
            ps.setString(1, nomCourt+"%");
-           rs = ps.executeQuery();
+           ResultSet rs = ps.executeQuery();
 
            // Récupérez les métadonnées du ResultSet (noms de colonnes)
            int columnCount = rs.getMetaData().getColumnCount();

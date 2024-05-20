@@ -1,4 +1,5 @@
 package metier;
+import java.awt.Color;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -60,6 +61,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         messages.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         messages.setForeground(new java.awt.Color(153, 0, 204));
+        messages.setBackground(Color.white);
         messages.setText("Messages");
         messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -78,6 +80,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         requests.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         requests.setForeground(new java.awt.Color(153, 0, 204));
+        requests.setBackground(Color.white);
         requests.setText("Requests");
         requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -96,6 +99,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         menu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         menu.setForeground(new java.awt.Color(153, 0, 204));
+        menu.setBackground(Color.white);
         menu.setText("Home ");
         menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -115,6 +119,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         projects.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         projects.setForeground(new java.awt.Color(153, 0, 204));
+        projects.setBackground(Color.white);
         projects.setText("Projects");
         projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -133,6 +138,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         se_deconnecter.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         se_deconnecter.setForeground(new java.awt.Color(153, 0, 204));
+        se_deconnecter.setBackground(Color.white);
         se_deconnecter.setText("se_deconnecter");
         se_deconnecter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         se_deconnecter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -172,6 +178,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         invitation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         invitation.setForeground(new java.awt.Color(153, 0, 204));
+        invitation.setBackground(Color.white);
         invitation.setText("Invitation");
         invitation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         invitation.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -196,7 +203,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
 
         P4P.setBackground(new java.awt.Color(255, 255, 255));
         P4P.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        P4P.setForeground(new java.awt.Color(255, 255, 255));
+        P4P.setForeground(Color.white);
         P4P.setText("P4P");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -210,7 +217,7 @@ public class UserAgendaPage extends javax.swing.JFrame {
         Username.setBackground(new java.awt.Color(255, 255, 255));
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
-        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("icons8-user-30.png"))); // NOI18N
+        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
         Username.setText(username);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -300,6 +307,8 @@ public class UserAgendaPage extends javax.swing.JFrame {
     private void menuActionPerformed(ActionEvent evt) {                                      
         HomePageUser nwusp = new HomePageUser(iduser, user_name);
         nwusp.setVisible(true);
+        nwusp.setSize(1050, 650);
+        nwusp.setLocationRelativeTo(null);
         Window win = SwingUtilities.getWindowAncestor(menu);
         win.dispose();
     }                                     
@@ -307,21 +316,28 @@ public class UserAgendaPage extends javax.swing.JFrame {
     private void messagesActionPerformed(ActionEvent evt) {                                         
         UserMessagePage usrmsgp = new UserMessagePage(iduser, user_name);
         usrmsgp.setVisible(true);
+        usrmsgp.setSize(1050, 650);
+        usrmsgp.setLocationRelativeTo(null);
         Window win = SwingUtilities.getWindowAncestor(messages);
         win.dispose();
     }                                        
 
     private void se_deconnecterActionPerformed(ActionEvent evt) {                                            
-    	 Window wdws = SwingUtilities.getWindowAncestor(se_deconnecter);
-         if(wdws != null)
-         {
-         	wdws.dispose();
-         }
-    }                                           
+      	 Window wdws = SwingUtilities.getWindowAncestor(se_deconnecter);
+           if(wdws != null)
+           {
+          	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+        	vd.setLocationRelativeTo(null);
+           	vd.setVisible(true);
+           	vd.setSize(400, 300);
+           }
+      }                                        
 
     private void projectsActionPerformed(ActionEvent evt) {                                         
         Projects pp = new Projects(iduser, user_name);
         pp.setVisible(true);
+        pp.setSize(1050, 650);
+        pp.setLocationRelativeTo(null);
         Window win =SwingUtilities.getWindowAncestor(projects);
         win.dispose();
     }                                        
@@ -329,17 +345,28 @@ public class UserAgendaPage extends javax.swing.JFrame {
     private void requestsActionPerformed(ActionEvent evt) {                                         
     	UserRequests usrmsgp = new UserRequests(iduser, user_name);
         usrmsgp.setVisible(true);
+        usrmsgp.setSize(1050, 650);
+        usrmsgp.setLocationRelativeTo(null);
         Window win = SwingUtilities.getWindowAncestor(requests);
         win.dispose();
     }                                        
 
     private void agendaActionPerformed(ActionEvent evt) {                                       
-        new UserAgendaPage(iduser, user_name).setVisible(true);
+        UserAgendaPage usrp= new UserAgendaPage(iduser, user_name);
+        usrp.setVisible(true);
+        usrp.setSize(1050, 650);
+        usrp.setLocationRelativeTo(null);
+        Window win = SwingUtilities.getWindowAncestor(agenda);
+        win.dispose();
+        
+        
     } 
     private void invitationActionPerformed(ActionEvent evt)
     {
     	Invitation_demande usr_inv_page = new Invitation_demande(iduser, user_name);
         usr_inv_page.setVisible(true);
+        usr_inv_page.setSize(1050, 650);
+        usr_inv_page.setLocationRelativeTo(null);
         Window win = SwingUtilities.getWindowAncestor(invitation);
         win.dispose();
     }

@@ -27,7 +27,7 @@ public class Profile extends javax.swing.JFrame {
         email = new javax.swing.JLabel();
         emailValue = new javax.swing.JLabel();
         Projects = new javax.swing.JLabel();
-        tableProjets = new TableProjets();
+        tableProjets = new TableProjets(iduser);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new Dimension(1050, 650));

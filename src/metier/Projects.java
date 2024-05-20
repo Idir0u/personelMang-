@@ -1,6 +1,7 @@
 package metier;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 import java.util.*;
@@ -47,7 +48,7 @@ public class Projects extends javax.swing.JFrame {
     	this.username = username;
     	this.iduser = iduser;
         java.awt.GridBagConstraints gridBagConstraints;
-
+        Create_New_Project = new JButton();
         body = new javax.swing.JPanel();
         Header = new javax.swing.JPanel();
         LOGO = new javax.swing.JLabel();
@@ -60,6 +61,7 @@ public class Projects extends javax.swing.JFrame {
         Requests = new javax.swing.JButton();
         Invitations = new javax.swing.JButton();
         Agenda = new javax.swing.JButton();
+        deconnexion = new JButton();
         Contenu = new javax.swing.JPanel();
         
         
@@ -72,13 +74,29 @@ public class Projects extends javax.swing.JFrame {
         setPreferredSize(new Dimension(1050, 650));
         
         // Panel for the label
+        
         JPanel labelPanel = new JPanel();
-        JLabel projectsLabel = new JLabel("My Projects");
+        labelPanel.setLayout(new BorderLayout());
+        labelPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        JLabel projectsLabel = new JLabel("        My Projects");
         projectsLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         projectsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         projectsLabel.setForeground(Color.white);
+        
         labelPanel.setBackground(new java.awt.Color(0, 51, 204));
-        labelPanel.add(projectsLabel);
+        labelPanel.add(projectsLabel, BorderLayout.WEST);
+        Create_New_Project.setBackground(new java.awt.Color(153, 0, 204));
+        Create_New_Project.setFont(new java.awt.Font("Segoe UI", 1, 14)); //  
+        Create_New_Project.setForeground(new java.awt.Color(255, 255, 255));
+        Create_New_Project.setText("Create New Project");
+        Create_New_Project.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        Create_New_Project.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Create_New_Project.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Create_New_ProjectActionPerformed(evt);
+            }
+        });
+        labelPanel.add(Create_New_Project, BorderLayout.EAST);
         //IF a user does not have a project
         JPanel emptyPanel = new JPanel();
         JLabel emptyLabel = new JLabel("Your are not associated with any project !!");
@@ -246,6 +264,19 @@ public class Projects extends javax.swing.JFrame {
 
         Menu.add(Agenda);
         
+        deconnexion.setFont(new Font("Segoe UI", 1, 14)); 
+        deconnexion.setBackground(new Color(255, 255, 255));
+        deconnexion.setForeground(new Color(153, 0, 204));
+        deconnexion.setText("Se_deconnecter");
+        deconnexion.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        deconnexion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deconnexion.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
+        Menu.add(deconnexion);
+        
         body.add(Menu, java.awt.BorderLayout.WEST);
 
         Contenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -321,9 +352,9 @@ public class Projects extends javax.swing.JFrame {
                 ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
-							AboutPage ap = new AboutPage(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date"), rs.getInt("idprojet"), rs.getString("nom_court"), rs.getString("username"));
+							AboutPage ap = new AboutPage(new Info(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username));
 							ap.setVisible(true);
-							ap.setSize(1050, 650);
+							ap.setSize(950, 550);
 							ap.setLocationRelativeTo(null);
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
@@ -405,6 +436,22 @@ public class Projects extends javax.swing.JFrame {
     	pf.setLocationRelativeTo(null);
     	pf.setSize(1050, 650);
     } 
+    private void deconnexionActionPerformed(ActionEvent evt) {                                            
+      	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+           if(wdws != null)
+           {
+          	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+        		vd.setLocationRelativeTo(null);
+           	vd.setVisible(true);
+           	vd.setSize(400, 300);
+           }
+      }
+    private void Create_New_ProjectActionPerformed(java.awt.event.ActionEvent evt) {
+        NewProjectPage np = new NewProjectPage(iduser, username);
+        np.setVisible(true);
+        np.setLocationRelativeTo(null);
+        np.setSize(1900,1000);
+    }
 
     public static void main(String args[]) {
         Projects p = new Projects(9,"oubeza_idir");
@@ -426,6 +473,8 @@ public class Projects extends javax.swing.JFrame {
     private javax.swing.JLabel Username;
     private javax.swing.JPanel body;
     private javax.swing.JLabel userIcon;
+    private JButton deconnexion;
+    private JButton Create_New_Project;
     
     
     

@@ -15,8 +15,15 @@ public class ProjectsList extends JFrame {
     TableProjetList tableProjets;
     DefaultTableModel model;
     private String username;
+    
 
-    public ProjectsList(String username) {
+    public String getusername() {
+		return username;
+	}
+	public void setusername(String username) {
+		this.username = username;
+	}
+	public ProjectsList(String username) {
     	this.username = username;
         GridBagConstraints gridBagConstraints;
         tableProjets = new TableProjetList(this);
@@ -305,7 +312,7 @@ public class ProjectsList extends JFrame {
 
 
     public static void main(String args[]) {
-        ProjectsList Usrpg = new ProjectsList("oubeza_idir-adm");
+        ProjectsList Usrpg = new ProjectsList("oubeza_idir");
         Usrpg.setVisible(true);
         Usrpg.setSize(1050, 650);
     }

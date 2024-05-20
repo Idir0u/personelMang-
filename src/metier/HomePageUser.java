@@ -87,94 +87,6 @@ public class HomePageUser extends javax.swing.JFrame {
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        // Panel for the label
-        /*JPanel labelPanel = new JPanel();
-        JLabel projectsLabel = new JLabel("My Projects");
-        projectsLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        projectsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        projectsLabel.setForeground(Color.white);
-        labelPanel.setBackground(new java.awt.Color(0, 51, 204));
-        labelPanel.add(projectsLabel);*/
-/*        DashBord.setBackground(new Color(255, 255, 255));
-	        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
-
-        last_connexion_date.setText("Last connexion date :" + formatter.format(last_con_date));
-
-        jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
-        jLabel3.setForeground(new Color(153, 0, 204));
-        jLabel3.setText("Your recent activities");
-
-        jScrollPane1.setBackground(new Color(255, 255, 255));
-
-        activity_table.setModel(new DefaultTableModel(
-            new Object [][] {
-                {"envoi d'un message a Zakariae","15/05/2024","14h05"},
-                {"téléchargement d'un fichier du projet Site Builder","14/05/2024","18h00"},
-                {"ajout évènement dans votre agenda","13/05/2024","13h05"},
-                {"dépot de fichier pour le projet Site Builder","13/05/2024","00h05"},
-                {"demande de création de nouveau projet","12/05/2024","17h30"},
-                {"demande cloture projet Online Car Rent","12/05/2024","16h02"},
-                {"retrait participant au projet site Builder","11/05/2024","13h05"},
-                {"envoi d'un message à Idir","10/05/2024","14h05"},
-            },
-            new String [] {
-                "Description", "Date", "Time"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        /*
-        activity_table.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(activity_table);
-        activity_table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        GroupLayout DashBordLayout = new GroupLayout(DashBord);
-        DashBord.setLayout(DashBordLayout);
-        DashBordLayout.setHorizontalGroup(
-            DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(DashBordLayout.createSequentialGroup()
-                .addGroup(DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(DashBordLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(last_connexion_date, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DashBordLayout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DashBordLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 595, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(101, Short.MAX_VALUE))
-        );
-        DashBordLayout.setVerticalGroup(
-            DashBordLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(DashBordLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(DashBordLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(last_connexion_date, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
-        );
-        Contenu.add(DashBord, BorderLayout.NORTH);*/
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
         projectsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -486,9 +398,9 @@ public class HomePageUser extends javax.swing.JFrame {
                 ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
-							AboutPage ap = new AboutPage(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username);
+							AboutPage ap = new AboutPage(new Info(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username));
 							ap.setVisible(true);
-							ap.setSize(1050, 650);
+							ap.setSize(950, 550);
 							ap.setLocationRelativeTo(null);
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block

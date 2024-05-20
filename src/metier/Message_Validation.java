@@ -238,7 +238,7 @@ private javax.swing.JLabel Ajouter_succes;
         Username.setBackground(new java.awt.Color(255, 255, 255));
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
-        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/icons8-user-30.png"))); // NOI18N
+        Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
         Username.setText("Username_xxxx");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

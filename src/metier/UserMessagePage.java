@@ -55,7 +55,7 @@ public class UserMessagePage extends JFrame {
 
         usrname.setFont(new Font("Segoe UI Black", 3, 14)); 
         usrname.setForeground(new Color(255, 255, 255));
-        usrname.setIcon(new ImageIcon(getClass().getResource("icons8-user-30.png"))); 
+        usrname.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); 
         usrname.setText(usrname_var);
 
         GroupLayout HeaderLayout = new GroupLayout(Header);
@@ -104,18 +104,6 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Home1);
 
-        Messages.setBackground(new Color(153, 0, 204));
-        Messages.setFont(new Font("Segoe UI", 1, 14)); 
-        Messages.setForeground(new Color(255, 255, 255));
-        Messages.setText("Messages");
-        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
-        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        Messages.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                MessagesActionPerformed(evt);
-            }
-        });
-        Menu.add(Messages);
 
         Projects.setFont(new Font("Segoe UI", 1, 14)); 
         Projects.setForeground(new Color(153, 0, 204));
@@ -130,6 +118,19 @@ public class UserMessagePage extends JFrame {
         });
         Menu.add(Projects);
 
+        Messages.setBackground(new Color(153, 0, 204));
+        Messages.setFont(new Font("Segoe UI", 1, 14)); 
+        Messages.setForeground(new Color(255, 255, 255));
+        Messages.setText("Messages");
+        Messages.setBorder(BorderFactory.createLineBorder(new Color(153, 0, 204)));
+        Messages.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Messages.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                MessagesActionPerformed(evt);
+            }
+        });
+        Menu.add(Messages);
+        
         Requests.setFont(new Font("Segoe UI", 1, 14)); 
         Requests.setForeground(new Color(153, 0, 204));
         Requests.setBackground(new Color(255, 255, 255));
@@ -182,6 +183,7 @@ public class UserMessagePage extends JFrame {
             }
         });
         Menu.add(deconnexion);
+        
 
         body.add(Menu, BorderLayout.WEST);
 
@@ -189,7 +191,7 @@ public class UserMessagePage extends JFrame {
 
         jLabel3.setFont(new Font("Segoe UI Black", 3, 18)); 
         jLabel3.setForeground(new Color(153, 0, 204));
-        jLabel3.setIcon(new ImageIcon(getClass().getResource("mail.png"))); 
+        jLabel3.setIcon(new ImageIcon(getClass().getResource("assets/mail.png"))); 
         jLabel3.setText("WELCOME TO YOUR MESSAGE BOX");
 
         jScrollPane1.setBackground(new Color(255, 255, 255));
@@ -316,6 +318,8 @@ public class UserMessagePage extends JFrame {
         private void Home1ActionPerformed(ActionEvent evt) {                                      
             HomePageUser nwusp = new HomePageUser(iduser, usrname_var);
             nwusp.setVisible(true);
+            nwusp.setLocationRelativeTo(null);
+            nwusp.setSize(1050, 650);
             Window win = SwingUtilities.getWindowAncestor(Home1);
             win.dispose();
         }                                     
@@ -323,21 +327,29 @@ public class UserMessagePage extends JFrame {
         private void MessagesActionPerformed(ActionEvent evt) {                                         
             UserMessagePage usrmsgp = new UserMessagePage(iduser, usrname_var);
             usrmsgp.setVisible(true);
+            usrmsgp.setSize(1050, 650);
+            usrmsgp.setLocationRelativeTo(null);
+           
             Window win = SwingUtilities.getWindowAncestor(Messages);
             win.dispose();
         }                                        
 
         private void deconnexionActionPerformed(ActionEvent evt) {                                            
-        	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
-             if(wdws != null)
-             {
-             	wdws.dispose();
-             }
-        }                                           
+         	 Window wdws = SwingUtilities.getWindowAncestor(deconnexion);
+              if(wdws != null)
+              {
+             	verifieDeconnexion vd = new verifieDeconnexion(wdws);
+           		vd.setLocationRelativeTo(null);
+              	vd.setVisible(true);
+              	vd.setSize(400, 300);
+              }
+         }                                         
 
         private void ProjectsActionPerformed(ActionEvent evt) {                                         
             Projects pp = new Projects(iduser, usrname_var);
             pp.setVisible(true);
+            pp.setSize(1050, 650);
+            pp.setLocationRelativeTo(null);
             Window win =SwingUtilities.getWindowAncestor(Projects);
             win.dispose();
         }                                        
@@ -345,17 +357,28 @@ public class UserMessagePage extends JFrame {
         private void RequestsActionPerformed(ActionEvent evt) {                                         
         	UserRequests usrmsgp = new UserRequests(iduser, usrname_var);
             usrmsgp.setVisible(true);
+            usrmsgp.setSize(1050, 650);
+            usrmsgp.setLocationRelativeTo(null);
             Window win = SwingUtilities.getWindowAncestor(Requests);
             win.dispose();
         }                                        
 
-        private void AgendaActionPerformed(ActionEvent evt) {                                       
-            new UserAgendaPage(iduser, usrname_var).setVisible(true);
+        private void AgendaActionPerformed(ActionEvent evt) {    
+        	
+            UserAgendaPage usrp = new UserAgendaPage(iduser, usrname_var);
+            usrp.setVisible(true);
+            usrp.setSize(1050, 650);
+            usrp.setLocationRelativeTo(null);
+            Window win = SwingUtilities.getWindowAncestor(Agenda);
+            win.dispose();
+            
+            
         } 
         private void InvitationActionPerformed(ActionEvent evt)
         {
         	Invitation_demande usr_inv_page = new Invitation_demande(iduser, usrname_var);
             usr_inv_page.setVisible(true);
+            usr_inv_page.setLocationRelativeTo(null);
             Window win = SwingUtilities.getWindowAncestor(Invitation);
             win.dispose();
         }
