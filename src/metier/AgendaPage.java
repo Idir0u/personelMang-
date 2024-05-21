@@ -13,12 +13,6 @@ import java.sql.*;
 public class AgendaPage extends javax.swing.JFrame {
 	Connection conn = Utilitaire.getConnection();
 
-    /**
-     * Creates new form AgendaPage
-     */
-	private int iduser;
-	private String username;
-	private String NomCourt;
 	private Info info;
 	
     public AgendaPage(Info info) {
@@ -66,7 +60,7 @@ public class AgendaPage extends javax.swing.JFrame {
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-        Username.setText(info.getUsername());
+        Username.setText(info.getUsername() + "--" + info.getMode_navigation());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -95,6 +89,7 @@ public class AgendaPage extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
+                
             },
             new String [] {
                 "titre_evenement", "description_evenement", "date", "heure"
@@ -280,7 +275,9 @@ public class AgendaPage extends javax.swing.JFrame {
 
     private void agendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         AgendaPage ag = new AgendaPage(info);
-        ag.RemplirTable(info.getIdprojetAboutPage());
+        if(info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") ) {
+            ag.RemplirTable(info.getIdprojetAboutPage());
+            }
         ag.setVisible(true);
         ag.setSize(950, 550);
         this.setVisible(false);

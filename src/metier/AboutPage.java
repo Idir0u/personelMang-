@@ -1,8 +1,9 @@
 package metier;
 
+import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
+import java.sql.*;
 
 import javax.swing.SwingUtilities;
 
@@ -13,56 +14,99 @@ public class AboutPage extends javax.swing.JFrame {
      private javax.swing.JButton Agenda;
      private javax.swing.JLabel DateDeCreation;
      private javax.swing.JLabel DescriptionDuProjet;
-     private javax.swing.JPanel Menu;
      private javax.swing.JLabel NomLongProjet;
      private javax.swing.JLabel P4P1;
      private javax.swing.JLabel TitreDateDeCreation;
-     private javax.swing.JButton se_deconnecter;
      private javax.swing.JLabel TitreDescriptionDuProjet;
      private javax.swing.JLabel TitreNomLongProjet;
      private javax.swing.JLabel Username;
      private javax.swing.JButton about;
      private javax.swing.JButton adhesion;
-     private javax.swing.JButton agenda;
      private javax.swing.JPanel body;
      private javax.swing.JPanel contenu;
      private javax.swing.JPanel header;
-     private javax.swing.JButton invitation;
      private javax.swing.JPanel jPanel1;
      private javax.swing.JButton membres;
-     private javax.swing.JButton menu;
-     private javax.swing.JButton messages;
-     private javax.swing.JButton projects;
-     private javax.swing.JButton requests;
      private javax.swing.JButton ressources;
     
-     static int idprojet;
-     static String nomCourt;
-     static String username ;
-     static String date_var ;
-     static String descript ;
-     static String nom_long_var ;
-     private int iduser;
+     
      private Info info;
+     private String getNavMode(int iduser) {
+    	    String mode_navigation = "guest"; // default mode is guest
+    	    PreparedStatement pstmt = null;
+    	    ResultSet rs = null;
+    	    
+    	    try {
+    	        // Set auto-commit to false
+    	        conn.setAutoCommit(false);
+
+    	        // Query to check if the user is an admin
+    	        String adminQuery = "SELECT COUNT(*) FROM utilisateur_groupe ug JOIN GROUPE g ON ug.idGroupe = g.idGroupe WHERE ug.idUtilisateur = ? AND g.nom_groupe = CONCAT(?, '-adm')";
+    	        pstmt = conn.prepareStatement(adminQuery);
+    	        pstmt.setInt(1, iduser);
+    	        pstmt.setString(2, this.info.getNom_court());
+    	        rs = pstmt.executeQuery();
+    	        if (rs.next() && rs.getInt(1) > 0) {
+    	            
+    	            conn.commit(); // Commit transaction if user is admin
+    	            return "admin";
+    	        }
+
+    	        // Close resources to reuse pstmt and rs
+    	        rs.close();
+    	        pstmt.close();
+
+    	        // Query to check if the user is a membre
+    	        String membreQuery = "SELECT COUNT(*) FROM utilisateur_groupe ug JOIN GROUPE g ON ug.idGroupe = g.idGroupe WHERE ug.idUtilisateur = ? AND g.nom_groupe = ?";
+    	        pstmt = conn.prepareStatement(membreQuery);
+    	        pstmt.setInt(1, iduser);
+    	        pstmt.setString(2, info.getNom_court());
+    	        rs = pstmt.executeQuery();
+    	        if (rs.next() && rs.getInt(1) > 0) {
+    	            
+    	            conn.commit(); // Commit transaction if user is membre
+    	            return "membre";
+    	        }
+
+    	        // Commit if no changes (all checks passed)
+    	        conn.commit();
+    	        
+    	    } catch (Exception e) {
+    	        try {
+    	            if (conn != null) {
+    	                conn.rollback(); // Rollback transaction on exception
+    	            }
+    	        } catch (Exception rollbackEx) {
+    	            rollbackEx.printStackTrace();
+    	        }
+    	        e.printStackTrace();
+    	    } finally {
+    	        try {
+    	            if (rs != null) rs.close();
+    	            if (pstmt != null) pstmt.close();
+    	            if (conn != null) conn.setAutoCommit(true); // Restore auto-commit mode
+    	        } catch (Exception e) {
+    	            e.printStackTrace();
+    	        }
+    	    }
+    	    
+    	    return mode_navigation;
+    	}
+
      
      
      
 
     public AboutPage(Info info) {
         //initComponents(info.getNom_long(), info.getDescription(), info.getDate(), info.getUsername());
+        
         this.info = info;
+        info.setMode_navigation(getNavMode(info.getIduser()));
+
 
         java.awt.GridBagConstraints gridBagConstraints;
 
         body = new javax.swing.JPanel();
-        Menu = new javax.swing.JPanel();
-        menu = new javax.swing.JButton();
-        requests = new javax.swing.JButton();
-        agenda = new javax.swing.JButton();
-        messages = new javax.swing.JButton();
-        projects = new javax.swing.JButton();
-        invitation = new javax.swing.JButton();
-        se_deconnecter = new javax.swing.JButton();
         header = new javax.swing.JPanel();
         Username = new javax.swing.JLabel();
         P4P1 = new javax.swing.JLabel();
@@ -86,34 +130,22 @@ public class AboutPage extends javax.swing.JFrame {
         body.setLayout(new java.awt.BorderLayout());
 //////////////////////////////////////////////////////////////////
         header.setBackground(new java.awt.Color(153, 0, 204));
-        header.setLayout(new java.awt.GridBagLayout());
+        header.setLayout(new java.awt.BorderLayout());
 
         Username.setBackground(new java.awt.Color(255, 255, 255));
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-        Username.setText(info.getUsername());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 70;
-        gridBagConstraints.ipady = -2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 556, 0, 12);
-        header.add(Username, gridBagConstraints);
+        Username.setText(info.getUsername() + "--" + info.getMode_navigation());
+        
+        header.add(Username, BorderLayout.CENTER);
 
         P4P1.setBackground(new java.awt.Color(255, 255, 255));
         P4P1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         P4P1.setForeground(new java.awt.Color(255, 255, 255));
         P4P1.setText("P4P");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipady = 18;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 90, 0, 0);
-        header.add(P4P1, gridBagConstraints);
+        
+        header.add(P4P1, BorderLayout.WEST);
 
         body.add(header, java.awt.BorderLayout.PAGE_START);
 
@@ -346,15 +378,18 @@ public class AboutPage extends javax.swing.JFrame {
     }//GEN-LAST:event_aboutActionPerformed
 
     
-
+    //if the user is not a membre or an admin a the group_project
     private void adhesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adhesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adhesionActionPerformed
 
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         AgendaPage ag = new AgendaPage(info);
-        ag.RemplirTable(info.getIdprojetAboutPage());
+        if(info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") ) {
+            ag.RemplirTable(info.getIdprojetAboutPage());
+            }
         ag.setVisible(true);
+        ag.setLocationRelativeTo(null);
         ag.setSize(950, 550);
         this.setVisible(false);
     }//GEN-LAST:event_AgendaActionPerformed

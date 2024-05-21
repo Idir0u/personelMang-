@@ -8,22 +8,24 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
 
  
-public class RessourcesPage extends javax.swing.JFrame {
+
+
+
+
+
+public class RessourcesPage extends JFrame {
 			
 			private Info info;
    
     public RessourcesPage(Info info) {
     	
-            java.awt.GridBagConstraints gridBagConstraints;
+            GridBagConstraints gridBagConstraints;
             this.info = info;
             /*
             project_name = proj_name ;
@@ -34,135 +36,135 @@ public class RessourcesPage extends javax.swing.JFrame {
             this.username = username;
             this.NomCourt = NomCourt;*/
 
-            body = new javax.swing.JPanel();
-            header = new javax.swing.JPanel();
-            P4P = new javax.swing.JLabel();
-            Username = new javax.swing.JLabel();
-            contenu = new javax.swing.JPanel();
-            membres = new javax.swing.JButton();
-            Agenda = new javax.swing.JButton();
-            ressources = new javax.swing.JButton();
-            about = new javax.swing.JButton();
-            jScrollPane1 = new javax.swing.JScrollPane();
-            Ressources_Projet = new javax.swing.JTree();
-            adhesion = new javax.swing.JButton();
+            body = new JPanel();
+            header = new JPanel();
+            P4P = new JLabel();
+            Username = new JLabel();
+            contenu = new JPanel();
+            membres = new JButton();
+            Agenda = new JButton();
+            ressources = new JButton();
+            about = new JButton();
+            jScrollPane1 = new JScrollPane();
+            Ressources_Projet = new JTree();
+            adhesion = new JButton();
 
            
 
-            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-            body.setBackground(new java.awt.Color(255, 255, 255));
-            body.setLayout(new java.awt.BorderLayout());
+            body.setBackground(new Color(255, 255, 255));
+            body.setLayout(new BorderLayout());
 
             
 
 
-            header.setBackground(new java.awt.Color(153, 0, 204));
-            header.setLayout(new java.awt.GridBagLayout());
+            header.setBackground(new Color(153, 0, 204));
+            header.setLayout(new GridBagLayout());
 
-            P4P.setBackground(new java.awt.Color(255, 255, 255));
-            P4P.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-            P4P.setForeground(new java.awt.Color(255, 255, 255));
+            P4P.setBackground(new Color(255, 255, 255));
+            P4P.setFont(new Font("Segoe UI", 3, 24)); // NOI18N
+            P4P.setForeground(new Color(255, 255, 255));
             P4P.setText("P4P");
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.gridheight = 2;
             gridBagConstraints.ipady = 18;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(0, 90, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(0, 90, 0, 0);
             header.add(P4P, gridBagConstraints);
 
-            Username.setBackground(new java.awt.Color(255, 255, 255));
-            Username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            Username.setForeground(new java.awt.Color(255, 255, 255));
-            Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-            Username.setText(info.getUsername());
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            Username.setBackground(new Color(255, 255, 255));
+            Username.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            Username.setForeground(new Color(255, 255, 255));
+            Username.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
+            Username.setText(info.getUsername() + "--" + info.getMode_navigation());
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 1;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 80;
             gridBagConstraints.ipady = -2;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 556, 0, 22);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 556, 0, 22);
             header.add(Username, gridBagConstraints);
 
-            body.add(header, java.awt.BorderLayout.PAGE_START);
+            body.add(header, BorderLayout.PAGE_START);
 
-            contenu.setBackground(new java.awt.Color(255, 255, 255));
-            contenu.setLayout(new java.awt.GridBagLayout());
+            contenu.setBackground(new Color(255, 255, 255));
+            contenu.setLayout(new GridBagLayout());
 
-            membres.setBackground(new java.awt.Color(153, 0, 204));
-            membres.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            membres.setForeground(new java.awt.Color(255, 255, 255));
+            membres.setBackground(new Color(153, 0, 204));
+            membres.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            membres.setForeground(new Color(255, 255, 255));
             membres.setText("Membres");
-            membres.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
+            membres.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
                     membresActionPerformed(evt);
                 }
             });
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 3;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 24;
             gridBagConstraints.ipady = 32;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 20, 0, 0);
             contenu.add(membres, gridBagConstraints);
 
-            Agenda.setBackground(new java.awt.Color(153, 0, 204));
-            Agenda.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            Agenda.setForeground(new java.awt.Color(255, 255, 255));
+            Agenda.setBackground(new Color(153, 0, 204));
+            Agenda.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            Agenda.setForeground(new Color(255, 255, 255));
             Agenda.setText("Agenda");
-            Agenda.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
+            Agenda.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
                     AgendaActionPerformed(evt);
                 }
             });
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 2;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 13;
             gridBagConstraints.ipady = 32;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 20, 0, 0);
             contenu.add(Agenda, gridBagConstraints);
 
-            ressources.setBackground(new java.awt.Color(153, 0, 204));
-            ressources.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            ressources.setForeground(new java.awt.Color(255, 255, 255));
+            ressources.setBackground(new Color(153, 0, 204));
+            ressources.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            ressources.setForeground(new Color(255, 255, 255));
             ressources.setText("Ressources");
-            ressources.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
+            ressources.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
                     ressourcesActionPerformed(evt);
                 }
             });
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 1;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 8;
             gridBagConstraints.ipady = 32;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 20, 0, 0);
             contenu.add(ressources, gridBagConstraints);
 
-            about.setBackground(new java.awt.Color(153, 0, 204));
-            about.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            about.setForeground(new java.awt.Color(255, 255, 255));
+            about.setBackground(new Color(153, 0, 204));
+            about.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            about.setForeground(new Color(255, 255, 255));
             about.setText("About");
-            about.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
+            about.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
                     aboutActionPerformed(evt);
                 }
             });
             
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 30;
             gridBagConstraints.ipady = 32;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 10, 0, 0);
             contenu.add(about, gridBagConstraints);
 
             
@@ -184,15 +186,18 @@ public class RessourcesPage extends javax.swing.JFrame {
 			
 			// Ajout des fichiers src
 			try 
-			{
-				PreparedStatement statementSrc = con.prepareStatement(sqlSrc);
-				statementSrc.setInt(1, info.getIdprojetAboutPage());
-			    ResultSet resultSetSrc = statementSrc.executeQuery();
+			{	if(info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre")){
+					PreparedStatement statementSrc = con.prepareStatement(sqlSrc);
+					statementSrc.setInt(1, info.getIdprojetAboutPage());
+				    ResultSet resultSetSrc = statementSrc.executeQuery();
 			        while (resultSetSrc.next()) {
 			            String fileName = resultSetSrc.getString("titre");
 			            String exten = resultSetSrc.getString("extension");
 			            srcNode.add(new DefaultMutableTreeNode(fileName+"."+exten));
-			}
+			        }
+				}else {
+					srcNode.add(new DefaultMutableTreeNode("private files"));
+				}
 			}
 			catch(Exception e)
 			{
@@ -203,15 +208,16 @@ public class RessourcesPage extends javax.swing.JFrame {
 
 			// Ajout des fichiers web(affichage s'ils existent a la DB
 			try 
-			{
-				PreparedStatement statementWeb = con.prepareStatement(sqlWeb);
-				statementWeb.setInt(1, info.getIdprojetAboutPage());
-			    ResultSet resultSetWeb = statementWeb.executeQuery();
-			        while (resultSetWeb.next()) {
-			            String fileName = resultSetWeb.getString("titre");
-			            String exten = resultSetWeb.getString("extension");
-			            webNode.add(new DefaultMutableTreeNode(fileName+"."+exten));
-			}
+			{	//dépot web est accessible pour tous le monde (remarque :  mais n'est pas modifiable par des non membre/admin )
+					PreparedStatement statementWeb = con.prepareStatement(sqlWeb);
+					statementWeb.setInt(1, info.getIdprojetAboutPage());
+				    ResultSet resultSetWeb = statementWeb.executeQuery();
+				        while (resultSetWeb.next()) {
+				            String fileName = resultSetWeb.getString("titre");
+				            String exten = resultSetWeb.getString("extension");
+				            webNode.add(new DefaultMutableTreeNode(fileName+exten));
+				        }
+				
 			}
 			catch(Exception e)
 			{
@@ -237,34 +243,40 @@ public class RessourcesPage extends javax.swing.JFrame {
                             JPopupMenu popupMenu = new JPopupMenu();
                             
                             // Vérifiez si le nœud sélectionné est "src" ou "web"
-                            if (selectedNode.toString().equals("src") || selectedNode.toString().equals("web")) {
+                            if ( ( selectedNode.toString().equals("src") || selectedNode.toString().equals("web") )  &&  ( info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") )  ) {
                                 JMenuItem addItem = new JMenuItem("Ajouter un nouveau fichier");
                                 addItem.addActionListener(actionEvent -> {
                                     new DocumentAddPage(info.getNom_long(), info.getIdprojetAboutPage(), selectedNode.toString()).setVisible(true);
                                 });
                                 popupMenu.add(addItem);
                             } else if (!selectedNode.isRoot() && (selectedNode.getParent().toString().equals("src") || selectedNode.getParent().toString().equals("web"))) {
-                                // Les options "Supprimer" et "Ouvrir" sont disponibles pour les sous-fichiers de "src" ou "web"
-                                JMenuItem deleteItem = new JMenuItem("Supprimer");
-                                deleteItem.addActionListener(actionEvent -> {
-                                    // Appeler la fonction qui supprime le fichier dans la base de données
-                                    deleteFileFromDatabase(selectedNode.toString());
-                                });
-                                popupMenu.add(deleteItem);
+                                if (info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre")  ) {
+									// Les options "Supprimer" et "Ouvrir" sont disponibles pour les sous-fichiers de "src" ou "web"
+									JMenuItem deleteItem = new JMenuItem("Supprimer");
+									deleteItem.addActionListener(actionEvent -> {
+										// Appeler la fonction qui supprime le fichier dans la base de données
+										deleteFileFromDatabase(selectedNode.toString());
+									});
+									popupMenu.add(deleteItem);
+                                }									
+								
+								///////////////////////////////////////////////////////////////////
                                 
-                                JMenuItem openItem = new JMenuItem("Ouvrir");
-                                openItem.addActionListener(actionEvent -> {
-                                    // Appeler la fonction qui ouvre le fichier
-                                    openFile(selectedNode.toString());
-                                });
-                                popupMenu.add(openItem);
-                                
-                                JMenuItem downloadItem = new JMenuItem("Télécharger");
-                                downloadItem.addActionListener(actionEvent -> {
-                                    // Call the function that handles file download
-                                    downloadFile(selectedNode.toString());
-                                });
-                                popupMenu.add(downloadItem);
+                                if ( info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") || selectedNode.getParent().toString().equals("web")) {
+									JMenuItem openItem = new JMenuItem("Ouvrir");
+									openItem.addActionListener(actionEvent -> {
+										// Appeler la fonction qui ouvre le fichier
+										openFile(selectedNode.toString());
+									});
+									popupMenu.add(openItem);
+									
+									JMenuItem downloadItem = new JMenuItem("Télécharger");
+									downloadItem.addActionListener(actionEvent -> {
+										// Call the function that handles file download
+										downloadFile(selectedNode.toString());
+									});
+									popupMenu.add(downloadItem);
+								}
                             }
                             
                             popupMenu.show(Ressources_Projet, e.getX(), e.getY());
@@ -379,57 +391,57 @@ public class RessourcesPage extends javax.swing.JFrame {
             
 
             
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 1;
             gridBagConstraints.gridwidth = 6;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.fill = GridBagConstraints.BOTH;
             gridBagConstraints.ipadx = 814;
             gridBagConstraints.ipady = 344;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
             gridBagConstraints.weightx = 1.0;
             gridBagConstraints.weighty = 1.0;
-            gridBagConstraints.insets = new java.awt.Insets(20, 20, 18, 0);
+            gridBagConstraints.insets = new Insets(20, 20, 18, 0);
             contenu.add(jScrollPane1, gridBagConstraints);
 
-            adhesion.setBackground(new java.awt.Color(153, 0, 204));
-            adhesion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-            adhesion.setForeground(new java.awt.Color(255, 255, 255));
+            adhesion.setBackground(new Color(153, 0, 204));
+            adhesion.setFont(new Font("Segoe UI", 1, 24)); // NOI18N
+            adhesion.setForeground(new Color(255, 255, 255));
             adhesion.setText("Adhésion");
-            adhesion.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
+            adhesion.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
                     adhesionActionPerformed(evt);
                 }
             });
-            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 4;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.ipadx = 24;
             gridBagConstraints.ipady = 32;
-            gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-            gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+            gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+            gridBagConstraints.insets = new Insets(10, 20, 0, 0);
             contenu.add(adhesion, gridBagConstraints);
 
-            body.add(contenu, java.awt.BorderLayout.CENTER);
+            body.add(contenu, BorderLayout.CENTER);
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            GroupLayout layout = new GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 1002, Short.MAX_VALUE))
+                    .addComponent(body, GroupLayout.DEFAULT_SIZE, 1002, Short.MAX_VALUE))
             );
             layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(body, GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
             );
 
             pack();
     }
 
  
-    private void membresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_membresActionPerformed
+    private void membresActionPerformed(ActionEvent evt) {//GEN-FIRST:event_membresActionPerformed
         MembersPage mp = new MembersPage(info);
         mp.RemplirTable(info.getNom_court());
         mp.setVisible(true);
@@ -438,7 +450,7 @@ public class RessourcesPage extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_membresActionPerformed
 
-    private void ressourcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ressourcesActionPerformed
+    private void ressourcesActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ressourcesActionPerformed
     	RessourcesPage rsp = new RessourcesPage(info);
         rsp.setVisible(true);
         rsp.setLocationRelativeTo(null);
@@ -448,7 +460,7 @@ public class RessourcesPage extends javax.swing.JFrame {
 
    
 
-    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
+    private void aboutActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
     	AboutPage rsp = new AboutPage(info);
         rsp.setVisible(true);
         rsp.setLocationRelativeTo(null);
@@ -458,13 +470,15 @@ public class RessourcesPage extends javax.swing.JFrame {
 
     
 
-    private void adhesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adhesionActionPerformed
+    private void adhesionActionPerformed(ActionEvent evt) {//GEN-FIRST:event_adhesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adhesionActionPerformed
 
-    private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
+    private void AgendaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         AgendaPage ag = new AgendaPage(info);
-        ag.RemplirTable(info.getIdprojetAboutPage());
+        if(info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") ) {
+            ag.RemplirTable(info.getIdprojetAboutPage());
+            }
         ag.setLocationRelativeTo(null);
         ag.setVisible(true);
         ag.setSize(950, 550);
@@ -472,18 +486,18 @@ public class RessourcesPage extends javax.swing.JFrame {
     }//GEN-LAST:event_AgendaActionPerformed
 
     
-    private javax.swing.JButton Agenda;
-    private javax.swing.JLabel P4P;
-    private javax.swing.JTree Ressources_Projet;
-    private javax.swing.JLabel Username;
-    private javax.swing.JButton about;
-    private javax.swing.JButton adhesion;
-    private javax.swing.JPanel body;
-    private javax.swing.JPanel contenu;
-    private javax.swing.JPanel header;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton membres;
-    private javax.swing.JButton ressources;
+    private JButton Agenda;
+    private JLabel P4P;
+    private JTree Ressources_Projet;
+    private JLabel Username;
+    private JButton about;
+    private JButton adhesion;
+    private JPanel body;
+    private JPanel contenu;
+    private JPanel header;
+    private JScrollPane jScrollPane1;
+    private JButton membres;
+    private JButton ressources;
     /*protected static String project_name ;
     protected static String username_var ;
     protected String date ;
@@ -492,3 +506,4 @@ public class RessourcesPage extends javax.swing.JFrame {
     public static Connection con = Utilitaire.getConnection();
    
 }
+

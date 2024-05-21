@@ -76,6 +76,8 @@ public class VerifierSupprissionCompte extends JFrame {
     private void deleteUser(int userId) {
         try {
             conn.setAutoCommit(false);
+            PreparedStatement disableFK = conn.prepareStatement("SET FOREIGN_KEY_CHECKS=0;");
+            disableFK.executeUpdate();
 
             
 
@@ -107,6 +109,8 @@ public class VerifierSupprissionCompte extends JFrame {
                 ps.setInt(1, userId);
                 ps.executeUpdate();
             }
+            PreparedStatement enableFK = conn.prepareStatement("SET FOREIGN_KEY_CHECKS=1;");
+            enableFK.executeUpdate();
 
             conn.commit();
             JOptionPane.showMessageDialog(this, "Utilisateur supprimé avec succès.", "Succès", JOptionPane.INFORMATION_MESSAGE);

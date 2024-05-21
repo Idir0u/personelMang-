@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import java.util.*;
 
-public class HomePageUser extends javax.swing.JFrame {
+public class HomePageUser extends JFrame {
     Connection conn = Utilitaire.getConnection();
     private int iduser;
     private String username;
@@ -24,9 +24,9 @@ public class HomePageUser extends javax.swing.JFrame {
         Vector<Integer> projectIds = new Vector<>();
         
         try {
-        	String query = "SELECT IdProjet, nom_court, theme, type, etat, isPublic FROM projet";
+        	String query = "SELECT IdProjet, nom_court, theme, type, etat, isPublic FROM projet WHERE etat = 'Enabled' ";
             if (searchQuery != null && !searchQuery.isEmpty()) {
-                query += " WHERE nom_court LIKE ?";
+                query += " AND nom_court LIKE ?";
             }
             PreparedStatement ps = conn.prepareStatement(query);
 
@@ -57,18 +57,18 @@ public class HomePageUser extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
         tableProjets = new TableProjetList(this);
 
-        body = new javax.swing.JPanel();
-        Header = new javax.swing.JPanel();
-        LOGO = new javax.swing.JLabel();
-        Username = new javax.swing.JLabel();
-        userIcon = new javax.swing.JLabel();
-        Menu = new javax.swing.JPanel();
-        Home1 = new javax.swing.JButton();
-        Projects = new javax.swing.JButton();
-        Messages = new javax.swing.JButton();
-        Requests = new javax.swing.JButton();
-        Invitations = new javax.swing.JButton();
-        Agenda = new javax.swing.JButton();
+        body = new JPanel();
+        Header = new JPanel();
+        LOGO = new JLabel();
+        Username = new JLabel();
+        userIcon = new JLabel();
+        Menu = new JPanel();
+        Home1 = new JButton();
+        Projects = new JButton();
+        Messages = new JButton();
+        Requests = new JButton();
+        Invitations = new JButton();
+        Agenda = new JButton();
         jLabel1 = new JLabel();
         DashBord = new JPanel();
         last_connexion_date = new JLabel();
@@ -76,7 +76,7 @@ public class HomePageUser extends javax.swing.JFrame {
         jLabel3 = new JLabel();
         jScrollPane1 = new JScrollPane();
         activity_table = new JTable();
-        Contenu = new javax.swing.JPanel();
+        Contenu = new JPanel();
         barContenu = new JPanel();
         h1Bar = new JLabel();
         recherche = new JTextField();
@@ -85,7 +85,7 @@ public class HomePageUser extends javax.swing.JFrame {
         
         Contenu.setLayout(new BorderLayout());
         Contenu.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Panel for the project panels
         JPanel projectsPanel = new JPanel(new GridLayout(0, 3, 30, 30));
@@ -185,10 +185,10 @@ public class HomePageUser extends javax.swing.JFrame {
 
         Username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
-        Username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Username.setHorizontalAlignment(SwingConstants.CENTER);
         Username.setText(username);
         Username.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Username.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Username.setHorizontalTextPosition(SwingConstants.CENTER);
         Username.setIconTextGap(1);
         Username.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -205,9 +205,9 @@ public class HomePageUser extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 10, 49);
         Header.add(Username, gridBagConstraints);
 
-        userIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
-        userIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        userIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        userIcon.setIcon(new ImageIcon(getClass().getResource("assets/icons8-user-30.png"))); // NOI18N
+        userIcon.setHorizontalTextPosition(SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -220,7 +220,7 @@ public class HomePageUser extends javax.swing.JFrame {
         body.add(Header, java.awt.BorderLayout.NORTH);
 
         Menu.setBackground(new java.awt.Color(255, 255, 255));
-        Menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Menu.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Menu.setPreferredSize(new java.awt.Dimension(180, 427));
         Menu.setLayout(new java.awt.GridLayout(9, 0));
 
@@ -228,7 +228,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Home1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Home1.setForeground(Color.white);
         Home1.setText("Home");
-        Home1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        Home1.setBorder(BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         Home1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Home1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +242,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Projects.setBackground(Color.white);
         Projects.setForeground(new java.awt.Color(153, 0, 204));
         Projects.setText("Projects");
-        Projects.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Projects.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Projects.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Projects.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,7 +256,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Messages.setForeground(new java.awt.Color(153, 0, 204));
         Messages.setText("Messages");
         Messages.setBackground(Color.white);
-        Messages.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Messages.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Messages.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Messages.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +271,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Requests.setBackground(Color.white);
         Requests.setForeground(new java.awt.Color(153, 0, 204));
         Requests.setText("Requests");
-        Requests.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Requests.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Requests.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Requests.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,7 +285,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Invitations.setBackground(Color.white);
         Invitations.setForeground(new java.awt.Color(153, 0, 204));
         Invitations.setText("Invitations");
-        Invitations.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Invitations.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Invitations.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Invitations.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,7 +299,7 @@ public class HomePageUser extends javax.swing.JFrame {
         Agenda.setBackground(Color.white);
         Agenda.setForeground(new java.awt.Color(153, 0, 204));
         Agenda.setText("Agenda");
-        Agenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
+        Agenda.setBorder(BorderFactory.createLineBorder(new java.awt.Color(153, 0, 204)));
         Agenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Agenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -398,7 +398,7 @@ public class HomePageUser extends javax.swing.JFrame {
                 ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
-							AboutPage ap = new AboutPage(new Info(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username));
+							AboutPage ap = new AboutPage(new Info(iduser, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username, "", isPublic));
 							ap.setVisible(true);
 							ap.setSize(950, 550);
 							ap.setLocationRelativeTo(null);
@@ -502,19 +502,19 @@ public class HomePageUser extends javax.swing.JFrame {
         }
    }
     // Variables declaration - do not modify                     
-    private javax.swing.JButton Agenda;
-    private javax.swing.JPanel Contenu;
-    private javax.swing.JPanel Header;
-    private javax.swing.JButton Home1;
-    private javax.swing.JButton Invitations;
-    private javax.swing.JLabel LOGO;
-    private javax.swing.JPanel Menu;
-    private javax.swing.JButton Messages;
-    private javax.swing.JButton Projects;
-    private javax.swing.JButton Requests;
-    private javax.swing.JLabel Username;
-    private javax.swing.JPanel body;
-    private javax.swing.JLabel userIcon;
+    private JButton Agenda;
+    private JPanel Contenu;
+    private JPanel Header;
+    private JButton Home1;
+    private JButton Invitations;
+    private JLabel LOGO;
+    private JPanel Menu;
+    private JButton Messages;
+    private JButton Projects;
+    private JButton Requests;
+    private JLabel Username;
+    private JPanel body;
+    private JLabel userIcon;
     
     private TableProjetList tableProjets;
        

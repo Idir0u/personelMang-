@@ -125,6 +125,7 @@ public class TableProjets extends JPanel {
         private JButton button;
         private String label;
         private boolean isPushed;
+        private int selectedRow;
 
         public ButtonEditor(JCheckBox checkBox) {
             button = new JButton();
@@ -138,21 +139,31 @@ public class TableProjets extends JPanel {
             label = (value == null) ? "" : value.toString();
             button.setText(label);
             isPushed = true;
+            selectedRow = row;
             return button;
         }
 
         @Override
         public Object getCellEditorValue() {
             if (isPushed) {
-                int row = table.getEditingRow();
-                int value = (int) table.getValueAt(row, 0);
-                String type = (String) table.getValueAt(row, 5);
-                JFrame frame = new JFrame();
-                frame.setLocationRelativeTo(null);
-                frame.setSize(520, 400);
-                frame.setVisible(true);
-
-                
+            	try {
+                    int idProjet = (int) table.getValueAt(selectedRow, 0);
+                    PreparedStatement pstm = conn.prepareStatement("SELECT * FROM PROJET WHERE idProjet = ?");
+                    pstm.setInt(1, idProjet);
+                    ResultSet rs = pstm.executeQuery(); 
+                    //(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court, String username)
+                    Info info;
+    				if (rs.next()) {
+    					info = new Info(0, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"),
+    							idProjet, rs.getString("nom_court"), "Guest", "guest", true);
+    					AboutPage frame = new AboutPage(info);frame.setLocationRelativeTo(null);
+    	                frame.setSize(950, 550);
+    	                frame.setLocationRelativeTo(null);
+    	                frame.setVisible(true);
+    				}
+            	} catch(SQLException t) {
+                	t.printStackTrace();
+                }   
             }
             isPushed = false;
             return label;

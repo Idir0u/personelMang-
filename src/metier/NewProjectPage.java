@@ -1,24 +1,18 @@
 package metier;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
+
+import java.awt.*;
 import java.sql.*;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PC MAROC
- */
+
 public class NewProjectPage extends javax.swing.JFrame {
 
     private javax.swing.JLabel FormulaireCreation;
     private javax.swing.JLabel P4P;
     private javax.swing.JCheckBox Prive;
     private javax.swing.JCheckBox Public;
-    private javax.swing.JLabel Username;
     private javax.swing.JPanel background_formulaire;
     private javax.swing.JPanel barre_FormulaireCreation;
     private javax.swing.JPanel body;
@@ -51,7 +45,6 @@ public class NewProjectPage extends javax.swing.JFrame {
         body = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         P4P = new javax.swing.JLabel();
-        Username = new javax.swing.JLabel();
         contenu = new javax.swing.JPanel();
         barre_FormulaireCreation = new javax.swing.JPanel();
         FormulaireCreation = new javax.swing.JLabel();
@@ -210,6 +203,7 @@ public class NewProjectPage extends javax.swing.JFrame {
 
         Prive.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Prive.setForeground(new java.awt.Color(255, 255, 255));
+        Prive.setBackground( new Color(102, 0, 204) );
         Prive.setText("Privé");
         
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -224,6 +218,7 @@ public class NewProjectPage extends javax.swing.JFrame {
 
         Public.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Public.setForeground(new java.awt.Color(255, 255, 255));
+        Public.setBackground(new java.awt.Color(102, 0, 204));
         Public.setText("Public");
         
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -356,8 +351,7 @@ public class NewProjectPage extends javax.swing.JFrame {
 
     private void envoyerActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Establish database connection
-            Connection conn = DriverManager.getConnection("your_database_url", "username", "password");
+            
 
             // Disable auto-commit
             conn.setAutoCommit(false);

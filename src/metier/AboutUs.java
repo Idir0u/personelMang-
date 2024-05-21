@@ -27,7 +27,7 @@ public class AboutUs extends JFrame {
         jLabel3 = new JLabel();
         jLabel4 = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         body.setBackground(Color.white);
         body.setLayout(new GridBagLayout());
@@ -86,7 +86,7 @@ public class AboutUs extends JFrame {
         gridBagConstraints.insets = new Insets(20, 150, 0, 0);
         body.add(aboutUs, gridBagConstraints);
 
-        pictures.setIcon(new ImageIcon(getClass().getResource("Design sans titre (2).png"))); 
+        pictures.setIcon(new ImageIcon(getClass().getResource("assets/Design sans titre (2).png"))); 
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;

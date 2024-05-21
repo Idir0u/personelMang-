@@ -206,8 +206,9 @@ public class TableProjetList extends JPanel {
                 Info info;
 				if (rs.next()) {
 					info = new Info(0, rs.getString("nom_long_projet"), rs.getString("description_projet"), "18/05/2024",
-							rs.getInt("IdProjet"), rs.getString("nom_court_projet"), "Guest");
-					AboutPage frame = new AboutPage(info);frame.setLocationRelativeTo(null);
+							rs.getInt("IdProjet"), rs.getString("nom_court_projet"), "Guest", "guest", true);
+					AboutPage frame = new AboutPage(info);
+					frame.setLocationRelativeTo(null);
 	                frame.setSize(950, 550);
 	                frame.setLocationRelativeTo(null);
 	                frame.setVisible(true);

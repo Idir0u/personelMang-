@@ -312,7 +312,7 @@ public class Guest extends javax.swing.JFrame {
                 ButtonSeeMore.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         try {
-							AboutPage ap = new AboutPage(new Info(0, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username));
+							AboutPage ap = new AboutPage(new Info(0, rs.getString("nom_long"), rs.getString("description"), rs.getString("date_creation"), rs.getInt("idprojet"), rs.getString("nom_court"), username, "", rs.getBoolean("isPublic")));
 							ap.setVisible(true);
 							ap.setSize(950, 550);
 							ap.setLocationRelativeTo(null);

@@ -8,8 +8,9 @@ public class Info {
 	private int idprojetAboutPage;
 	private String nom_court;
 	private String username;
-	public Info(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court,
-			String username) {
+	private String mode_navigation;
+	private boolean isPublic;
+	public Info(int iduser, String nom_long, String description, String date, int idprojetAboutPage, String nom_court,String username, String mode, boolean isPublic) {
 		super();
 		this.iduser = iduser;
 		this.nom_long = nom_long;
@@ -18,6 +19,23 @@ public class Info {
 		this.idprojetAboutPage = idprojetAboutPage;
 		this.nom_court = nom_court;
 		this.username = username;
+		this.mode_navigation = mode;
+		this.isPublic = isPublic;
+	}
+	
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	public String getMode_navigation() {
+		return mode_navigation;
+	}
+	public void setMode_navigation(String mode_navigation) {
+		this.mode_navigation = mode_navigation;
 	}
 	public int getIduser() {
 		return iduser;

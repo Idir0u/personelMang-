@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class MembersPage extends javax.swing.JFrame {
@@ -81,7 +82,7 @@ public class MembersPage extends javax.swing.JFrame {
         Username.setFont(new java.awt.Font("Segoe UI", 1, 24));    
         Username.setForeground(new java.awt.Color(255, 255, 255));
         Username.setIcon(new javax.swing.ImageIcon(getClass().getResource("assets/icons8-user-30.png")));    
-        Username.setText(info.getUsername());
+        Username.setText(info.getUsername() + "--" + info.getMode_navigation());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -235,7 +236,11 @@ public class MembersPage extends javax.swing.JFrame {
         ajouter_administrateur.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ajouter_administrateur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajouter_administrateurActionPerformed(evt);
+            	if(info.getMode_navigation().equalsIgnoreCase("admin")){
+            		ajouter_administrateurActionPerformed(evt);
+            	}else {
+            		JOptionPane.showMessageDialog(null, "Your are not an admin of this project!!", "Action unsuccesful", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -254,7 +259,11 @@ public class MembersPage extends javax.swing.JFrame {
         ajouter_membre_simple.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ajouter_membre_simple.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajouter_membre_simpleActionPerformed(evt);
+            	if(info.getMode_navigation().equalsIgnoreCase("admin")){
+            		ajouter_membre_simpleActionPerformed(evt);
+            	}else {
+            		JOptionPane.showMessageDialog(null, "Your are not an admin of this project!!", "Action unsuccesful", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -313,6 +322,7 @@ public class MembersPage extends javax.swing.JFrame {
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
     	AboutPage rsp = new AboutPage(info);
+    	
         rsp.setVisible(true);
         rsp.setLocationRelativeTo(null);
         rsp.setSize(950, 550);
@@ -327,7 +337,9 @@ public class MembersPage extends javax.swing.JFrame {
 
     private void AgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgendaActionPerformed
         AgendaPage ag = new AgendaPage(info);
+        if(info.isPublic() || info.getMode_navigation().equalsIgnoreCase("admin") || info.getMode_navigation().equalsIgnoreCase("membre") ) {
         ag.RemplirTable(info.getIdprojetAboutPage());
+        }
         ag.setVisible(true);
         ag.setLocationRelativeTo(null);
         ag.setSize(950, 550);
