@@ -36,6 +36,7 @@ Utilisation de l'Application
 	Connexion :
 
 		Utilisez le formulaire de connexion pour accéder à la plateforme avec un compte utilisateur, administrateur ou invité (guest).
+		pour acceder comme administrateur veuillez saisir username suivi par -adm
 	Fonctionnalités Principales :
 
 	Inscription de nouveaux utilisateurs.
