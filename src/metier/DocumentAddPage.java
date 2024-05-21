@@ -53,7 +53,6 @@ public class DocumentAddPage extends JFrame {
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
                      selectedFile = fileChooser.getSelectedFile();
-                   
                 }
             }
         });
@@ -84,7 +83,7 @@ public class DocumentAddPage extends JFrame {
                      catch (Exception e) {
                         e.printStackTrace();
                     }
-                    JOptionPane.showMessageDialog(null, "Document has been added ", "Notif", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Document has been added ", "Notif", JOptionPane.INFORMATION_MESSAGE);
                     Window win = SwingUtilities.getWindowAncestor(add_file_button);
                     win.dispose();
                 }

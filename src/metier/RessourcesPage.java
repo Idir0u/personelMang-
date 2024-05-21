@@ -201,7 +201,7 @@ public class RessourcesPage extends javax.swing.JFrame {
 			    
 			
 
-			// Ajout des fichiers web
+			// Ajout des fichiers web(affichage s'ils existent a la DB
 			try 
 			{
 				PreparedStatement statementWeb = con.prepareStatement(sqlWeb);
@@ -240,7 +240,7 @@ public class RessourcesPage extends javax.swing.JFrame {
                             if (selectedNode.toString().equals("src") || selectedNode.toString().equals("web")) {
                                 JMenuItem addItem = new JMenuItem("Ajouter un nouveau fichier");
                                 addItem.addActionListener(actionEvent -> {
-                                    new DocumentAddPage(project_name, proj_id, selectedNode.toString()).setVisible(true);
+                                    new DocumentAddPage(info.getNom_long(), info.getIdprojetAboutPage(), selectedNode.toString()).setVisible(true);
                                 });
                                 popupMenu.add(addItem);
                             } else if (!selectedNode.isRoot() && (selectedNode.getParent().toString().equals("src") || selectedNode.getParent().toString().equals("web"))) {
@@ -325,7 +325,7 @@ public class RessourcesPage extends javax.swing.JFrame {
                         String sql = "SELECT contenu FROM document WHERE titre = ? AND IdProjet = ?";
                         pstmt = con.prepareStatement(sql);
                         pstmt.setString(1, fileName.substring(0, fileName.lastIndexOf(".")));
-                        pstmt.setInt(2, proj_id);
+                        pstmt.setInt(2, info.getIdprojetAboutPage());
                         rs = pstmt.executeQuery();
 
                         if (rs.next()) {
@@ -364,7 +364,7 @@ public class RessourcesPage extends javax.swing.JFrame {
 					{
 						PreparedStatement ps = con.prepareStatement("DELETE FROM document WHERE titre = ? and IdProjet = ?");
 						ps.setString(1, title.substring(0, title.lastIndexOf(".")));
-						ps.setInt(2,proj_id);
+						ps.setInt(2,info.getIdprojetAboutPage());
 						ps.executeUpdate();
 						
 					}catch (Exception e)
@@ -484,11 +484,11 @@ public class RessourcesPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton membres;
     private javax.swing.JButton ressources;
-    protected static String project_name ;
+    /*protected static String project_name ;
     protected static String username_var ;
     protected String date ;
     protected String Description ;
-    protected int proj_id ;
+    protected int proj_id ;*/
     public static Connection con = Utilitaire.getConnection();
    
 }
