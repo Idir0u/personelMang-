@@ -1,7 +1,7 @@
 Membres du Groupe
 
-	-ZEMAT Zakariae
 	-OUBEZA Idir
+ 	-ZEMAT Zakariae
 	-SAWADOGO Abdel
 	-Arnaud Ulrich TOE
 
